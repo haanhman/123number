@@ -1,0 +1,23 @@
+#khong commit thu muc build ngoai tru thu muc video_bridge
+!/build/
+/build/*
+!/build/jsb-binary/
+
+!/build/jsb-binary/
+/build/jsb-binary/*
+!/build/jsb-binary/frameworks/
+
+!/build/jsb-binary/frameworks/
+/build/jsb-binary/frameworks/*
+!/build/jsb-binary/frameworks/runtime-src/
+
+!/build/jsb-binary/frameworks/runtime-src/
+/build/jsb-binary/frameworks/runtime-src/*
+!/build/jsb-binary/frameworks/runtime-src/proj.ios_mac
+
+!/build/jsb-binary/frameworks/runtime-src/proj.ios_mac
+/build/jsb-binary/frameworks/runtime-src/proj.ios_mac/*
+!/build/jsb-binary/frameworks/runtime-src/proj.ios_mac/video_bridge/
+
+/temp
+/local/builder.json
