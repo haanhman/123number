@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>frames</key>
+	<dict>
+		<key>characters/a.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{385, 511}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/b.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{769, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/c.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{961, 511}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/d.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 511}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/e.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{193, 766}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/f.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{577, 256}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/g.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{769, 766}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/h.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1408, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/i.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{193, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/j.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{385, 256}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/k.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{577, 766}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/l.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{961, 256}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/m.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 256}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/n.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{193, 511}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/o.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{577, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/p.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{769, 511}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/q.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1153, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/r.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 766}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/s.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{385, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/t.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{577, 511}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/u.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{961, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/v.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 1}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/w.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{193, 256}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/x.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{385, 766}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/y.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{769, 256}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+		<key>characters/z.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{961, 766}, {253, 190}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<true/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {253, 190}}</string>
+			<key>sourceSize</key>
+			<string>{253, 190}</string>
+		</dict>
+	</dict>
+	<key>metadata</key>
+	<dict>
+		<key>format</key>
+		<integer>2</integer>
+		<key>size</key>
+		<string>{2048, 1024}</string>
+		<key>textureFileName</key>
+		<string>characters.png</string>
+	</dict>
+</dict>
+</plist>
