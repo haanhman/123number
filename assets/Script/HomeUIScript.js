@@ -1,3 +1,4 @@
+var BridgeVideoPlayer = require('BridgeVideoPlayer');
 cc.Class({
     extends: cc.Component,
 
@@ -24,10 +25,19 @@ cc.Class({
     actionShare:function(){},
     actionRate:function(){},
     actionAddMore:function(){},
-    actionSettings:function(){},
-    actionBuyAll:function(){},
+    actionSettings:function(){
+        BridgeVideoPlayer.playVideo("phonic.mp4");
+    },
+    actionBuyAll:function(){
+        BridgeVideoPlayer.playVideo("duck.mp4");
+    },
 
-
+    videoCompleteCallback: function () {
+        cc.log("============= Play video complete =============");
+    },
+    closeVideoButton: function () {
+        cc.log("============= Close video button =============");
+    }
 
 
 
