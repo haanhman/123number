@@ -21,3 +21,5 @@
 
 /temp
 /local/builder.json
+/library
+*.meta
