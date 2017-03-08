@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "moveup",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.25,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "popcontent": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                -700
+              ]
+            },
+            {
+              "frame": 0.25,
+              "value": [
+                0,
+                0
+              ]
+            }
+          ]
+        }
+      },
+      "popBG": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.25,
+              "value": 180
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}
