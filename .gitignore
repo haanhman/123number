@@ -59,4 +59,6 @@
 /temp
 /local/builder.json
 /library
+/local
+/settings
 *.meta
