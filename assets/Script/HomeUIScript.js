@@ -51,12 +51,9 @@ cc.Class({
     },
     closeVideoButton: function () {
         cc.log("============= Close video button =============");
-    }
-
-
+    },
     actionClickCard:function(nodebutton){
         var namebutton=nodebutton.target.name;
-
         namebutton=namebutton.toLocaleLowerCase();
 
         cc.log("---asd-as-d-sad-as:   %s",namebutton);
@@ -75,16 +72,5 @@ cc.Class({
         }else{
             cc.log("lock add new popup");
         }
-
-
-
-
-
-
-
-    },
-
-
-
-
+    }
 });
