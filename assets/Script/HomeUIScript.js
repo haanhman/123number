@@ -3,10 +3,20 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-       bgDisplay:{
-           type:cc.Node,
-           default: null
-       }
+        popOptionPrefab:{
+            type:cc.Prefab,
+            default:null
+        },
+
+        cardAtlas:{
+            default:null,
+            type:cc.SpriteAtlas
+        },
+        bgDisplay:{
+            type:cc.Node,
+            default: null
+        }
+
     },
 
     configDisplay:function(){
@@ -42,6 +52,37 @@ cc.Class({
     closeVideoButton: function () {
         cc.log("============= Close video button =============");
     }
+
+
+    actionClickCard:function(nodebutton){
+        var namebutton=nodebutton.target.name;
+
+        namebutton=namebutton.toLocaleLowerCase();
+
+        cc.log("---asd-as-d-sad-as:   %s",namebutton);
+        var checkOldNode=this.node.getChildByName("PopOptions");
+        if(checkOldNode===null){
+            var popnode=cc.instantiate(this.popOptionPrefab);
+            popnode.name="PopOptions"
+            popnode.setLocalZOrder(10);
+            this.node.addChild(popnode);
+
+
+            var scriptCard=popnode.getComponent("PopScript");
+            scriptCard.cardSprite.spriteFrame=this.cardAtlas.getSpriteFrame("characters-"+namebutton);
+            scriptCard.strCardName=namebutton;
+            scriptCard.lbtitle.string="Letter "+namebutton.toUpperCase();
+        }else{
+            cc.log("lock add new popup");
+        }
+
+
+
+
+
+
+
+    },
 
 
 
