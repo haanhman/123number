@@ -11,6 +11,16 @@ var BridgeVideoPlayer = {
         } else {
             cc.log("This device not support to play video");   
         }
+    },
+    unlockData: function() {
+        if(cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeVideoPlayer", "playVideo:", videoPath);
+        }else if(cc.sys.os == cc.sys.OS_ANDROID) {
+            cc.log("Unlock data function");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "purchaseRemoveAds", "()V");
+        } else {
+            cc.log("This device not support inapp purchase");   
+        }
     }
 }
 module.exports = BridgeVideoPlayer;

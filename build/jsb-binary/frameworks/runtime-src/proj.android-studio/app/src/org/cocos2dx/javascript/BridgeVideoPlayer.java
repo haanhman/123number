@@ -48,9 +48,9 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
     private static void startVideo(String videoName) {
         try {
             if(videoName.equals("duck.mp4")) {
-                videoPath = "android.resource://org.cocos2d.videoPlayer/" + R.raw.duck;
+                videoPath = "android.resource://com.sonman.demoinapp/" + R.raw.duck;
             } else {
-                videoPath = "android.resource://org.cocos2d.videoPlayer/" + R.raw.phonic;
+                videoPath = "android.resource://com.sonman.demoinapp/" + R.raw.phonic;
             }
 
             Log.e("AndroidVideoPlayer", videoPath);

@@ -22,14 +22,18 @@ cc.Class({
     },
 
 
-    actionShare:function(){},
+    actionShare:function(){
+        
+    },
     actionRate:function(){},
-    actionAddMore:function(){},
+    actionAddMore:function(){
+        BridgeVideoPlayer.playVideo("duck.mp4");
+    },
     actionSettings:function(){
         BridgeVideoPlayer.playVideo("phonic.mp4");
     },
     actionBuyAll:function(){
-        BridgeVideoPlayer.playVideo("duck.mp4");
+        BridgeVideoPlayer.unlockData();
     },
 
     videoCompleteCallback: function () {
