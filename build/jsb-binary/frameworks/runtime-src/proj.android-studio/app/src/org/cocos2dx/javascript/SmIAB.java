@@ -8,6 +8,7 @@ import com.sonman.inapp.IabHelper;
 import com.sonman.inapp.IabResult;
 import com.sonman.inapp.Inventory;
 import com.sonman.inapp.Purchase;
+import com.sonman.inapp.SkuDetails;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
@@ -21,7 +22,7 @@ public class SmIAB {
     // Debug tag, for logging
     static final String TAG = "SmIAB";
 
-    static final String SKU_REMOVE_ADS = "com.sonman.demoinapp.unlockdata";
+    static final String product_id = "com.sonman.inappdemo.goi1";
 
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10111;
@@ -29,7 +30,7 @@ public class SmIAB {
     // The helper object
     private static IabHelper mHelper;
 
-    private static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxU450o0ihw+qxqWrMxWghIaBfCxGJXijkasUFaqmlj7K7VxlrN4zXOHClg4E6ejnMXF5UDOO6Ew3CJGGk3ae8AGx8Zh1TVHoIgD3h/obWbqKSi80ztoj4k9Dn5XKsBRlBDRS82lzGLZIRKm04sStgr03/ER2Tr+vRsM6Ki28nQ2ScPEOYFaSvt5NOumQA5Um/OA46GC2kVuoyFJNbSj/U2wT03B+M446QebiegIN4LKJf+JAEdfWC97okDHeUsmcjE0rmnPlp9gM/ZeEufT1uSzaG6TfW8HckWae8lc0yBQkFZsGrHSfCBPV/uMM8I77iLTjx9ZFPxumnxquoGwzZwIDAQAB";
+    private static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApeoELU1M81j98Z9JRSvWtQ+avl/LGtcrWOYOHaDL1oG9J/QIeyqXI/2OTGMJuM6ac8W6JbpvgcnejPk4Jj27sXmiKK+RndMBCK8qJCbGnc/jCECNKcQPMW+ono5BKjuFFNYQxV8UHik9hi+or4afilOBGCAnfm5Jt7mKXJS7OKBAbhmud0FhgJLp0itar15VYrXgSHECqOTmHIoajK7dwOpBA9hDLFpo2dF56gL2WihPWqcbzJNZ2g0GJFu4nhJX2T1QHF3T94VFIddb/CZkL8ULcnQLLO9juFaQeS2X6MJJ0mDyP572LXJo3T5FMjj66N3Ar6+Q9NicBZlHajc72QIDAQAB";
 
     private static Boolean isAdsDisabled = false;
     private static String payload = "bat_cu_noi_dung_gi_cung_duoc";
@@ -87,29 +88,16 @@ public class SmIAB {
                 return;
             }
 
-            Log.d(TAG, "Query inventory was successful.");
+            SkuDetails sku = inventory.getSkuDetails(product_id);
+            if (sku == null) {
+                Log.d(TAG, "co loi phan load goi mua ban");
+                return;
+            }
 
-            /*
-             * Check for items we own. Notice that for each purchase, we check
-             * the developer payload to see if it's correct! See
-             * verifyDeveloperPayload().
-             */
-
-            // Do we have the premium upgrade?
-            Purchase removeAdsPurchase = inventory.getPurchase(SKU_REMOVE_ADS);
-//            Log.w(TAG, removeAdsPurchase.getToken());
-//            Log.w(TAG, removeAdsPurchase.getDeveloperPayload());
-//            Log.w(TAG, removeAdsPurchase.getPackageName());
-//            Log.w(TAG, removeAdsPurchase.getSku());
-//            Constants.isAdsDisabled = (removeAdsPurchase != null && verifyDeveloperPayload(removeAdsPurchase));
-//            removeAds();
-//
-//            Log.d(TAG, "User has "
-//                    + (Constants.isAdsDisabled ? "REMOVED ADS"
-//                    : "NOT REMOVED ADS"));
-
-            // setWaitScreen(false);
-            Log.d(TAG, "Initial inventory query finished; enabling main UI.");
+            Log.d(TAG, "============== PRODUCT ID =================");
+            Log.d(TAG, "name: " + sku.getTitle());
+            Log.d(TAG, "price: " + sku.getPrice());
+            Log.d(TAG, "============== END PRODUCT ID =============");
         }
     };
 
@@ -122,7 +110,7 @@ public class SmIAB {
                 Log.d(TAG, "================ nguoi dung chon unlock data ================");
 
                 try {
-                    mHelper.launchPurchaseFlow(activity, SKU_REMOVE_ADS,
+                    mHelper.launchPurchaseFlow(activity, product_id,
                             RC_REQUEST, mPurchaseFinishedListener, payload);
                 } catch (Exception ex) {
                     Log.d(TAG, ex.getMessage());
@@ -184,7 +172,7 @@ public class SmIAB {
 
             Log.d(TAG, "Purchase successful.");
 
-            if (purchase.getSku().equals(SKU_REMOVE_ADS)) {
+            if (purchase.getSku().equals(product_id)) {
                 // bought the premium upgrade!
                 removeAds();
 
