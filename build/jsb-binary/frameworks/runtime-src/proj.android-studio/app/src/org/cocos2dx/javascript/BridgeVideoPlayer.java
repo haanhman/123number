@@ -48,9 +48,9 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
     private static void startVideo(String videoName) {
         try {
             if(videoName.equals("duck.mp4")) {
-                videoPath = "android.resource://com.sonman.demoinapp/" + R.raw.duck;
+                videoPath = "android.resource://com.sonman.inappdemo/" + R.raw.duck;
             } else {
-                videoPath = "android.resource://com.sonman.demoinapp/" + R.raw.phonic;
+                videoPath = "android.resource://com.sonman.inappdemo/" + R.raw.phonic;
             }
 
             Log.e("AndroidVideoPlayer", videoPath);
@@ -147,7 +147,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
             @Override
             public void run() {
                 Cocos2dxJavascriptJavaBridge.evalString("var currentsc = cc.director.getScene();\n" +
-                        "var runningScene = currentsc.children[0].getComponent(\"MainScript\");\n" +
+                        "var runningScene = currentsc.children[0].getComponent(\"HomeUIScript\");\n" +
                         "runningScene.videoCompleteCallback();");
             }
         });
@@ -160,7 +160,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
             @Override
             public void run() {
                 Cocos2dxJavascriptJavaBridge.evalString("var currentsc = cc.director.getScene();\n" +
-                        "var runningScene = currentsc.children[0].getComponent(\"MainScript\");\n" +
+                        "var runningScene = currentsc.children[0].getComponent(\"HomeUIScript\");\n" +
                         "runningScene.closeVideoButton();");
             }
         });

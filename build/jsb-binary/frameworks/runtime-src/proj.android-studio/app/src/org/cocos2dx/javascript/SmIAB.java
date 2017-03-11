@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.sonman.inapp.IabException;
 import com.sonman.inapp.IabHelper;
 import com.sonman.inapp.IabResult;
 import com.sonman.inapp.Inventory;
@@ -12,6 +13,7 @@ import com.sonman.inapp.SkuDetails;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
 
 /**
  * Created by anhmantk on 3/7/17.
@@ -22,7 +24,7 @@ public class SmIAB {
     // Debug tag, for logging
     static final String TAG = "SmIAB";
 
-    static final String product_id = "com.sonman.inappdemo.goi1";
+    static final String product_id = "com.sonman.inappdemo.goi5";
 
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10111;
@@ -32,7 +34,6 @@ public class SmIAB {
 
     private static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApeoELU1M81j98Z9JRSvWtQ+avl/LGtcrWOYOHaDL1oG9J/QIeyqXI/2OTGMJuM6ac8W6JbpvgcnejPk4Jj27sXmiKK+RndMBCK8qJCbGnc/jCECNKcQPMW+ono5BKjuFFNYQxV8UHik9hi+or4afilOBGCAnfm5Jt7mKXJS7OKBAbhmud0FhgJLp0itar15VYrXgSHECqOTmHIoajK7dwOpBA9hDLFpo2dF56gL2WihPWqcbzJNZ2g0GJFu4nhJX2T1QHF3T94VFIddb/CZkL8ULcnQLLO9juFaQeS2X6MJJ0mDyP572LXJo3T5FMjj66N3Ar6+Q9NicBZlHajc72QIDAQAB";
 
-    private static Boolean isAdsDisabled = false;
     private static String payload = "bat_cu_noi_dung_gi_cung_duoc";
     private static Cocos2dxActivity activity;
 
@@ -151,6 +152,15 @@ public class SmIAB {
         return true;
     }
 
+    public static boolean checkRestore() {
+        try {
+            Inventory ivo = mHelper.queryInventory();
+            return ivo.hasPurchase(product_id);
+        }catch (IabException ex) {
+            return false;
+        }
+    }
+
     // Callback for when a purchase is finished
     static IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
@@ -162,7 +172,11 @@ public class SmIAB {
                 return;
 
             if (result.isFailure()) {
-                complain("Error purchasing: " + result);
+                if(checkRestore()) {
+                    unlockContentSuccess();
+                } else {
+                    complain("Error purchasing: " + result);
+                }
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
@@ -174,20 +188,39 @@ public class SmIAB {
 
             if (purchase.getSku().equals(product_id)) {
                 // bought the premium upgrade!
-                removeAds();
+                unlockContentSuccess();
 
             }
         }
     };
 
-    private static void removeAds() {
-        isAdsDisabled = true;
+    private static void unlockContentSuccess() {
+        Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxJavascriptJavaBridge.evalString("var currentsc = cc.director.getScene();\n" +
+                        "var runningScene = currentsc.children[0].getComponent(\"HomeUIScript\");\n" +
+                        "runningScene.unlockDataSuccess();");
+            }
+        });
+    }
+
+    private static void unlockContentFail() {
+        Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                Cocos2dxJavascriptJavaBridge.evalString("var currentsc = cc.director.getScene();\n" +
+                        "var runningScene = currentsc.children[0].getComponent(\"HomeUIScript\");\n" +
+                        "runningScene.unlockDataError();");
+            }
+        });
     }
 
 
     private static void complain(String message) {
-        Log.e(TAG, "**** TrivialDrive Error: " + message);
-        alert("Error: " + message);
+        unlockContentFail();
+//        Log.e(TAG, "**** TrivialDrive Error: " + message);
+//        alert("Error: " + message);
     }
 
     private static void alert(final String message) {

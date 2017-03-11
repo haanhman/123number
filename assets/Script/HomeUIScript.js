@@ -15,8 +15,8 @@ cc.Class({
         bgDisplay:{
             type:cc.Node,
             default: null
-        }
-
+        },
+        btnBuy: cc.Sprite
     },
 
     configDisplay:function(){
@@ -29,8 +29,14 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         this.configDisplay();
+        var vkids_buy_content = cc.sys.localStorage.getItem('vkids_buy_content');
+        if(vkids_buy_content) {
+            this.removeBuyBtn();
+        }
     },
-
+    removeBuyBtn: function() {
+        this.btnBuy.node.removeFromParent(true);  
+    },
 
     actionShare:function(){
         
@@ -72,5 +78,13 @@ cc.Class({
         }else{
             cc.log("lock add new popup");
         }
-    }
+    },
+    unlockDataSuccess: function() {
+        cc.log("Nguoi dung da unlock data thanh cong");
+        cc.sys.localStorage.setItem('vkids_buy_content', true);
+        this.removeBuyBtn();
+    },
+    unlockDataError: function() {
+        cc.log("Unlock data that bai");
+    },
 });
