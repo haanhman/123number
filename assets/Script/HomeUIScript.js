@@ -1,4 +1,5 @@
 var BridgeVideoPlayer = require('BridgeVideoPlayer');
+var BridgeInappPurchase = require('BridgeInappPurchase');
 cc.Class({
     extends: cc.Component,
 
@@ -49,7 +50,7 @@ cc.Class({
         BridgeVideoPlayer.playVideo("phonic.mp4");
     },
     actionBuyAll:function(){
-        BridgeVideoPlayer.unlockData();
+        BridgeInappPurchase.unlockData();
     },
 
     videoCompleteCallback: function () {
