@@ -19,11 +19,20 @@
 !/build/jsb-binary/frameworks/runtime-src/proj.ios_mac
 /build/jsb-binary/frameworks/runtime-src/proj.ios_mac/*
 !/build/jsb-binary/frameworks/runtime-src/proj.ios_mac/video_bridge/
+!/build/jsb-binary/frameworks/runtime-src/proj.ios_mac/inapp_bridge/
+
+!/build/jsb-binary/frameworks/runtime-src/proj.ios_mac/ios/
+/build/jsb-binary/frameworks/runtime-src/proj.ios_mac/ios/*
+!/build/jsb-binary/frameworks/runtime-src/proj.ios_mac/ios/AppController.mm
 
 
+/temp
+/local/builder.json
+/library
+/local
+/settings
+/.idea
 
-!/build/jsb-binary/frameworks/runtime-src/
-/build/jsb-binary/frameworks/runtime-src/*
 !/build/jsb-binary/frameworks/runtime-src/proj.android-studio/
 
 !/build/jsb-binary/frameworks/runtime-src/proj.android-studio/
@@ -56,9 +65,3 @@
 
 
 !/build/jsb-binary/frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml
-
-/temp
-/local/builder.json
-/library
-/local
-/settings
