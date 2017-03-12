@@ -31,6 +31,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
     private static LinearLayout _btnLayout = null;
     private static Cocos2dxActivity _cocosActivity = null;
     private static String videoPath = "";
+    private static int stopPosition = 0;
 
 
     public static void playVideo(final String videoName){
@@ -166,6 +167,22 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
         });
     }
 
+    public static void pauseVideo() {
+        if(_video != null) {
+            stopPosition = _video.getCurrentPosition(); //stopPosition is an int
+            _video.pause();
+        }
+    }
+
+
+
+    public static void checkVideoResume() {
+        if(_video != null) {
+            _video.seekTo(stopPosition);
+            _video.start();
+        }
+    }
+
     private static void removeVideo() {
         _btnLayout.removeAllViews();
         _layout.setOnTouchListener(null);
@@ -174,6 +191,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
     }
 
     private static void restartParams() {
+        stopPosition = 0;
         _video = null;
         _layout = null;
         _homeBtn = null;
