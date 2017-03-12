@@ -102,8 +102,8 @@ public class SmIAB {
         }
     };
 
-    // User clicked the "Remove Ads" button.
-    public static void purchaseRemoveAds() {
+    // unlock content
+    public static void unlockContent() {
 
         Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
             @Override

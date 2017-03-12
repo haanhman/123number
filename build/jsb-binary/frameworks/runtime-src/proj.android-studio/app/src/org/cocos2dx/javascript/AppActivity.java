@@ -57,12 +57,14 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        BridgeVideoPlayer.checkVideoResume();
         SDKWrapper.getInstance().onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        BridgeVideoPlayer.pauseVideo();
         SDKWrapper.getInstance().onPause();
     }
 

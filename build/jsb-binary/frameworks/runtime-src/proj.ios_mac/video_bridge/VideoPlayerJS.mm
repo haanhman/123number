@@ -18,6 +18,11 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:[_playerViewController.player currentItem]];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidBecomeActiveNotification object:[UIApplication sharedApplication] queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        [_playerViewController.player play];
+    }];
+    
     [self createHomeButton];
     [rootView.view addSubview:_playerViewController.view];
     rootView.view.autoresizesSubviews = YES;
