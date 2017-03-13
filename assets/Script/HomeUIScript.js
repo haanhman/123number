@@ -1,5 +1,6 @@
 var BridgeVideoPlayer = require('BridgeVideoPlayer');
 var BridgeInappPurchase = require('BridgeInappPurchase');
+var BridgeDownload = require('BridgeDownload');
 cc.Class({
     extends: cc.Component,
 
@@ -40,7 +41,7 @@ cc.Class({
     },
 
     actionShare:function(){
-        
+        BridgeDownload.startDownload('https://fir-e5fd4.firebaseapp.com/zip/b.zip');
     },
     actionRate:function(){},
     actionAddMore:function(){
