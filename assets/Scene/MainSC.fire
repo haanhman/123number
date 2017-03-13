@@ -5397,7 +5397,10 @@
     },
     "_enabled": true,
     "_type": 0,
-    "_segements": 64
+    "_segements": 64,
+    "_N$spriteFrame": null,
+    "_N$alphaThreshold": 1,
+    "_N$inverted": false
   },
   {
     "__type__": "cc.Node",
@@ -5547,7 +5550,7 @@
     "_fitHeight": false
   },
   {
-    "__type__": "cd1e4rdkaxIjKCfUg2QCvZH",
+    "__type__": "f03c28B3UtKroyXJKoQzMal",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -5555,13 +5558,16 @@
     },
     "_enabled": true,
     "popOptionPrefab": {
-      "__uuid__": "a37d530c-30c7-47d4-962f-1e0e15f19fef"
+      "__uuid__": "fd56b2d3-dcc5-494b-8c14-daa7a7c4dfee"
     },
     "cardAtlas": {
       "__uuid__": "9e910ba7-953b-41cf-a12e-24dd9f133d94"
     },
     "bgDisplay": {
-      "__id__": 3
+      "__id__": 27
+    },
+    "btnBuy": {
+      "__id__": 23
     }
   }
 ]

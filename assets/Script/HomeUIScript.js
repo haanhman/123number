@@ -1,3 +1,6 @@
+var BridgeVideoPlayer = require('BridgeVideoPlayer');
+var BridgeInappPurchase = require('BridgeInappPurchase');
+var BridgeDownload = require('BridgeDownload');
 cc.Class({
     extends: cc.Component,
 
@@ -14,8 +17,8 @@ cc.Class({
         bgDisplay:{
             type:cc.Node,
             default: null
-        }
-
+        },
+        btnBuy: cc.Sprite
     },
 
     configDisplay:function(){
@@ -28,21 +31,37 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         this.configDisplay();
+        var vkids_buy_content = cc.sys.localStorage.getItem('vkids_buy_content');
+        if(vkids_buy_content) {
+            this.removeBuyBtn();
+        }
+    },
+    removeBuyBtn: function() {
+        this.btnBuy.node.removeFromParent(true);  
     },
 
-
-    actionShare:function(){},
+    actionShare:function(){
+        BridgeDownload.startDownload('https://fir-e5fd4.firebaseapp.com/zip/b.zip');
+    },
     actionRate:function(){},
-    actionAddMore:function(){},
-    actionSettings:function(){},
-    actionBuyAll:function(){},
+    actionAddMore:function(){
+        BridgeVideoPlayer.playVideo("duck.mp4");
+    },
+    actionSettings:function(){
+        BridgeVideoPlayer.playVideo("phonic.mp4");
+    },
+    actionBuyAll:function(){
+        BridgeInappPurchase.unlockData();
+    },
 
-
-
-
+    videoCompleteCallback: function () {
+        cc.log("============= Play video complete =============");
+    },
+    closeVideoButton: function () {
+        cc.log("============= Close video button =============");
+    },
     actionClickCard:function(nodebutton){
         var namebutton=nodebutton.target.name;
-
         namebutton=namebutton.toLocaleLowerCase();
 
         cc.log("---asd-as-d-sad-as:   %s",namebutton);
@@ -61,16 +80,13 @@ cc.Class({
         }else{
             cc.log("lock add new popup");
         }
-
-
-
-
-
-
-
     },
-
-
-
-
+    unlockDataSuccess: function() {
+        cc.log("Nguoi dung da unlock data thanh cong");
+        cc.sys.localStorage.setItem('vkids_buy_content', true);
+        this.removeBuyBtn();
+    },
+    unlockDataError: function() {
+        cc.log("Unlock data that bai");
+    },
 });
