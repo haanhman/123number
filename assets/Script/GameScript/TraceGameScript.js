@@ -12,8 +12,9 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-
-        this.size_screen=cc.p(1136/2,640/2);
+        this.scSize=cc.director.getVisibleSize();
+        cc.log("---- %s    %s",this.scSize.width,this.scSize.height);
+        this.size_screen=cc.p(568,320);
         this.index_trace=0;
 
         this.indexDraw=[];
@@ -142,13 +143,14 @@ cc.Class({
 
     onTouchMoved: function (touch, event) {
         var touchLoc = touch.getLocation();
-        //touchLoc = this.node.parent.convertToNodeSpaceAR(touchLoc);
+        touchLoc = this.node.parent.convertToNodeSpaceAR(touchLoc);
         //this.scriptDraw.sendonTouchMoved(touchLoc);
         this.activeDot(touchLoc);
     },
 
 
     onTouchEnded: function (touch, event) {
+
         //this.scriptDraw.sendonTouchEnded();
         var count_p=this.helpNode.length;
         if(count_p<=this.index_trace){
@@ -172,7 +174,7 @@ cc.Class({
             return;
         }
 
-        poscheck=cc.p(poscheck.x-this.size_screen.x,poscheck.y-this.size_screen.y);
+        poscheck=cc.p(poscheck.x-this.scSize.width/2,poscheck.y-this.scSize.height/2);
         var current_help_node=this.helpNode[this.index_trace];
         var count_dots=current_help_node.childrenCount;
         var current_index=this.indexDraw[this.index_trace];
@@ -183,8 +185,9 @@ cc.Class({
 
         var active_Dot=current_help_node.children[current_index];
 
+        var distance=cc.pDistance(active_Dot.getPosition(),poscheck);
 
-        if(cc.pDistance(active_Dot.getPosition(),poscheck)<50){
+        if(distance<50){
             var handNode=this.node.getChildByName("bantay");
             if(handNode.opacity>0){
                 handNode.stopAllActions();
