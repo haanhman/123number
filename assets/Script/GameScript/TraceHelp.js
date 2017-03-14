@@ -65,15 +65,23 @@ cc.Class({
         arrayAction[0]=cc.fadeTo(0.5,255);
         handNode.setPosition(lastPos);
 
+        var count_index=1;
         for(var ic=1;ic<count_child;ic++){
             var tmpd_dot=allchild[ic];
-            arrayAction[ic]=cc.moveTo(0.15,tmpd_dot.getPosition());
-            //tmpd_dot
+            var name_dot=tmpd_dot.name;
+
+
+            if(name_dot==="dot_hidden_ignore"){
+                cc.log("----tmpd_dot.name : %s",name_dot);
+                continue;
+            }
+            arrayAction[count_index]=cc.moveTo(0.15,tmpd_dot.getPosition());
+            count_index++;
 
         }
-        arrayAction[count_child]=cc.fadeTo(0.3,0);
-        arrayAction[count_child+1]=cc.moveTo(0.1,lastPos);
-        arrayAction[count_child+2]=cc.delayTime(0.6);
+        arrayAction[count_index]=cc.fadeTo(0.3,0);
+        arrayAction[count_index+1]=cc.moveTo(0.1,lastPos);
+        arrayAction[count_index+2]=cc.delayTime(0.6);
         handNode.runAction(cc.repeatForever(cc.sequence(arrayAction)))
     },
 });

@@ -69,6 +69,11 @@ cc.Class({
         this.scriptDraw.loadNewPath();
         var len_help=this.helpNode.length;
         if(this.index_trace>=len_help){
+
+            var handNode=this.node.getChildByName("bantay");
+            handNode.stopAllActions();
+            handNode.opacity=0;
+
             //finish
             var getLastOBJ=this.node.getChildByName("effectNode");
 
