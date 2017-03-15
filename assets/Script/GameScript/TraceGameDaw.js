@@ -33,7 +33,13 @@ cc.Class({
     loadNewPath:function(){
         this.isFirst=true;
     },
+    deActivePath:function(path_index){
+        var path=this.pathsMask[path_index];
+        path=[];
 
+
+        this.contentDraw.clear();
+    },
     deActiveDot:function(path_index){
         if(this.isFirst){
             this.isFirst=false;

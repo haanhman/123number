@@ -377,9 +377,9 @@
     "_lineWidth": 70,
     "_strokeColor": {
       "__type__": "cc.Color",
-      "r": 2,
-      "g": 2,
-      "b": 2,
+      "r": 174,
+      "g": 201,
+      "b": 209,
       "a": 255
     },
     "_lineJoin": 2,
@@ -482,7 +482,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "23cf0BezG1DBIpG2rahFvSY",
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 36
@@ -1519,7 +1519,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "a63eeodYPxB8ZTta+txEuWB",
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 64

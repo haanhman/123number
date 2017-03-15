@@ -181,33 +181,48 @@ cc.Class({
 
         poscheck=cc.p(poscheck.x-this.scSize.width/2,poscheck.y-this.scSize.height/2);
         var current_help_node=this.helpNode[this.index_trace];
-        var count_dots=current_help_node.childrenCount;
-        var current_index=this.indexDraw[this.index_trace];
-
-        if(count_dots<=current_index){
-            return;
-        }
-
-        var active_Dot=current_help_node.children[current_index];
-
-        var distance=cc.pDistance(active_Dot.getPosition(),poscheck);
-
-        if(distance<50){
+        if(current_help_node.name=="onedot"){
+            var count_dots=current_help_node.childrenCount;
+            var alldot=current_help_node.children;
+            for(var ipo=0;ipo<count_dots;ipo++){
+                alldot[ipo].opacity=0;
+            }
             var handNode=this.node.getChildByName("bantay");
             if(handNode.opacity>0){
                 handNode.stopAllActions();
                 handNode.opacity=0;
             }
 
+            this.indexDraw[this.index_trace]=count_dots;
+            this.scriptDraw.deActivePath(this.index_trace);
+        }else{
+            var count_dots=current_help_node.childrenCount;
+            var current_index=this.indexDraw[this.index_trace];
+
+            if(count_dots<=current_index){
+                return;
+            }
+
+            var active_Dot=current_help_node.children[current_index];
+
+            var distance=cc.pDistance(active_Dot.getPosition(),poscheck);
+
+            if(distance<50){
+                var handNode=this.node.getChildByName("bantay");
+                if(handNode.opacity>0){
+                    handNode.stopAllActions();
+                    handNode.opacity=0;
+                }
 
 
-
-
-            active_Dot.isRemove=true;
-            active_Dot.opacity=0;
-            this.scriptDraw.deActiveDot(this.index_trace);
-            this.indexDraw[this.index_trace]=current_index+1;
+                active_Dot.isRemove=true;
+                active_Dot.opacity=0;
+                this.scriptDraw.deActiveDot(this.index_trace);
+                this.indexDraw[this.index_trace]=current_index+1;
+            }
         }
+
+
 
     },
 
