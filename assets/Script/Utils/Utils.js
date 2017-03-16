@@ -51,7 +51,7 @@ var Utils = {
             "z": "4ab8e4383c6576a4412ac393571cba8c1601f2a5504610f61f71638c8f3e2ab3"
         };
         return getServer() + "/" + listFile[letter] + ".zip";
-    }
+    },
 
     beginDownloadFile:function(strfileDownload){
         if(cc.sys.os==cc.sys.OS_IOS){
@@ -59,7 +59,7 @@ var Utils = {
         }else if(cc.sys.os==cc.sys.OS_ANDROID){
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "beginDownloadFile", "(Ljava/lang/String;)V",strfileDownload);
         }
-    }
+    },
 
 
 
