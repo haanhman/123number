@@ -30,7 +30,7 @@ cc.Class({
         this.addTouchListenEvent();
     },
     onDisable: function onDisable() {
-
+        cc.log("---------onDisable");
         cc.eventManager.removeListener(this.touchListen);
 
 
@@ -49,7 +49,7 @@ cc.Class({
     },
     removeMeFromParrent:function(){
         this.node.removeFromParent(true);
-
+        this.node.destroy();
     },
 
 
@@ -60,5 +60,10 @@ cc.Class({
 
 
 
+
+
+    onDestroy:function(){
+
+    },
 
 });
