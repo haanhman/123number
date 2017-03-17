@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "c3739ea3-a216-4efb-ad01-7c15b9c2a106",
+  "uuid": "9c971355-46ad-4030-b144-1c27f31c7570",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "001": {
+    "game_02_bubble_01": {
       "ver": "1.0.3",
-      "uuid": "48c693d4-9950-441c-baa6-27599b033add",
-      "rawTextureUuid": "c3739ea3-a216-4efb-ad01-7c15b9c2a106",
+      "uuid": "3fb967ef-9124-42f0-b388-8d8e75941f36",
+      "rawTextureUuid": "9c971355-46ad-4030-b144-1c27f31c7570",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 359,
-      "height": 250,
-      "rawWidth": 359,
-      "rawHeight": 250,
+      "width": 280,
+      "height": 280,
+      "rawWidth": 280,
+      "rawHeight": 280,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,
