@@ -1,6 +1,7 @@
 var BridgeVideoPlayer = require('BridgeVideoPlayer');
 var BridgeInappPurchase = require('BridgeInappPurchase');
 var BridgeDownload = require('BridgeDownload');
+var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -43,7 +44,11 @@ cc.Class({
     actionShare:function(){
         BridgeDownload.startDownload('https://fir-e5fd4.firebaseapp.com/zip/b.zip');
     },
-    actionRate:function(){},
+    actionRate:function(){
+        cc.log("Document: %s", jsb.fileUtils.getWritablePath());
+        var audioPath = 'resources/Sound/gametouch/ta.mp3';
+        Utils.playEffect(audioPath);
+    },
     actionAddMore:function(){
         BridgeVideoPlayer.playVideo("duck.mp4");
     },

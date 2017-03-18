@@ -27,16 +27,18 @@ cc.Class({
     },
 
     playSoundHelp: function () {
-        var audioPath = 'Sound/gametouch/t' + this.cardData["text"].toLowerCase() + '.mp3';
+        var audioPath = 'resources/Sound/gametouch/t' + this.cardData["text"].toLowerCase() + '.mp3';
         Utils.playEffect(audioPath);
     },
 
     loadJsonData: function () {
         var letter = cc.sys.localStorage.getItem('play_game_letter');
-        var jsonUrl = cc.url.raw('resources/cards/' + letter + '.json');
+        var jsonUrl = Utils.getFilePath('resources/cards/' + letter + '.json');
         var self = this;
         cc.loader.load(jsonUrl, function (error, result) {
-
+            if (!(error == null)) {
+                cc.log("Load JSON ERROR: %s ", error);
+            }
         }, function (error, result) {
             self.cardData = result;
             //random mang du lieu
@@ -59,7 +61,7 @@ cc.Class({
 
         //hien thi anh
         var imageIndex = Math.floor(Math.random() * cardInfo["total_image"]) + 1;
-        var imgUrl = cc.url.raw('resources/cards/' + cardInfo['card_name'] + imageIndex + '.png');
+        var imgUrl = Utils.getFilePath('resources/cards/' + cardInfo['card_name'] + imageIndex + '.png');
         this.picture.spriteFrame = cc.SpriteFrame(imgUrl);
 
         this.audioAuration = cardInfo["audio_duration"];
@@ -74,7 +76,7 @@ cc.Class({
             return;
         }
         this.blockTouchLeteer = true;
-        var audioPath = 'Sound/card/' + this.cardData["text"].toLowerCase() + '.mp3';
+        var audioPath = 'resources/Sound/card/' + this.cardData["text"].toLowerCase() + '.mp3';
         Utils.playEffect(audioPath, true);
 
 
@@ -102,7 +104,7 @@ cc.Class({
     },
 
     playCardName: function () {
-        Utils.playEffect('Sound/card/' + this.cardName + '.mp3', true);
+        Utils.playEffect('resources/Sound/card/' + this.cardName + '.mp3', true);
         this.myScheduler.schedule(this.playKidsSayYay, this, this.audioAuration + 0.1, false);
     },
 
@@ -112,7 +114,7 @@ cc.Class({
         effect.name = "success_effect";
         effect.x = 0;
         this.node.addChild(effect);
-        Utils.playEffect('Sound/gamevoice/kids_say_yay.mp3');
+        Utils.playEffect('resources/Sound/gamevoice/kids_say_yay.mp3');
 
         var scheduler = cc.director.getScheduler();
         this.myScheduler.schedule(this.nextCard, this, 5.0, false);
@@ -134,12 +136,13 @@ cc.Class({
     },
 
     exitGame: function () {
+        cc.audioEngine.stopAll();
         cc.director.loadScene('MainSC');
     },
 
     touchBackground: function () {
         if (!this.blockTouchLeteer) {
-            Utils.playEffect('Sound/gamevoice/error.mp3', true);
+            Utils.playEffect('resources/Sound/gamevoice/error.mp3', true);
         }
     },
 

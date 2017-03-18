@@ -63,7 +63,7 @@ var Utils = {
 
 
     playEffect: function (path, stop) {
-        cc.loader.loadRes(path, function (error, audiofile) {
+        cc.loader.load(this.getFilePath(path), function (error, audiofile) {
             if (!(error == null)) {
                 cc.log("Play effect error: %s ", error);
             }
@@ -87,7 +87,14 @@ var Utils = {
             a[j] = x;
         }
     },
-
+    //de lay duong dan cua file goi qua ham nay nhe
+    getFilePath: function (path) {
+        var fullPath = cc.url.raw(path);
+        if(jsb.fileUtils.isFileExist(fullPath)) {
+            return fullPath;
+        }
+        return jsb.fileUtils.getWritablePath() + path;
+    }
 }
 module.exports = Utils;
 
