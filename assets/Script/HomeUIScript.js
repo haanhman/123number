@@ -77,6 +77,7 @@ cc.Class({
             scriptCard.cardSprite.spriteFrame=this.cardAtlas.getSpriteFrame("characters-"+namebutton);
             scriptCard.strCardName=namebutton;
             scriptCard.lbtitle.string="Letter "+namebutton.toUpperCase();
+            scriptCard.selectedLetter = namebutton.toLowerCase();
         }else{
             cc.log("lock add new popup");
         }
