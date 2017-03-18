@@ -27,6 +27,7 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+        this.selectedLetter = '';
         this.addTouchListenEvent();
     },
     onDisable: function onDisable() {
@@ -53,7 +54,10 @@ cc.Class({
     },
 
 
-    actionPlayGame:function(){},
+    actionPlayGame:function(){
+        cc.sys.localStorage.setItem('play_game_letter', this.selectedLetter);
+        cc.director.loadScene('GameSc/GameWord');
+    },
     actionPlaySong:function(){
         Utils.playVideoForCard(this.strCardName);
     },

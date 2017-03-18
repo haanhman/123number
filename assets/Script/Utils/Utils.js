@@ -53,18 +53,48 @@ var Utils = {
         return getServer() + "/" + listFile[letter] + ".zip";
     },
 
-    beginDownloadFile:function(strfileDownload){
-        if(cc.sys.os==cc.sys.OS_IOS){
-            jsb.reflection.callStaticMethod("BridgeJS2IOS", "beginDownloadData:",strfileDownload);
-        }else if(cc.sys.os==cc.sys.OS_ANDROID){
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "beginDownloadFile", "(Ljava/lang/String;)V",strfileDownload);
+    beginDownloadFile: function (strfileDownload) {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "beginDownloadData:", strfileDownload);
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "beginDownloadFile", "(Ljava/lang/String;)V", strfileDownload);
         }
     },
 
 
+    playEffect: function (path, stop) {
+        cc.loader.load(this.getFilePath(path), function (error, audiofile) {
+            if (!(error == null)) {
+                cc.log("Play effect error: %s ", error);
+            }
+            if (stop == true) {
+                cc.audioEngine.stopAll();
+            }
+            cc.audioEngine.playEffect(audiofile);
+        });
+    },
 
-
-
+    /**
+     * Shuffles array in place.
+     * @param {Array} a items The array containing the items.
+     */
+    arrayShuffle: function (a) {
+        var j, x, i;
+        for (i = a.length; i; i--) {
+            j = Math.floor(Math.random() * i);
+            x = a[i - 1];
+            a[i - 1] = a[j];
+            a[j] = x;
+        }
+    },
+    //de lay duong dan cua file goi qua ham nay nhe
+    getFilePath: function (path) {
+        var fullPath = cc.url.raw(path);
+        if(jsb.fileUtils.isFileExist(fullPath)) {
+            return fullPath;
+        }
+        return jsb.fileUtils.getWritablePath() + path;
+    }
 }
 module.exports = Utils;
 
