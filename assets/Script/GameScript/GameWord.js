@@ -133,11 +133,11 @@ cc.Class({
             this.exitGame();
             return;
         }
+        this.blockTouchLeteer = false;
         this.cardIndex++;
         this.renderUI();
         this.ovuong.node.color = this.ovuongColor;
         this.lblTouch.node.setPosition(this.lblTouchPostion);
-        this.blockTouchLeteer = false;
     },
 
     exitGame: function () {
