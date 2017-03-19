@@ -75,6 +75,8 @@ cc.Class({
             var popnode=cc.instantiate(this.popOptionPrefab);
             popnode.name="PopOptions"
             popnode.setLocalZOrder(10);
+            popnode.x=0;
+            popnode.y=0;
             this.node.addChild(popnode);
 
 
