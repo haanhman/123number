@@ -436,9 +436,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 141,
-      "g": 138,
-      "b": 138,
+      "r": 179,
+      "g": 178,
+      "b": 178,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -447,7 +447,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 1,
       "y": 0.5
     },
     "_contentSize": {
@@ -466,8 +466,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -108,
-      "y": -17
+      "x": 0,
+      "y": -22.2
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -518,8 +518,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 70,
-      "y": -11
+      "x": 0,
+      "y": -25
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -603,12 +603,12 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 1,
       "y": 0.5
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 200,
+      "width": 88.89,
       "height": 120
     },
     "_children": [],
@@ -660,7 +660,7 @@
     "_N$string": "A",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
-    "_N$overflow": 3
+    "_N$overflow": 0
   },
   {
     "__type__": "cc.Button",
@@ -670,7 +670,7 @@
       "__id__": 16
     },
     "_enabled": true,
-    "transition": 0,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 211,

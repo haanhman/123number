@@ -61,13 +61,18 @@ cc.Class({
         var colorIndex = Math.floor(Math.random() * this.colorRandom.length);
         this.lblTouch.node.color = this.colorRandom[colorIndex];
         this.lblTouch.string = this.cardData["text"];
-        this.lblName.string = this.cardName.substring(1, this.cardName.length);
 
+
+        this.lblName.string = this.cardName.substring(1, this.cardName.length);
+        //can ra center
+        this.lblName.node.parent.x=50-this.lblName.node.width/2;
+        cc.log("-----lenght : %s",this.lblName.node.width );
         //hien thi anh
         var imageIndex = Math.floor(Math.random() * cardInfo["total_image"]) + 1;
         var imgUrl = Utils.getFilePath('resources/cards/' + cardInfo['card_name'] + imageIndex + '.png');
         cc.log("imgUrl: %s", imgUrl);
-        this.picture.spriteFrame = cc.SpriteFrame(imgUrl);
+        this.picture.spriteFrame = new cc.SpriteFrame(imgUrl);
+        this.picture.node.runAction(cc.sequence(cc.scaleTo(0.4,1.15),cc.scaleTo(0.4,1.0)));
 
         this.audioAuration = cardInfo["audio_duration"];
         cc.log('this.audioAuration: ' + this.audioAuration);
@@ -85,25 +90,33 @@ cc.Class({
         Utils.playEffect(audioPath, true);
 
 
-        var sequence = [];
-        sequence.push(cc.delayTime(1.2));
-        sequence.push(cc.moveTo(0.5, this.ovuong.node.getPosition()));
-        this.lblTouch.node.runAction(cc.sequence(sequence));
+        {
+            var sequence = [];
+            sequence.push(cc.delayTime(1.2));
+            var pos_move=this.ovuong.node.getPosition();
+            if (cc.sys.isBrowser){
+                pos_move.y-=12;
+            }
+            sequence.push(cc.moveTo(0.5, pos_move));
+            this.lblTouch.node.runAction(cc.sequence(sequence));
 
-        sequence = [];
-        sequence.push(cc.delayTime(1.2));
-        sequence.push(cc.tintTo(0.5, 255, 255, 255));
-        this.ovuong.node.runAction(cc.sequence(sequence));
+            sequence = [];
+            sequence.push(cc.delayTime(1.2));
+            sequence.push(cc.tintTo(0.5, 255, 255, 255));
+            this.ovuong.node.runAction(cc.sequence(sequence));
+        }
 
 
-        var self = this;
-        sequence = [];
-        sequence.push(cc.delayTime(1.8));
-        sequence.push(cc.callFunc(function () {
-            self.playCardName();
-        }));
+        {
+            var self = this;
+            sequence = [];
+            sequence.push(cc.delayTime(1.8));
+            sequence.push(cc.callFunc(function () {
+                self.playCardName();
+            }));
 
-        this.node.runAction(cc.sequence(sequence));
+            this.node.runAction(cc.sequence(sequence));
+        }
 
 
     },
@@ -111,6 +124,8 @@ cc.Class({
     playCardName: function () {
         Utils.playEffect('resources/Sound/card/' + this.cardName + '.mp3', true);
         var callFunc=cc.callFunc(this.playKidsSayYay,this);
+        this.ovuong.node.runAction(cc.sequence(cc.scaleTo(0.4,1.3),cc.scaleTo(0.4,1.0)));
+        this.lblTouch.node.runAction(cc.sequence(cc.scaleTo(0.4,1.3),cc.scaleTo(0.4,1.0)));
         this.node.stopAllActions();
         this.node.runAction(cc.sequence(cc.delayTime(this.audioAuration + 0.1),callFunc));
     },
