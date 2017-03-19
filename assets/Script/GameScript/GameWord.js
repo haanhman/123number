@@ -22,18 +22,22 @@ cc.Class({
         this.cardName = "";
         this.audioAuration = 0;
         this.ovuongColor = this.ovuong.node.color;
+        this.lblTouchPostion = this.lblTouch.node.getPosition();
         this.myScheduler = cc.director.getScheduler();
         this.loadJsonData();
     },
 
     playSoundHelp: function () {
-        var audioPath = 'resources/Sound/gametouch/t' + this.cardData["text"].toLowerCase() + '.mp3';
-        Utils.playEffect(audioPath);
+        if (this.blockTouchLeteer) {
+            return;
+        }
+        Utils.playEffect('resources/Sound/card/' + this.cardName + '.mp3', true);
     },
 
     loadJsonData: function () {
         var letter = cc.sys.localStorage.getItem('play_game_letter');
         var jsonUrl = Utils.getFilePath('resources/cards/' + letter + '.json');
+        cc.log("jsonUrl: %s", jsonUrl);
         var self = this;
         cc.loader.load(jsonUrl, function (error, result) {
             if (!(error == null)) {
@@ -62,6 +66,7 @@ cc.Class({
         //hien thi anh
         var imageIndex = Math.floor(Math.random() * cardInfo["total_image"]) + 1;
         var imgUrl = Utils.getFilePath('resources/cards/' + cardInfo['card_name'] + imageIndex + '.png');
+        cc.log("imgUrl: %s", imgUrl);
         this.picture.spriteFrame = cc.SpriteFrame(imgUrl);
 
         this.audioAuration = cardInfo["audio_duration"];
@@ -131,7 +136,7 @@ cc.Class({
         this.cardIndex++;
         this.renderUI();
         this.ovuong.node.color = this.ovuongColor;
-        this.lblTouch.node.setPosition(0, -259);
+        this.lblTouch.node.setPosition(this.lblTouchPostion);
         this.blockTouchLeteer = false;
     },
 
