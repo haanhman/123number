@@ -110,7 +110,9 @@ cc.Class({
 
     playCardName: function () {
         Utils.playEffect('resources/Sound/card/' + this.cardName + '.mp3', true);
-        this.myScheduler.schedule(this.playKidsSayYay, this, this.audioAuration + 0.1, false);
+        var callFunc=cc.callFunc(this.playKidsSayYay,this);
+        this.node.stopAllActions();
+        this.node.runAction(cc.sequence(cc.delayTime(this.audioAuration + 0.1),callFunc));
     },
 
 
@@ -121,9 +123,9 @@ cc.Class({
         this.node.addChild(effect);
         Utils.playEffect('resources/Sound/gamevoice/kids_say_yay.mp3');
 
-        var scheduler = cc.director.getScheduler();
-        this.myScheduler.schedule(this.nextCard, this, 5.0, false);
-
+        var callFunc=cc.callFunc(this.nextCard,this);
+        this.node.stopAllActions();
+        this.node.runAction(cc.sequence(cc.delayTime(5.0),callFunc));
     },
 
     nextCard: function () {

@@ -90,6 +90,10 @@ var Utils = {
     //de lay duong dan cua file goi qua ham nay nhe
     getFilePath: function (path) {
         var fullPath = cc.url.raw(path);
+        if(cc.sys.os != cc.sys.OS_IOS && cc.sys.os != cc.sys.OS_ANDROID) {
+            return fullPath;
+        }
+
         if(jsb.fileUtils.isFileExist(fullPath)) {
             return fullPath;
         }
