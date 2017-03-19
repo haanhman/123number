@@ -1,11 +1,26 @@
 var Utils = {
 
     playVideoForCard: function (cardname) {
-        cc.log("lkahdsahdhkashdjashdjsahjkd: " + cardname);
         if (cc.sys.os == cc.sys.OS_IOS) {
             jsb.reflection.callStaticMethod("BridgeIOS", "playVideoName:", cardname);
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideoName", "(Ljava/lang/String;)V", cardname);
+        } else {
+            var arrPath = cardname.split("/");
+            var fileName = arrPath[arrPath.length - 1];
+            var youtubeVideo = {
+                "a_song.mp4": "RgDAav0jxNs",
+                "a_trace.mp4": "sYuVNv57zdg",
+                "b_song.mp4": "LC17Po5enAo",
+                "b_trace.mp4": "2McyOE79pEU",
+                "c_song.mp4": "Oz8ElBTBsyU",
+                "c_trace.mp4": "r9fZIH6LNPQ",
+                "d_song.mp4": "DwhPe30f-D0",
+                "d_trace.mp4": "ifnmXmcV_4U"
+            };
+            if(youtubeVideo[fileName] != undefined) {
+                openVideoNow(youtubeVideo[fileName]);
+            }
         }
     },
 
@@ -90,11 +105,11 @@ var Utils = {
     //de lay duong dan cua file goi qua ham nay nhe
     getFilePath: function (path) {
         var fullPath = cc.url.raw(path);
-        if(cc.sys.os != cc.sys.OS_IOS && cc.sys.os != cc.sys.OS_ANDROID) {
+        if (cc.sys.os != cc.sys.OS_IOS && cc.sys.os != cc.sys.OS_ANDROID) {
             return fullPath;
         }
 
-        if(jsb.fileUtils.isFileExist(fullPath)) {
+        if (jsb.fileUtils.isFileExist(fullPath)) {
             return fullPath;
         }
         return jsb.fileUtils.getWritablePath() + path;

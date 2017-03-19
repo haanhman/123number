@@ -59,12 +59,21 @@ cc.Class({
         cc.director.loadScene('GameSc/GameWord');
     },
     actionPlaySong:function(){
-        Utils.playVideoForCard(this.strCardName);
+        var videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_song.mp4')
+        Utils.playVideoForCard(videoPath);
     },
 
-
-
-
+    actionTraceVideo:function(){
+        var videoPath = '';
+        if(this.strCardName.toLowerCase() == 'z') {
+            var listVideo = ["z_trace1.mp4", "z_trace2.mp4"];
+            Utils.arrayShuffle(listVideo);
+            videoPath = Utils.getFilePath('resources/video/'+ listVideo[0]);
+        } else {
+            videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_trace.mp4')
+        }
+        Utils.playVideoForCard(videoPath);
+    },
 
     onDestroy:function(){
 
