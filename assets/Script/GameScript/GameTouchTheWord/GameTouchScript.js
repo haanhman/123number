@@ -73,7 +73,7 @@ cc.Class({
         this.addResourcePath(file_rs);
 
         var self=this;
-        cc.loader.loadRes(file_rs, function (err, prefab_file) {
+        cc.loader.loadRes(file_rs,cc.Prefab, function (err, prefab_file) {
             if(!(err==null)){
                 cc.log("----err===  %s ",err);
             }
@@ -109,7 +109,7 @@ cc.Class({
             this.addResourcePath(this.source_audio_path);
         }
 
-        cc.loader.loadRes(this.source_audio_path, function (err, audiofile) {
+        cc.loader.loadRes(this.source_audio_path,cc.AudioClip, function (err, audiofile) {
             if(!(err==null)){
                 cc.log("----error load word  %s ",err);
             }
@@ -127,7 +127,7 @@ cc.Class({
             var rd_index=this.getRandomNumber(0,arr_well.length-1);
             var source_path="Sound/gamevoice/"+arr_well[rd_index];
             this.addResourcePath(source_path);
-            cc.loader.loadRes(source_path, function (err, audiofile) {
+            cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
                 if(!(err==null)){
                     cc.log("----error load word  %s = %s ",err,rd_index);
                 }
@@ -140,7 +140,7 @@ cc.Class({
         }else{
             var source_path="Sound/gamevoice/error";
             this.addResourcePath(source_path);
-            cc.loader.loadRes(source_path, function (err, audiofile) {
+            cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
                 if(!(err==null)){
                     cc.log("----error load word  %s ",err);
                 }

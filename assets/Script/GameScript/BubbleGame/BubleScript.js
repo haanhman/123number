@@ -19,9 +19,7 @@ cc.Class({
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
 
-    onDisable: function() {// bat buoc phai co de giai phong bo nho
-        cc.loader.releaseRes(this.source_path_bubble);
-    },
+
 
     onLoad: function () {
         var scsize=cc.director.getVisibleSize();
@@ -41,14 +39,26 @@ cc.Class({
         var rdid=this.getRandomBubble(1,7);
         // lay ten file, phai luu lai thanh bien this.source_path_bubble de con release
         // release o dong thu 23
-        this.source_path_bubble="GameTouch/game_02_bubble_0"+rdid;
+        var source_path_bubble="GameTouch/game_02_bubble_0"+rdid;
         var self=this;
-        cc.loader.loadRes(this.source_path_bubble,cc.SpriteFrame, function (err, rsdata) {
+        cc.loader.loadRes(source_path_bubble,cc.SpriteFrame, function (err, rsdata) {
             if(!(err==null)){
                 cc.log("----error load word  %s = %s ",err,rd_index);
+                return;
             }
             var child_mask=self.node.getChildByName("sp_bubble");
             child_mask.getComponent(cc.Sprite).spriteFrame=rsdata;
+        });
+
+
+
+        cc.loader.loadRes(this.node.pathIMG,cc.SpriteFrame, function (err, rsdata) {
+            if(!(err==null)){
+                cc.log("----error load word  %s = %s ",err,rd_index);
+                return;
+            }
+            var child_card=self.node.getChildByName("card");
+            child_card.getComponent(cc.Sprite).spriteFrame=rsdata;
         });
 
 
@@ -79,9 +89,7 @@ cc.Class({
         this.node.destroy();
     },
 
-    onDestroy:function(){
-        cc.log("------button is destroy");
-    },
+
     // called every frame, uncomment this function to activate update callback
      update: function (dt) {
          if(this.stopmove){
