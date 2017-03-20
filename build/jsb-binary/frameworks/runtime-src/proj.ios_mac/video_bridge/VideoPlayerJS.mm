@@ -7,9 +7,7 @@
 -(void)openVideoPlayer:(NSString*)stringVideoName {
     UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
     
-    NSString *stringVideoPath = [[NSBundle mainBundle] pathForResource:stringVideoName ofType:nil];
-    NSLog(@"Video path: %@", stringVideoPath);
-    NSURL *urlVideoFile = [NSURL fileURLWithPath:stringVideoPath];
+    NSURL *urlVideoFile = [NSURL fileURLWithPath:stringVideoName];
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:urlVideoFile];
     _playerViewController = [[AVPlayerViewController alloc] init];
     _playerViewController.player = [AVPlayer playerWithPlayerItem:item];
