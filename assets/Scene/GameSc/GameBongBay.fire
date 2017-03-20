@@ -41,7 +41,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "51af7951-10c1-4a79-8563-5f83e32f7a76",
-    "autoReleaseAssets": false
+    "autoReleaseAssets": true
   },
   {
     "__type__": "cc.Node",
@@ -977,6 +977,9 @@
     "_enabled": true,
     "bubbleNode": {
       "__uuid__": "99bcc986-274a-4485-b410-482a71332780"
+    },
+    "bubbleLabel": {
+      "__uuid__": "b0526a73-8cf6-4f2a-bc44-4d1ebc298761"
     },
     "effect_touch": {
       "__uuid__": "2d434c8f-9b11-4618-948b-0feb4c88eae9"

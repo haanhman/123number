@@ -55,8 +55,19 @@ cc.Class({
 
 
     actionPlayGame:function(){
-        cc.sys.localStorage.setItem('play_game_letter', this.selectedLetter);
-        cc.director.loadScene('GameSc/GameWord');
+        //cc.sys.localStorage.setItem('play_game_letter', this.selectedLetter);
+        //cc.director.loadScene('GameSc/GameWord');
+
+        Utils.play_game_letter=this.selectedLetter.toLowerCase();
+        var latter=this.selectedLetter;
+        Utils.index_sc=0;
+        Utils.arrScene=["Trace"+latter.toUpperCase(),"Trace"+latter+"_low","Game_Touch","GameWord","GameBongBay"];
+        // se random o day, nhung gio test theo thu tu truoc da
+
+        var namesc=Utils.arrScene[Utils.index_sc];
+        Utils.index_sc++;
+        cc.director.loadScene(namesc);
+
     },
     actionPlaySong:function(){
         var videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_song.mp4')

@@ -1,3 +1,4 @@
+var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -73,7 +74,7 @@ cc.Class({
         this.addResourcePath(file_rs);
 
         var self=this;
-        cc.loader.loadRes(file_rs, function (err, prefab_file) {
+        cc.loader.loadRes(file_rs,cc.Prefab, function (err, prefab_file) {
             if(!(err==null)){
                 cc.log("----err===  %s ",err);
             }
@@ -109,7 +110,7 @@ cc.Class({
             this.addResourcePath(this.source_audio_path);
         }
 
-        cc.loader.loadRes(this.source_audio_path, function (err, audiofile) {
+        cc.loader.loadRes(this.source_audio_path,cc.AudioClip, function (err, audiofile) {
             if(!(err==null)){
                 cc.log("----error load word  %s ",err);
             }
@@ -127,7 +128,7 @@ cc.Class({
             var rd_index=this.getRandomNumber(0,arr_well.length-1);
             var source_path="Sound/gamevoice/"+arr_well[rd_index];
             this.addResourcePath(source_path);
-            cc.loader.loadRes(source_path, function (err, audiofile) {
+            cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
                 if(!(err==null)){
                     cc.log("----error load word  %s = %s ",err,rd_index);
                 }
@@ -136,11 +137,14 @@ cc.Class({
                 cc.audioEngine.playEffect(audiofile);
             });
             this.buttonsound.active=false;
+
+            this.blockLoad=false;
+            this.scheduleOnce(this.loadNextScene,3);
             return true;
         }else{
             var source_path="Sound/gamevoice/error";
             this.addResourcePath(source_path);
-            cc.loader.loadRes(source_path, function (err, audiofile) {
+            cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
                 if(!(err==null)){
                     cc.log("----error load word  %s ",err);
                 }
@@ -169,6 +173,27 @@ cc.Class({
 
     onDestroy:function(){
         cc.log("---------onDestroy");
+
+    },
+
+
+
+
+    loadNextScene:function(){
+        //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
+        if(this.blockLoad){
+            return;
+        }
+        this.blockLoad=true;
+        if (typeof (Utils.arrScene)=="undefined"){
+            return;
+        }
+        if(Utils.arrScene.length<=Utils.index_sc){
+            return;
+        }
+        var nextScName=Utils.arrScene[Utils.index_sc];
+        Utils.index_sc++;
+        cc.director.loadScene(nextScName);
 
     },
 
