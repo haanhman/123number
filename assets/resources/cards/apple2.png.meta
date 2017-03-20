@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "60d35375-9e86-423a-a006-6e8a0703e3d1",
+  "uuid": "ad357a7f-c820-453c-a054-8f03e36cec70",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
     "apple2": {
       "ver": "1.0.3",
-      "uuid": "528787d4-1808-4581-ad0e-8cadd5ac567b",
-      "rawTextureUuid": "60d35375-9e86-423a-a006-6e8a0703e3d1",
+      "uuid": "5ffcc220-fb8f-422f-b838-aed67018a5f4",
+      "rawTextureUuid": "ad357a7f-c820-453c-a054-8f03e36cec70",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

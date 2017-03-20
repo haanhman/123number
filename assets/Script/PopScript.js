@@ -75,14 +75,7 @@ cc.Class({
     },
 
     actionTraceVideo:function(){
-        var videoPath = '';
-        if(this.strCardName.toLowerCase() == 'z') {
-            var listVideo = ["z_trace1.mp4", "z_trace2.mp4"];
-            Utils.arrayShuffle(listVideo);
-            videoPath = Utils.getFilePath('resources/video/'+ listVideo[0]);
-        } else {
-            videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_trace.mp4')
-        }
+        var videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_trace.mp4')
         Utils.playVideoForCard(videoPath);
     },
 
