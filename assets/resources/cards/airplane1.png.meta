@@ -1,14 +1,14 @@
 {
   "ver": "1.0.0",
-  "uuid": "2b39a7ea-78e6-417f-966c-1ebd1eae7b16",
+  "uuid": "ad8585d6-7d5c-44d3-be35-b502da58abcf",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
     "airplane1": {
       "ver": "1.0.3",
-      "uuid": "8d401a21-edd7-4eb0-8c18-08de8084fe4c",
-      "rawTextureUuid": "2b39a7ea-78e6-417f-966c-1ebd1eae7b16",
+      "uuid": "f21a6822-28cc-4303-b7f6-bb6f8ecdc791",
+      "rawTextureUuid": "ad8585d6-7d5c-44d3-be35-b502da58abcf",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

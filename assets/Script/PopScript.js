@@ -59,9 +59,11 @@ cc.Class({
         //cc.director.loadScene('GameSc/GameWord');
 
         Utils.play_game_letter=this.selectedLetter.toLowerCase();
+        // Utils.play_game_letter='x'
         var latter=this.selectedLetter;
         Utils.index_sc=0;
-        Utils.arrScene=["Trace"+latter.toUpperCase(),"Trace"+latter+"_low","Game_Touch","GameWord","GameBongBay"];
+        // Utils.arrScene=["Trace"+latter.toUpperCase(),"Trace"+latter+"_low","Game_Touch","GameWord","GameBongBay"];
+        Utils.arrScene=["GameWord"];
         // se random o day, nhung gio test theo thu tu truoc da
 
         var namesc=Utils.arrScene[Utils.index_sc];
@@ -75,14 +77,7 @@ cc.Class({
     },
 
     actionTraceVideo:function(){
-        var videoPath = '';
-        if(this.strCardName.toLowerCase() == 'z') {
-            var listVideo = ["z_trace1.mp4", "z_trace2.mp4"];
-            Utils.arrayShuffle(listVideo);
-            videoPath = Utils.getFilePath('resources/video/'+ listVideo[0]);
-        } else {
-            videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_trace.mp4')
-        }
+        var videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_trace.mp4')
         Utils.playVideoForCard(videoPath);
     },
 

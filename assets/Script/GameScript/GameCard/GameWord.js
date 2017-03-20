@@ -49,8 +49,6 @@ cc.Class({
         this.cardName = "";
         this.audioAuration = 0;
         this.ovuongColor = this.ovuong.node.color;
-        this.lblTouchPostion = this.lblTouch.node.getPosition();
-
         this.loadJsonData();
     },
 
@@ -110,8 +108,36 @@ cc.Class({
         this.lblTouch.node.color = this.colorRandom[colorIndex];
         this.lblTouch.string = this.cardData["text"];
 
+        var lblTouchWidth = this.lblTouch.node.getContentSize().width;
 
-        this.lblName.string = this.cardName.substring(1, this.cardName.length);
+        if(cardInfo["end_word"] == 0) {
+            this.lblTouch.node.setPosition(lblTouchWidth/2, -223);
+            this.lblTouch.node.setAnchorPoint(1, 0.5);
+            this.ovuong.node.setPosition(0, -22.2);
+            this.ovuong.node.setAnchorPoint(1, 0.5);
+            this.lblName.node.setPosition(0, -25);
+            this.lblName.node.setAnchorPoint(0, 0.5);
+        } else {
+            this.lblTouch.node.setPosition(-lblTouchWidth/2, -223);
+            this.lblTouch.node.setAnchorPoint(0, 0.5);
+            this.ovuong.node.setPosition(0, -22.2);
+            this.ovuong.node.setAnchorPoint(0, 0.5);
+            this.lblName.node.setPosition(0, 0);
+            this.lblName.node.setAnchorPoint(1, 0.5);
+        }
+
+        cc.log("X: %s -- Y: %s", this.lblTouch.node.getPosition().x, this.lblTouch.node.getPosition().y);
+        cc.log("X2: %s -- Y2: %s", this.lblTouch.node.getAnchorPoint().x, this.lblTouch.node.getAnchorPoint().y);
+
+
+
+
+
+        if(cardInfo["end_word"] == 0) {
+            this.lblName.string = this.cardName.substring(1, this.cardName.length);
+        } else {
+            this.lblName.string = this.cardName.substring(0, this.cardName.length-1);
+        }
         //can ra center
         this.lblName.node.parent.x=50-this.lblName.node.width/2;
         //cc.log("-----lenght : %s",this.lblName.node.width );
@@ -222,7 +248,6 @@ cc.Class({
         this.cardIndex++;
         this.renderUI();
         this.ovuong.node.color = this.ovuongColor;
-        this.lblTouch.node.setPosition(this.lblTouchPostion);
     },
 
     exitGame: function () {
