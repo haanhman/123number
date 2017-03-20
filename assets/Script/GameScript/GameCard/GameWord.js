@@ -77,7 +77,12 @@ cc.Class({
     },
 
     loadJsonData: function () {
-        var letter = cc.sys.localStorage.getItem('play_game_letter');
+        var letter = Utils.play_game_letter;
+        if (typeof (letter)=="undefined"){
+            letter="a";
+            //khong bao gio xay ra truong hop nay, cai nay chi de test thoi
+        }
+
         var jsonUrl = Utils.getFilePath('resources/cards/' + letter + '.json');
         cc.log("jsonUrl: %s", jsonUrl);
         var self = this;
@@ -221,9 +226,21 @@ cc.Class({
     },
 
     exitGame: function () {
-        cc.audioEngine.stopAll();
-        cc.director.loadScene('MainSC');
+        //cc.audioEngine.stopAll();
+        //cc.director.loadScene('MainSC');
+
+        if (typeof (Utils.arrScene)=="undefined"){
+            return;
+        }
+        if(Utils.arrScene.length<=Utils.index_sc){
+            return;
+        }
+        var nextScName=Utils.arrScene[Utils.index_sc];
+        Utils.index_sc++;
+        cc.director.loadScene(nextScName);
+
     },
+
 
     touchBackground: function () {
         if (!this.blockTouchLeteer) {

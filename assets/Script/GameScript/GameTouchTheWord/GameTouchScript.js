@@ -1,3 +1,4 @@
+var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -136,6 +137,9 @@ cc.Class({
                 cc.audioEngine.playEffect(audiofile);
             });
             this.buttonsound.active=false;
+
+            this.blockLoad=false;
+            this.scheduleOnce(this.loadNextScene,3);
             return true;
         }else{
             var source_path="Sound/gamevoice/error";
@@ -169,6 +173,27 @@ cc.Class({
 
     onDestroy:function(){
         cc.log("---------onDestroy");
+
+    },
+
+
+
+
+    loadNextScene:function(){
+        //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
+        if(this.blockLoad){
+            return;
+        }
+        this.blockLoad=true;
+        if (typeof (Utils.arrScene)=="undefined"){
+            return;
+        }
+        if(Utils.arrScene.length<=Utils.index_sc){
+            return;
+        }
+        var nextScName=Utils.arrScene[Utils.index_sc];
+        Utils.index_sc++;
+        cc.director.loadScene(nextScName);
 
     },
 

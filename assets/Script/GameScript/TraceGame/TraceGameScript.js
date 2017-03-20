@@ -1,3 +1,4 @@
+var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -85,6 +86,8 @@ cc.Class({
             getLastOBJ=cc.instantiate(this.particleEffect);
             getLastOBJ.x=0;
             this.node.addChild(getLastOBJ);
+            this.blockLoad=false;
+            this.scheduleOnce(this.loadNextScene,3);
         }else{
             var current_help=this.helpNode[this.index_trace];
 
@@ -98,6 +101,24 @@ cc.Class({
             }
             current_help.opacity=255;
         }
+
+    },
+
+    loadNextScene:function(){
+        //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
+        if(this.blockLoad){
+            return;
+        }
+        this.blockLoad=true;
+        if (typeof (Utils.arrScene)=="undefined"){
+            return;
+        }
+        if(Utils.arrScene.length<=Utils.index_sc){
+            return;
+        }
+        var nextScName=Utils.arrScene[Utils.index_sc];
+        Utils.index_sc++;
+        cc.director.loadScene(nextScName);
 
     },
 

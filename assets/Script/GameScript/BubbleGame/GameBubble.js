@@ -1,3 +1,4 @@
+var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -33,7 +34,7 @@ cc.Class({
             cc.log("    ---release rs: %s ",this.arrRS[ir]);
             cc.loader.releaseRes(this.arrRS[ir]);
         }
-
+        cc.audioEngine.stopAll();
     },
 
     // use this for initialization
@@ -54,7 +55,12 @@ cc.Class({
 
         this.allowLoad=false;
 
-        this.word_name="b";
+        this.word_name=Utils.play_game_letter;
+        if (typeof (this.word_name)=="undefined"){
+            this.word_name="d";
+            //khong bao gio xay ra truong hop nay, cai nay chi de test thoi
+        }
+
         var json_path="cards/"+this.word_name+".json";
         this.addResourcePath(json_path);
         var self=this;
@@ -80,6 +86,8 @@ cc.Class({
             cc.audioEngine.play(audiofile,true);
         });
 
+        this.coundBubble=0;
+        this.blockCallFun=false;
     },
 
 
@@ -97,7 +105,10 @@ cc.Class({
         effect.y=btNode.y;
         this.node.addChild(effect);
 
+        this.coundBubble++;
+        if(this.coundBubble>15){
 
+        }
 
         var source_path=btNode.audioPath;
         this.addResourcePath(source_path);
@@ -111,9 +122,15 @@ cc.Class({
     },
 
 
+
+
     // called every frame, uncomment this function to activate update callback
      update: function (dt) {
          if(!this.allowLoad){
+             return;
+         }
+         if(this.coundBubble>15){
+             this.stopUpdate();
              return;
          }
          this.time_count+=dt;
@@ -143,4 +160,36 @@ cc.Class({
              this.node.addChild(spbutton);
          }
      },
+
+
+    stopUpdate:function(){
+        if(this.blockCallFun){
+            return;
+        }
+        this.blockCallFun=true;
+
+        this.blockLoad=false;
+        // show ra chuc mung
+        this.scheduleOnce(this.loadNextScene,3);
+    },
+    loadNextScene:function(){
+        //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
+        if(this.blockLoad){
+            return;
+        }
+        this.blockLoad=true;
+        if (typeof (Utils.arrScene)=="undefined"){
+            return;
+        }
+        if(Utils.arrScene.length<=Utils.index_sc){
+
+            cc.director.loadScene("MainSC");
+        }{
+            var nextScName=Utils.arrScene[Utils.index_sc];
+            Utils.index_sc++;
+            cc.director.loadScene(nextScName);
+        }
+
+
+    },
 });

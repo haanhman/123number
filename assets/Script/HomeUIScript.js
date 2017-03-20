@@ -71,7 +71,7 @@ cc.Class({
 
         cc.log("---asd-as-d-sad-as:   %s",namebutton);
         var checkOldNode=this.node.getChildByName("PopOptions");
-        if(checkOldNode===null){
+        if(checkOldNode==null){
             var popnode=cc.instantiate(this.popOptionPrefab);
             popnode.name="PopOptions"
             popnode.setLocalZOrder(10);
