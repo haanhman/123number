@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Cocos Creator | TestCocosJS</title>
+
+  <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="full-screen" content="yes"/>
+  <meta name="screen-orientation" content="portrait"/>
+  <meta name="x5-fullscreen" content="true"/>
+  <meta name="360-fullscreen" content="true"/>
+  
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  
+  <link rel="stylesheet" type="text/css" href="style-desktop.css"/>
+
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+  <style type="text/css">
+    #GameDiv {
+      width:960px;
+      height: 540px;
+      margin: 0px auto;
+    }
+    #popupVideo {
+      width:960px;
+      height: 540px;
+      margin: 0px auto;
+      overflow: initial;
+    }
+    #popupVideo .inner {
+      position: relative;
+    }
+    #popupVideo iframe {
+      z-index: 1;
+    }
+    .close_video {
+      cursor: pointer;
+      position: absolute;
+      top: -5px;
+      right: 5px;
+      z-index: 9999;
+    }
+  </style>
+
+  <script type="text/javascript">
+    function openVideoNow(videoPath) {
+      var videoID = videoPath;
+      var embed =  '<iframe width="960" height="540" src="//www.youtube.com/embed/'+videoID+'?rel=0&amp;controls=0&amp;showinfo=0&autoplay=1&iv_load_policy=3&hd=1&version=3&modestbranding=1" frameborder="0" allowfullscreen></iframe>';
+      $('#popupVideo .video').html(embed);
+      $('#popupVideo').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    }
+
+    $(function () {
+      var marginTop = (window.outerHeight - 540)/4;
+      $('#popupVideo').css('margin-top', marginTop);
+      $('#GameDiv').css('margin-top', marginTop);
+      $('#popupVideo').on('hidden.bs.modal', function (e) {
+        $('#popupVideo .video').html('');
+      });
+      $('.close_video').click(function(){
+        $('#popupVideo').modal('hide');
+      });
+    });
+  </script>
+</head>
+<body>
+
+<div id="popupVideo" class="modal fade" role="dialog">
+  <div class="inner">
+    <img class="close_video" src="closebutton.png" alt="Close video">
+    <div class="video"></div>
+  </div>
+</div>
+
+
+<div id="GameDiv">
+  <canvas id="GameCanvas" width="960" height="540"></canvas>
+  <div id="splash">
+    <div class="progress-bar stripes">
+      <span style="width: 0%"></span>
+    </div>
+  </div>
+</div>
+<script src="src/settings.js" charset="utf-8"></script>
+<script src="main.js" charset="utf-8"></script>
+</body>
+</html>
