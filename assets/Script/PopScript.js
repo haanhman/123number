@@ -59,11 +59,9 @@ cc.Class({
         //cc.director.loadScene('GameSc/GameWord');
 
         Utils.play_game_letter=this.selectedLetter.toLowerCase();
-        // Utils.play_game_letter='x'
         var latter=this.selectedLetter;
         Utils.index_sc=0;
-        // Utils.arrScene=["Trace"+latter.toUpperCase(),"Trace"+latter+"_low","Game_Touch","GameWord","GameBongBay"];
-        Utils.arrScene=["GameWord"];
+        Utils.arrScene=["Trace"+latter.toUpperCase(),"Trace"+latter+"_low","Game_Touch","GameWord","GameBongBay"];
         // se random o day, nhung gio test theo thu tu truoc da
 
         var namesc=Utils.arrScene[Utils.index_sc];
