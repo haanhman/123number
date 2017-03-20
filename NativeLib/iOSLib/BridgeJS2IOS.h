@@ -1,0 +1,14 @@
+
+
+#import <Foundation/Foundation.h>
+@interface BridgeJS2IOS : NSObject{
+    int mytimeplay;
+}
+
++(BridgeJS2IOS*)shareInstance;
+
+
+
++(void)beginDownloadData:(NSString *)strurlDownload;
+@end
+
