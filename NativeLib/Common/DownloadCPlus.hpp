@@ -35,8 +35,8 @@ public:
     void stopAllDownload();
     string fileSavePath;
     void unzipfile();
-    vector<string> explode(const string& str, const char& ch);
-    string joinStringVector(vector<string> vv,string delimiter);
+    std::vector<string> explode(const std::string& str, const char& ch);
+    std::string joinStringVector(std::vector<string> vv,std::string delimiter);
     
 };
 

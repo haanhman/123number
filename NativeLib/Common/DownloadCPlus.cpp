@@ -9,8 +9,13 @@
 #include "DownloadCPlus.hpp"
 #include "network/CCDownloader.h"
 #include "cocos2d.h"
+#include <iterator>
+#include <iostream>
+
 #include "js_module_register.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #include "NativeBridge.h"
+#endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
@@ -182,7 +187,7 @@ void DownloadCPlus::unzipfile(){
     s_download->removeFile();
 }
 
-vector<string> DownloadCPlus::explode(const string& str, const char& ch) {
+std::vector<string> DownloadCPlus::explode(const std::string& str, const char& ch) {
     string next;
     vector<string> result;
     // For each character in the string
@@ -205,7 +210,7 @@ vector<string> DownloadCPlus::explode(const string& str, const char& ch) {
     return result;
 }
 
-string DownloadCPlus::joinStringVector(vector<string> vv,string delimiter) {
+std::string DownloadCPlus::joinStringVector(std::vector<string> vv,std::string delimiter) {
     std::stringstream s;
     copy(vv.begin(),vv.end(), std::ostream_iterator<string>(s,delimiter.c_str()));
     std::string str = s.str();
@@ -217,6 +222,9 @@ string DownloadCPlus::joinStringVector(vector<string> vv,string delimiter) {
 
 void DownloadCPlus::CallBackJS(float pr)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return;
+#endif
     skipstep++;
     if(skipstep<step_download){
         return;
@@ -239,6 +247,9 @@ void DownloadCPlus::CallBackJS(float pr)
 }
 void DownloadCPlus::CallBackJSErrorDownload(int stt)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return;
+#endif
     int spp=stt;
     ScriptingCore * scriptingCore = ScriptingCore::getInstance();
     
@@ -256,6 +267,9 @@ void DownloadCPlus::CallBackJSErrorDownload(int stt)
 }
 void DownloadCPlus::CallBackJSFinishDownload(int stt)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return;
+#endif
     int spp=stt;
     ScriptingCore * scriptingCore = ScriptingCore::getInstance();
     
