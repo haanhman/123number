@@ -1,5 +1,12 @@
 #download android
 để cài đặt download android
+
+Note: không lên copy file, mà hãy link file tới thư mục với lệnh ln -s của linux
+VD: 
+```
+ln -s AndroidLib/BridgeAndroid.java <thư_mục_org.cocos2dx.javascript>
+```
+
 1. copy file **AndroidLib/BridgeAndroid.java** vào thư mục tương ứng với package **org.cocos2dx.javascript**
 
 2. copy 2 file **DownloadCPlus.cpp** & **DownloadCPlus.hpp** và thư mục **build/jsb-binary/frameworks/runtime-src/Classes**
