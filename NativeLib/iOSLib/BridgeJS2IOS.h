@@ -6,9 +6,6 @@
 }
 
 +(BridgeJS2IOS*)shareInstance;
-
-
-
 +(void)beginDownloadData:(NSString *)strurlDownload;
-@end
 
+@end

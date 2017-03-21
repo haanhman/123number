@@ -10,13 +10,10 @@ static BridgeJS2IOS *bridge_ios;
 
 #pragma mark -------------BEGIN STATIC METHOD ----------------------
 
-+(void)beginDownloadData:(NSString *)strurlDownload;{
++(void)beginDownloadData:(NSString *)strurlDownload {
     // goi sang C++
     DownloadCPlus::getInstance()->beginDownload(strurlDownload.UTF8String);
 }
-
-
-
 
 #pragma mark -------------END STATIC METHOD ------------------------
 
