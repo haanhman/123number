@@ -8,11 +8,14 @@
 
 #include "DownloadCPlus.hpp"
 #include "network/CCDownloader.h"
-
-
-
 #include "cocos2d.h"
+#include <iterator>
+#include <iostream>
+
 #include "js_module_register.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+#include "NativeBridge.h"
+#endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/JniHelper.h"
@@ -45,14 +48,6 @@ extern "C"
 #endif
 
 
-
-
-
-
-
-
-
-
 bool DownloadCPlus::init()
 {
     return true;
@@ -69,6 +64,9 @@ DownloadCPlus* DownloadCPlus::getInstance()
     return s_download;
 }
 
+void DownloadCPlus::removeFile() {
+    FileUtils::getInstance()->removeFile(s_download->fileSavePath);
+}
 
 void DownloadCPlus::beginDownload(const char* c_str_input){
     if (downloading) {
@@ -79,10 +77,10 @@ void DownloadCPlus::beginDownload(const char* c_str_input){
     downloading=true;
     std::string url=c_str_input;// neu co loi la do ep kieu
     //url="https://github.com/MaVuong/GameAnalytics/blob/master/videodata.zip?raw=true";
-    std::string filePath = FileUtils::getInstance()->getWritablePath() + "fullversion.zip";
-    if(FileUtils::getInstance()->isFileExist(filePath)){
+    s_download->fileSavePath = FileUtils::getInstance()->getWritablePath() + "data.zip";
+    if(FileUtils::getInstance()->isFileExist(s_download->fileSavePath)){
         CCLOG("------ remove file first-----");
-        FileUtils::getInstance()->removeFile(filePath);
+        s_download->removeFile();
     }
     network::Downloader *downloader = new (std::nothrow) network::Downloader();
     
@@ -96,8 +94,7 @@ void DownloadCPlus::beginDownload(const char* c_str_input){
     
     downloader->onFileTaskSuccess = ([] (const network::DownloadTask& task) {
         //file downloaded, do what you need next
-        std::string filePath = FileUtils::getInstance()->getWritablePath() + "peace.zip";
-        CCLOG("download thanh cong: %s",filePath.c_str());
+        CCLOG("download thanh cong: %s",s_download->fileSavePath.c_str());
         s_download->unzipfile();
         DownloadCPlus::CallBackJSFinishDownload(1);
         downloading=false;
@@ -115,7 +112,7 @@ void DownloadCPlus::beginDownload(const char* c_str_input){
               , errorStr.c_str());
     });
     
-    downloader->createDownloadFileTask(url, filePath);
+    downloader->createDownloadFileTask(url, s_download->fileSavePath);
     //downloader->release();
     
 }
@@ -125,9 +122,8 @@ void DownloadCPlus::stopAllDownload(){
 }
 
 void DownloadCPlus::unzipfile(){
-    std::string filePath = FileUtils::getInstance()->getWritablePath() + "fullversion.zip";
     // cu unzip file , file path duoc vao 1 array string, neu iOS thi config them doan code skipbackup len icloud
-    cocos2d::Data datafile=FileUtils::getInstance()->getDataFromFile(filePath);
+    cocos2d::Data datafile=FileUtils::getInstance()->getDataFromFile(s_download->fileSavePath);
     ssize_t size = datafile.getSize();
     unsigned char* bytes = datafile.getBytes();
     cocos2d::ZipFile *zFile = cocos2d::ZipFile::createWithBuffer(bytes, (unsigned long)size);
@@ -144,19 +140,29 @@ void DownloadCPlus::unzipfile(){
     ssize_t filesize;
     unsigned char* data = zFile->getFileData(fileName, &filesize);
     
-    std::string directoryName = cocos2d::FileUtils::getInstance()->getWritablePath() + "data/";
+    cocos2d::FileUtils *fileUtils =  cocos2d::FileUtils::getInstance();
     
-    if ( !cocos2d::FileUtils::getInstance()->isDirectoryExist(directoryName))
+    
+    std::string directoryName = fileUtils->getWritablePath();
+    
+    if (!fileUtils->isDirectoryExist(directoryName))
     {
-        cocos2d::FileUtils::getInstance()->createDirectory(directoryName);
+        fileUtils->createDirectory(directoryName);
     }
+    
+    
     
     while (data != nullptr)
     {
-        
         std::string fullFileName = directoryName + file;
+        vector<string> paths = s_download->explode(fullFileName, '/');
+        paths.erase(paths.end() - 1);
         
-        //CCLOG("fullFileName : %s",fullFileName.c_str());
+        string folder = s_download->joinStringVector(paths, "/");
+        if (!fileUtils->isDirectoryExist(folder))
+        {
+            fileUtils->createDirectory(folder);
+        }
         
         FILE *fp = fopen(fullFileName.c_str(), "wb");
         
@@ -168,20 +174,57 @@ void DownloadCPlus::unzipfile(){
         free(data);
         fileName = zFile->getNextFilename();
         file = fileName;
-        
         data = zFile->getFileData(fileName, &filesize);
         
+        //bo qua backup iClould ko co apple reject app
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        NativeBridge::addSkipBackupAttributeToItemAtPath(fileName);
+#endif
     }
     delete zFile;
     bytes=nullptr;
+    //xoa bo file sau khi da giai nen xong
+    s_download->removeFile();
 }
 
+std::vector<string> DownloadCPlus::explode(const std::string& str, const char& ch) {
+    string next;
+    vector<string> result;
+    // For each character in the string
+    for (string::const_iterator it = str.begin(); it != str.end(); it++) {
+        // If we've hit the terminal character
+        if (*it == ch) {
+            // If we have some characters accumulated
+            if (!next.empty()) {
+                // Add them to the result vector
+                result.push_back(next);
+                next.clear();
+            }
+        } else {
+            // Accumulate the next character into the sequence
+            next += *it;
+        }
+    }
+    if (!next.empty())
+        result.push_back(next);
+    return result;
+}
 
+std::string DownloadCPlus::joinStringVector(std::vector<string> vv,std::string delimiter) {
+    std::stringstream s;
+    copy(vv.begin(),vv.end(), std::ostream_iterator<string>(s,delimiter.c_str()));
+    std::string str = s.str();
+    str = str.substr (0,str.length()-(delimiter.length()));
+    return str;
+}
 
 //------------------- call back js -----------
 
 void DownloadCPlus::CallBackJS(float pr)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return;
+#endif
     skipstep++;
     if(skipstep<step_download){
         return;
@@ -204,6 +247,9 @@ void DownloadCPlus::CallBackJS(float pr)
 }
 void DownloadCPlus::CallBackJSErrorDownload(int stt)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return;
+#endif
     int spp=stt;
     ScriptingCore * scriptingCore = ScriptingCore::getInstance();
     
@@ -221,6 +267,9 @@ void DownloadCPlus::CallBackJSErrorDownload(int stt)
 }
 void DownloadCPlus::CallBackJSFinishDownload(int stt)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return;
+#endif
     int spp=stt;
     ScriptingCore * scriptingCore = ScriptingCore::getInstance();
     

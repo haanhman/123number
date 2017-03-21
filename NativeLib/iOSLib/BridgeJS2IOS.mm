@@ -1,5 +1,7 @@
 #import "BridgeJS2IOS.h"
 #include "DownloadCPlus.hpp"
+#import "VideoPlayerJS.h"
+
 @interface BridgeJS2IOS(){
 }
 @end
@@ -8,17 +10,19 @@
 static BridgeJS2IOS *bridge_ios;
 
 
-#pragma mark -------------BEGIN STATIC METHOD ----------------------
+//MARK: -------------BEGIN STATIC METHOD ----------------------
 
-+(void)beginDownloadData:(NSString *)strurlDownload;{
++(void)beginDownloadData:(NSString *)strurlDownload {
     // goi sang C++
     DownloadCPlus::getInstance()->beginDownload(strurlDownload.UTF8String);
 }
 
++(void)playVideo:(NSString *)videoPath {
+    VideoPlayerJS *videoJS = [[VideoPlayerJS alloc] init];
+    [videoJS openVideoPlayer:videoPath];
+}
 
-
-
-#pragma mark -------------END STATIC METHOD ------------------------
+//MARK: -------------END STATIC METHOD ------------------------
 
 
 +(BridgeJS2IOS*)shareInstance{

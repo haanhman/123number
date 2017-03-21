@@ -1,8 +1,8 @@
 var Utils = {
 
-    playVideoForCard: function (cardname) {
+    playVideoForCard: function (videoPath) {
         if (cc.sys.os == cc.sys.OS_IOS) {
-            jsb.reflection.callStaticMethod("BridgeIOS", "playVideoName:", cardname);
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "playVideo:", videoPath);
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideoName", "(Ljava/lang/String;)V", cardname);
         } else {
@@ -28,12 +28,13 @@ var Utils = {
     //neu co them server thi chi can cho vao day la xong
     getServer: function () {
         var server = [
+            // "http://api.sm.dev",
             "https://vkidsdata.firebaseapp.com",
             // "https://vkidsdata2.firebaseapp.com",
             // "https://vkidsdata3.firebaseapp.com",
             // "https://vkidsdata4.firebaseapp.com"
         ];
-        return server[Math.floor(Math.random() * server.length)] + "/media";
+        return server[Math.floor(Math.random() * server.length)] + "/zip";
     },
 
     getUrlDownload: function (letter) {

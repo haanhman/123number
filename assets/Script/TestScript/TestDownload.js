@@ -17,18 +17,14 @@ cc.Class({
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
         NativeMobileJS.scriptReceiveDownload=null;
-
     },
 
     actionStart:function(){
-        Utils.beginDownloadFile("http://www.colorado.edu/conflict/peace/download/peace.zip");
+        Utils.beginDownloadFile(Utils.getUrlDownload('a'));
     },
     actionStop:function(){
 
     },
-
-
-
 
     //--------download delegate----
     nativedownloadProgess:function(prdownload){
@@ -41,10 +37,6 @@ cc.Class({
         this.lbdownload.string="finishDownload";
     },
     //------end delegate -----
-
-
-
-
 
     // called every frame, uncomment this function to activate update callback
      update: function (dt) {

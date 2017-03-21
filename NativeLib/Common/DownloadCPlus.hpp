@@ -13,6 +13,9 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include "cocos2d.h"
+using namespace cocos2d;
+using namespace std;
 
 class  DownloadCPlus
 {
@@ -28,10 +31,12 @@ public:
     static void CallBackJSFinishDownload(int stt);
     
     void beginDownload(const char* str);
-    
+    void removeFile();
     void stopAllDownload();
-    
+    string fileSavePath;
     void unzipfile();
+    std::vector<string> explode(const std::string& str, const char& ch);
+    std::string joinStringVector(std::vector<string> vv,std::string delimiter);
     
 };
 
