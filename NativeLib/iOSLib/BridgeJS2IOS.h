@@ -4,8 +4,8 @@
 @interface BridgeJS2IOS : NSObject{
     int mytimeplay;
 }
-
 +(BridgeJS2IOS*)shareInstance;
-+(void)beginDownloadData:(NSString *)strurlDownload;
 
++(void)beginDownloadData:(NSString *)strurlDownload;
++(void)playVideo:(NSString *)videoPath;
 @end

@@ -1,8 +1,8 @@
 var Utils = {
 
-    playVideoForCard: function (cardname) {
+    playVideoForCard: function (videoPath) {
         if (cc.sys.os == cc.sys.OS_IOS) {
-            jsb.reflection.callStaticMethod("BridgeIOS", "playVideoName:", cardname);
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "playVideo:", videoPath);
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideoName", "(Ljava/lang/String;)V", cardname);
         } else {

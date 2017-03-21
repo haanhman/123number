@@ -1,4 +1,3 @@
-var BridgeVideoPlayer = require('BridgeVideoPlayer');
 var BridgeInappPurchase = require('BridgeInappPurchase');
 var BridgeDownload = require('BridgeDownload');
 var Utils = require('Utils');
@@ -50,10 +49,10 @@ cc.Class({
         Utils.playEffect(audioPath);
     },
     actionAddMore:function(){
-        BridgeVideoPlayer.playVideo("duck.mp4");
+
     },
     actionSettings:function(){
-        BridgeVideoPlayer.playVideo("phonic.mp4");
+
     },
     actionBuyAll:function(){
         BridgeInappPurchase.unlockData();
