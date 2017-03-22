@@ -44,9 +44,7 @@ cc.Class({
         BridgeDownload.startDownload('https://fir-e5fd4.firebaseapp.com/zip/b.zip');
     },
     actionRate:function(){
-        cc.log("Document: %s", jsb.fileUtils.getWritablePath());
-        var audioPath = 'resources/Sound/gametouch/ta.mp3';
-        Utils.playEffect(audioPath);
+
     },
     actionAddMore:function(){
 
@@ -84,6 +82,7 @@ cc.Class({
             scriptCard.strCardName=namebutton;
             scriptCard.lbtitle.string="Letter "+namebutton.toUpperCase();
             scriptCard.selectedLetter = namebutton.toLowerCase();
+            scriptCard.validateCardInfo();
         }else{
             cc.log("lock add new popup");
         }

@@ -29,6 +29,7 @@ public:
     static void CallBackJS(float pr);
     static void CallBackJSErrorDownload(int stt);
     static void CallBackJSFinishDownload(int stt);
+    static void CallBackJSUnzipFinish();
     
     void beginDownload(const char* str);
     void removeFile();

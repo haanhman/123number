@@ -16,18 +16,18 @@ cc.Class({
     },
 
     addResourcePath:function(str_path){
+        var path = Utils.getFilePath("resources/" + str_path);
         var source_exits=false;
         for(var is=0;is<this.arrRS.length;is++){
-            if(this.arrRS[is]==str_path){
+            if(this.arrRS[is]==path){
                 source_exits=true;
                 break;
             }
         }
         if(!source_exits){
-            this.arrRS[this.index_countRS]=str_path;
+            this.arrRS[this.index_countRS]=path;
             this.index_countRS++;
         }
-
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
         cc.log("---------onDisable");
@@ -52,26 +52,14 @@ cc.Class({
         this.loadJsonData();
     },
 
-    playSoundSource:function(pathsource,loop_audio,stoppall){
-        if(stoppall){
-            cc.audioEngine.stopAll();
-        }
-        this.addResourcePath(pathsource);
-        cc.loader.loadRes(pathsource,cc.AudioClip, function (err, audiofile) {
-            if(!(err==null)){
-                cc.log("----error load word  %s ",err);
-                return;
-            }
-            cc.audioEngine.play(audiofile,loop_audio);
-        });
-    },
 
     playSoundHelp: function () {
         if (this.blockTouchLeteer) {
             return;
         }
-        //Utils.playEffect('resources/Sound/card/' + this.cardName + '.mp3', true);
-        this.playSoundSource('Sound/card/' + this.cardName + '.mp3',false,true);
+        var mp3File = 'Sound/card/' + this.cardName + '.mp3';
+        this.addResourcePath(mp3File);
+        Utils.playSoundSource(mp3File, false,true);
     },
 
     loadJsonData: function () {
@@ -81,22 +69,16 @@ cc.Class({
             //khong bao gio xay ra truong hop nay, cai nay chi de test thoi
         }
 
-        var jsonUrl = Utils.getFilePath('resources/cards/' + letter + '.json');
-        cc.log("jsonUrl: %s", jsonUrl);
-        var self = this;
+        var jsonUrl = 'cards/' + letter + '.json';
         this.addResourcePath(jsonUrl);
-        cc.loader.load(jsonUrl, function (error, result) {
-            if (!(error == null)) {
-                cc.log("Load JSON ERROR: %s ", error);
-            }
-        }, function (error, result) {
-            self.cardData = result;
+        Utils.loadJson(jsonUrl, function (jsonResponse) {
+            this.cardData = jsonResponse;
             //random mang du lieu
-            Utils.arrayShuffle(self.cardData["images"]);
+            Utils.arrayShuffle(this.cardData["images"]);
             //chi lay 2 card ra de choi thoi
-            self.cardData["images"] = self.cardData["images"].slice(0, self.limitCard);
-            self.renderUI();
-        });
+            this.cardData["images"] = this.cardData["images"].slice(0, this.limitCard);
+            this.renderUI();
+        }.bind(this));
     },
 
     renderUI: function () {
@@ -126,13 +108,6 @@ cc.Class({
             this.lblName.node.setAnchorPoint(1, 0.5);
         }
 
-        cc.log("X: %s -- Y: %s", this.lblTouch.node.getPosition().x, this.lblTouch.node.getPosition().y);
-        cc.log("X2: %s -- Y2: %s", this.lblTouch.node.getAnchorPoint().x, this.lblTouch.node.getAnchorPoint().y);
-
-
-
-
-
         if(cardInfo["end_word"] == 0) {
             this.lblName.string = this.cardName.substring(1, this.cardName.length);
         } else {
@@ -143,25 +118,10 @@ cc.Class({
         //cc.log("-----lenght : %s",this.lblName.node.width );
         //hien thi anh
         var imageIndex = Math.floor(Math.random() * cardInfo["total_image"]) + 1;
-        var imgUrl = Utils.getFilePath('resources/cards/' + cardInfo['card_name'] + imageIndex + '.png');
-        cc.log("imgUrl: %s", imgUrl);
-        //this.picture.spriteFrame = new cc.SpriteFrame(imgUrl);
+        var imgUrl = 'cards/' + cardInfo['card_name'] + imageIndex + '.png';
 
-        var self=this;
         this.addResourcePath(imgUrl);
-        cc.loader.load({url: imgUrl, type: 'png'},function (err, tex) {
-            if(err!=null){
-                console.log("----error load image----:"+err);
-                return;
-            }
-            if(cc.sys.isBrowser){
-                self.picture.spriteFrame=new cc.SpriteFrame(tex);
-            }else {
-                self.picture.spriteFrame=cc.SpriteFrame(tex);
-            }
-
-        });
-
+        Utils.setSpriteFrame(this.picture, imgUrl);
 
         this.picture.node.runAction(cc.sequence(cc.scaleTo(0.4,1.15),cc.scaleTo(0.4,1.0)));
 
@@ -177,11 +137,10 @@ cc.Class({
             return;
         }
         this.blockTouchLeteer = true;
-        var audioPath = 'Sound/card/' + this.cardData["text"].toLowerCase() + '.mp3';
-        //Utils.playEffect(audioPath, true);
-        this.playSoundSource(audioPath,false,true);
 
-
+        var mp3File = 'Sound/card/' + this.cardData["text"].toLowerCase() + '.mp3';
+        this.addResourcePath(mp3File);
+        Utils.playSoundSource(mp3File, false,true);
         {
             var sequence = [];
             sequence.push(cc.delayTime(1.2));
@@ -200,12 +159,11 @@ cc.Class({
 
 
         {
-            var self = this;
             sequence = [];
             sequence.push(cc.delayTime(1.8));
             sequence.push(cc.callFunc(function () {
-                self.playCardName();
-            }));
+                this.playCardName();
+            }.bind(this)));
 
             this.node.runAction(cc.sequence(sequence));
         }
@@ -214,8 +172,10 @@ cc.Class({
     },
 
     playCardName: function () {
-        //Utils.playEffect('resources/Sound/card/' + this.cardName + '.mp3', true);
-        this.playSoundSource('Sound/card/' + this.cardName + '.mp3',false,true);
+        var mp3File = 'Sound/card/' + this.cardName + '.mp3';
+        this.addResourcePath(mp3File);
+        Utils.playSoundSource(mp3File, false,true);
+
         var callFunc=cc.callFunc(this.playKidsSayYay,this);
         this.ovuong.node.runAction(cc.sequence(cc.scaleTo(0.4,1.3),cc.scaleTo(0.4,1.0)));
         this.lblTouch.node.runAction(cc.sequence(cc.scaleTo(0.4,1.3),cc.scaleTo(0.4,1.0)));
@@ -229,8 +189,10 @@ cc.Class({
         effect.name = "success_effect";
         effect.x = 0;
         this.node.addChild(effect);
-        //Utils.playEffect('resources/Sound/gamevoice/kids_say_yay.mp3');
-        this.playSoundSource('Sound/gamevoice/kids_say_yay.mp3',false,true);
+
+        var mp3File = 'Sound/gamevoice/kids_say_yay.mp3';
+        this.addResourcePath(mp3File);
+        Utils.playSoundSource(mp3File, false,true);
 
         var callFunc=cc.callFunc(this.nextCard,this);
         this.node.stopAllActions();
@@ -251,9 +213,9 @@ cc.Class({
     },
 
     exitGame: function () {
-        //cc.audioEngine.stopAll();
-        //cc.director.loadScene('MainSC');
-
+        // cc.audioEngine.stopAll();
+        // cc.director.loadScene('MainSC');
+        // return;
         if (typeof (Utils.arrScene)=="undefined"){
             return;
         }
@@ -269,8 +231,7 @@ cc.Class({
 
     touchBackground: function () {
         if (!this.blockTouchLeteer) {
-            //Utils.playEffect('resources/Sound/gamevoice/error.mp3', true);
-           // this.playSoundSource('Sound/gamevoice/error.mp3',false,true);
+
         }
     },
 

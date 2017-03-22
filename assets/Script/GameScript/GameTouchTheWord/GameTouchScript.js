@@ -23,18 +23,18 @@ cc.Class({
     },
 
     addResourcePath:function(str_path){
+        var path = Utils.getFilePath("resources/" + str_path);
         var source_exits=false;
         for(var is=0;is<this.arrRS.length;is++){
-            if(this.arrRS[is]==str_path){
+            if(this.arrRS[is]==path){
                 source_exits=true;
                 break;
             }
         }
         if(!source_exits){
-            this.arrRS[this.index_countRS]=str_path;
+            this.arrRS[this.index_countRS]=path;
             this.index_countRS++;
         }
-
     },
     getRandomNumber:function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -106,52 +106,28 @@ cc.Class({
         }
         if(this.source_audio_path==null){
             cc.log("----this.source_audio_path==null");
-            this.source_audio_path="Sound/gametouch/t"+this.true_word;
+            this.source_audio_path="Sound/gametouch/t"+this.true_word + ".mp3";
             this.addResourcePath(this.source_audio_path);
         }
-
-        cc.loader.loadRes(this.source_audio_path,cc.AudioClip, function (err, audiofile) {
-            if(!(err==null)){
-                cc.log("----error load word  %s ",err);
-            }
-
-            cc.audioEngine.stopAll();
-            cc.audioEngine.playEffect(audiofile);
-        });
-
-
+        Utils.playSoundSource(this.source_audio_path, false, true);
     },
 
     touchIndex:function(index_touch){
         if(index_touch==this.true_index){
             var arr_well=["awesome","fantastic","greatjob","perfect","super","thatsit","yes","youraregreat","youdidit"];
             var rd_index=this.getRandomNumber(0,arr_well.length-1);
-            var source_path="Sound/gamevoice/"+arr_well[rd_index];
+            var source_path="Sound/gamevoice/"+arr_well[rd_index] + ".mp3";
             this.addResourcePath(source_path);
-            cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
-                if(!(err==null)){
-                    cc.log("----error load word  %s = %s ",err,rd_index);
-                }
-
-                cc.audioEngine.stopAll();
-                cc.audioEngine.playEffect(audiofile);
-            });
+            Utils.playSoundSource(source_path, false, true);
             this.buttonsound.active=false;
 
             this.blockLoad=false;
             this.scheduleOnce(this.loadNextScene,3);
             return true;
         }else{
-            var source_path="Sound/gamevoice/error";
+            var source_path="Sound/gamevoice/error.mp3";
             this.addResourcePath(source_path);
-            cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
-                if(!(err==null)){
-                    cc.log("----error load word  %s ",err);
-                }
-
-                cc.audioEngine.stopAll();
-                cc.audioEngine.playEffect(audiofile);
-            });
+            Utils.playSoundSource(source_path, false, true);
             return false;
         }
     },

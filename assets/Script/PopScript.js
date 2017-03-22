@@ -1,23 +1,70 @@
 var Utils = require('Utils');
+var NativeMobileJS = require('NativeMobile');
 cc.Class({
     extends: cc.Component,
-
     properties: {
-        cardSprite:{
-            type:cc.Sprite,
-            default:null
+        cardSprite: {
+            type: cc.Sprite,
+            default: null
         },
-        strCardName:{
-            default:"A"
+        strCardName: {
+            default: "A"
         },
-
-        lbtitle:cc.Label
+        btnWrite: cc.Sprite,
+        btnSong: cc.Sprite,
+        btnLearn: cc.Sprite,
+        btnDownload: cc.Sprite,
+        btnBuy: cc.Sprite,
+        btnClose: cc.Sprite,
+        progressBar: cc.ProgressBar,
+        lbtitle: cc.Label
     },
-    addTouchListenEvent:function(){
 
-        this.touchListen=cc.eventManager.addListener({event: cc.EventListener.TOUCH_ONE_BY_ONE,swallowTouches: true,
-            onTouchBegan: function(touch, event) {
-                cc.log("-------this.name: "+this.node.name);
+    validateCardInfo: function () {
+        this.progressBar.node.active = false;
+        this.btnWrite.node.active = false;
+        this.btnSong.node.active = false;
+        this.btnLearn.node.active = false;
+        this.btnDownload.node.active = false;
+        this.btnBuy.node.active = false;
+
+
+        var showContent = false;
+        var freeCard = ["a", "b", "c", "d"];
+        if (freeCard.indexOf(this.selectedLetter) >= 0) {
+            showContent = true;
+        }
+
+        if (!showContent) {
+            var vkids_buy_content = cc.sys.localStorage.getItem('vkids_buy_content');
+            vkids_buy_content = true;
+            if (vkids_buy_content == undefined || !vkids_buy_content) {
+                this.btnBuy.node.active = true;
+            } else {
+                //kiem tra neu download roi thi hien thi cac nut cho choi, chua download thi phai download ve da
+                var checkDownload = "download_pack_" + this.selectedLetter;
+                var download = cc.sys.localStorage.getItem(checkDownload);
+                if (download == undefined || !download) {
+                    this.btnDownload.node.active = true;
+                } else {
+                    showContent = true;
+                }
+            }
+        }
+
+        this.btnWrite.node.active = showContent;
+        this.btnSong.node.active = showContent;
+        this.btnLearn.node.active = showContent;
+
+
+    },
+
+    addTouchListenEvent: function () {
+
+        this.touchListen = cc.eventManager.addListener({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE, swallowTouches: true,
+            onTouchBegan: function (touch, event) {
+                cc.log("-------this.name: " + this.node.name);
                 return true;
             }.bind(this),
 
@@ -29,9 +76,10 @@ cc.Class({
     onLoad: function () {
         this.selectedLetter = '';
         this.addTouchListenEvent();
+        NativeMobileJS.scriptReceiveDownload = this;
     },
     onDisable: function onDisable() {
-        cc.log("---------onDisable");
+        NativeMobileJS.scriptReceiveDownload = null;
         cc.eventManager.removeListener(this.touchListen);
 
 
@@ -40,47 +88,69 @@ cc.Class({
 
     actionCloseButton: function () {
         //
-        var animation=this.node.getComponent("cc.Animation");
+        var animation = this.node.getComponent("cc.Animation");
         animation.play("movedown");
 
-        var callFun=cc.callFunc(this.removeMeFromParrent,this);
-        var delay=cc.delayTime(0.4);
+        var callFun = cc.callFunc(this.removeMeFromParrent, this);
+        var delay = cc.delayTime(0.4);
         this.node.stopAllActions();
-        this.node.runAction(cc.sequence(delay,callFun));
+        this.node.runAction(cc.sequence(delay, callFun));
     },
-    removeMeFromParrent:function(){
+    removeMeFromParrent: function () {
         this.node.removeFromParent(true);
         this.node.destroy();
     },
 
 
-    actionPlayGame:function(){
-        //cc.sys.localStorage.setItem('play_game_letter', this.selectedLetter);
-        //cc.director.loadScene('GameSc/GameWord');
-
-        Utils.play_game_letter=this.selectedLetter.toLowerCase();
-        var latter=this.selectedLetter;
-        Utils.index_sc=0;
-        Utils.arrScene=["Trace"+latter.toUpperCase(),"Trace"+latter+"_low","Game_Touch","GameWord","GameBongBay"];
+    actionPlayGame: function () {
+        Utils.play_game_letter = this.selectedLetter.toLowerCase();
+        var latter = this.selectedLetter;
+        Utils.index_sc = 0;
+        Utils.arrScene = ["Trace" + latter.toUpperCase(), "Trace" + latter + "_low", "Game_Touch", "GameWord", "GameBongBay"];
+        // Utils.arrScene = ["GameBongBay"];
         // se random o day, nhung gio test theo thu tu truoc da
 
-        var namesc=Utils.arrScene[Utils.index_sc];
+        var namesc = Utils.arrScene[Utils.index_sc];
         Utils.index_sc++;
         cc.director.loadScene(namesc);
 
     },
-    actionPlaySong:function(){
-        var videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_song.mp4')
-        Utils.playVideoForCard(videoPath);
+    actionPlaySong: function () {
+        Utils.playVideoForCard('video/' + this.strCardName.toLowerCase() + '_song.mp4');
     },
 
-    actionTraceVideo:function(){
-        var videoPath = Utils.getFilePath('resources/video/'+ this.strCardName.toLowerCase() +'_trace.mp4')
-        Utils.playVideoForCard(videoPath);
+    actionTraceVideo: function () {
+        Utils.playVideoForCard('video/' + this.strCardName.toLowerCase() + '_trace.mp4');
     },
 
-    onDestroy:function(){
+    actionDownload: function () {
+        Utils.beginDownloadFile(Utils.getUrlDownload(this.strCardName.toLowerCase()));
+        this.btnDownload.node.active = false;
+        this.progressBar.node.active = true;
+        this.btnClose.node.active = false;
+    },
+
+    actionBuy: function () {
 
     },
+
+    onDestroy: function () {
+
+    },
+
+    //--------download delegate----
+    nativedownloadProgess: function (prdownload) {
+        this.progressBar.progress = (prdownload / 100);
+    },
+    errorDownload: function (status) {
+        this.btnClose.node.active = true;
+    },
+    finishDownload: function (status) {
+        this.btnClose.node.active = true;
+        var checkDownload = "download_pack_" + this.selectedLetter;
+        cc.sys.localStorage.setItem(checkDownload, true);
+        this.validateCardInfo();
+    },
+    //------end delegate -----
 
 });

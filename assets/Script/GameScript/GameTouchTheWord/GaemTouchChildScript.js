@@ -1,3 +1,4 @@
+var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -76,8 +77,6 @@ cc.Class({
                 cc.log("----error load word  %s ",err);
             }
             var tmp_eff=cc.instantiate(eff_file);
-            //tmp_eff.x=0;
-            //tmp_eff.y=0;
             tmp_node.addChild(tmp_eff);
             tmp_node.runAction(cc.moveTo(0.5,cc.p(0,0)));
 

@@ -1,3 +1,4 @@
+var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
 
@@ -29,16 +30,9 @@ cc.Class({
 
 
         var rdid=this.getRandomBubbleWord(1,7);
-        this.source_path_bubble="GameTouch/game_02_bubble_0"+rdid;
-        var self=this;
-        cc.loader.loadRes(this.source_path_bubble,cc.SpriteFrame, function (err, rsdata) {
-            if(!(err==null)){
-                cc.log("----error load word  %s = %s ",err,rd_index);
-            }
-            var child_mask=self.node.getChildByName("sp_bubble");
-            child_mask.getComponent(cc.Sprite).spriteFrame=rsdata;
-        });
-
+        this.source_path_bubble="GameTouch/game_02_bubble_0"+rdid+".png";
+        var child_mask=this.node.getChildByName("sp_bubble");
+        Utils.setSpriteFrame(child_mask.getComponent(cc.Sprite), this.source_path_bubble);
 
         var idcolor=this.getRandomBubbleWord(0,4);
         var childNodelb=this.node.children[0];
