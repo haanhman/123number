@@ -3,7 +3,7 @@ var NativeMobile = {
     downloadProgess:function(number_progress){//range 0-1000
         var convert_number=Number(number_progress);
         convert_number=convert_number/1000.0;
-
+        cc.log("download: %s", convert_number);
         if((this.scriptReceiveDownload==null)||(typeof (this.scriptReceiveDownload)=="undefined")){
             //cc.log("NativeMobileJS.scriptGame===null");
         }else{
@@ -14,7 +14,7 @@ var NativeMobile = {
 
 
     errorDownload:function(statusDownload){
-
+        cc.log("errorDownload: " + statusDownload);
         if((this.scriptReceiveDownload==null)||(typeof (this.scriptReceiveDownload)=="undefined")){
             //cc.log("NativeMobileJS.scriptGame===null");
         }else{
@@ -24,13 +24,17 @@ var NativeMobile = {
     },
 
     finishDownload:function(statusDownload){
-
+        cc.log("download thanh cong: " + statusDownload);
         if((this.scriptReceiveDownload==null)||(typeof (this.scriptReceiveDownload)=="undefined")){
             //cc.log("NativeMobileJS.scriptGame===null");
         }else{
             this.scriptReceiveDownload.finishDownload(statusDownload);
         }
 
+    },
+
+    unzipFinish:function(){
+        cc.log("Unzip file thanh cong");
     },
 }
 

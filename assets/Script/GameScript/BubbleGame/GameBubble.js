@@ -15,18 +15,18 @@ cc.Class({
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     addResourcePath:function(str_path){
+        var path = Utils.getFilePath("resources/" + str_path);
         var source_exits=false;
         for(var is=0;is<this.arrRS.length;is++){
-            if(this.arrRS[is]==str_path){
+            if(this.arrRS[is]==path){
                 source_exits=true;
                 break;
             }
         }
         if(!source_exits){
-            this.arrRS[this.index_countRS]=str_path;
+            this.arrRS[this.index_countRS]=path;
             this.index_countRS++;
         }
-
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
         cc.log("---------onDisable");
@@ -64,27 +64,14 @@ cc.Class({
         var json_path="cards/"+this.word_name+".json";
         this.addResourcePath(json_path);
         var self=this;
-        cc.loader.loadRes(json_path, function (err, rsdata) {
-            if(!(err==null)){
-                cc.log("----error load word  %s = ",err);
-                return;
-            }
-            //console.log("------rsdata: "+rsdata);
-            //return;
-            self.arrayCard=rsdata.images;
+        Utils.loadJson(json_path, function (jsonResponse) {
+            self.arrayCard=jsonResponse.images;
             self.allowLoad=true;
-        });
+        }.bind(this));
 
         var soundms_bg="Sound/msbg/simplemsbg.mp3";
         this.addResourcePath(soundms_bg);
-        cc.loader.loadRes(soundms_bg,cc.AudioClip, function (err, audiofile) {
-            if(!(err==null)){
-                cc.log("----error load word  %s ",err);
-            }
-
-            cc.audioEngine.stopAll();
-            cc.audioEngine.play(audiofile,true);
-        });
+        Utils.playSoundSource(soundms_bg,true,true);
 
         this.coundBubble=0;
         this.blockCallFun=false;
@@ -112,13 +99,7 @@ cc.Class({
 
         var source_path=btNode.audioPath;
         this.addResourcePath(source_path);
-        cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
-            if(!(err==null)){
-                cc.log("----error load word  %s ",err);
-            }
-
-            cc.audioEngine.play(audiofile);
-        });
+        Utils.playSoundSource(source_path, false, false);
     },
 
 

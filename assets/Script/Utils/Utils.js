@@ -1,10 +1,11 @@
 var Utils = {
 
     playVideoForCard: function (videoPath) {
+        var path = this.getFilePath("resources/" + videoPath);
         if (cc.sys.os == cc.sys.OS_IOS) {
-            jsb.reflection.callStaticMethod("BridgeJS2IOS", "playVideo:", videoPath);
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "playVideo:", path);
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideoName", "(Ljava/lang/String;)V", cardname);
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideoName", "(Ljava/lang/String;)V", path);
         } else {
             var arrPath = cardname.split("/");
             var fileName = arrPath[arrPath.length - 1];
@@ -18,7 +19,7 @@ var Utils = {
                 "d_song.mp4": "DwhPe30f-D0",
                 "d_trace.mp4": "ifnmXmcV_4U"
             };
-            if(youtubeVideo[fileName] != undefined) {
+            if (youtubeVideo[fileName] != undefined) {
                 openVideoNow(youtubeVideo[fileName]);
             }
         }
@@ -77,23 +78,6 @@ var Utils = {
         }
     },
 
-
-    playEffect: function (path, stop) {
-        cc.loader.load(this.getFilePath(path), function (error, audiofile) {
-            if (!(error == null)) {
-                cc.log("Play effect error: %s ", error);
-            }
-            if (stop == true) {
-                cc.audioEngine.stopAll();
-            }
-            cc.audioEngine.playEffect(audiofile);
-        });
-    },
-
-
-
-
-
     /**
      * Shuffles array in place.
      * @param {Array} a items The array containing the items.
@@ -118,7 +102,76 @@ var Utils = {
             return fullPath;
         }
         return jsb.fileUtils.getWritablePath() + path;
+    },
+
+    /**
+     *
+     * @param sprite cc.Sprite
+     * @param filePath duong dan anh tinh tu thu muc resources
+     * VD: card/ant.png => full path /resources/card/ant.png
+     * @param callback callback function neu co
+     */
+    setSpriteFrame: function (sprite, filePath, callback) {
+        var path = this.getFilePath("resources/" + filePath);
+        cc.loader.load(path, function (err, tex) {
+            if (err != null) {
+                console.log("----error load image----:" + err);
+                return;
+            }
+            if (cc.sys.isBrowser) {
+                sprite.spriteFrame = new cc.SpriteFrame(tex);
+            } else {
+                sprite.spriteFrame = cc.SpriteFrame(tex);
+            }
+            if(callback != undefined) {
+                callback();
+            }
+        });
+    },
+    /**
+     *
+     * @param pathSource duong dan file audio tinh tu thu muc resources
+     * VD: Sound/ant.mp3 => full path /resources/Sound/ant.mp3
+     * @param loopAudio chay lap lai audio hay khong
+     * @param stopAll truoc khi play audio co stop het tat ca audio dang chay hay khong
+     * @param callback callback function neu co
+     */
+    playSoundSource:function(pathSource,loopAudio,stopAll, callback){
+        if(stopAll){
+            cc.audioEngine.stopAll();
+        }
+        var path = this.getFilePath("resources/" + pathSource);
+
+        cc.loader.load(path,function (err, audioFile) {
+            if(!(err==null)){
+                cc.log("----error load word  %s ",err);
+                return;
+            }
+            cc.audioEngine.play(audioFile,loopAudio);
+        });
+        if(callback != undefined) {
+            callback();
+        }
+    },
+
+    /**
+     *
+     * @param json_path tinh tu thu muc resources
+     * @param callback callback function neu co
+     */
+    loadJson: function (jsonPath, callback) {
+        var path = this.getFilePath("resources/" + jsonPath);
+        cc.loader.load(path, function (err, rsdata) {
+            if(!(err==null)){
+                cc.log("----error load word  %s = ",err);
+                return;
+            }
+            if(callback != undefined) {
+                callback(rsdata);
+            }
+        });
     }
+
 }
 module.exports = Utils;
 

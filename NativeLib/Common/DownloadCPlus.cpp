@@ -185,6 +185,7 @@ void DownloadCPlus::unzipfile(){
     bytes=nullptr;
     //xoa bo file sau khi da giai nen xong
     s_download->removeFile();
+    s_download->CallBackJSUnzipFinish();
 }
 
 std::vector<string> DownloadCPlus::explode(const std::string& str, const char& ch) {
@@ -282,6 +283,24 @@ void DownloadCPlus::CallBackJSFinishDownload(int stt)
     
     JS_GetProperty(context, object, "NativeMobile", &owner);
     scriptingCore->executeFunctionWithOwner(owner, "finishDownload", 1, argumentsVector);
+    
+    delete [] argumentsVector;
+}
+void DownloadCPlus::CallBackJSUnzipFinish()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    return;
+#endif
+    ScriptingCore * scriptingCore = ScriptingCore::getInstance();
+    
+    JSContext * context = scriptingCore->getGlobalContext();
+    JS::RootedObject object(context, scriptingCore->getGlobalObject());
+    JS::RootedValue owner(context);
+    
+    jsval * argumentsVector = new jsval[1];
+    
+    JS_GetProperty(context, object, "NativeMobile", &owner);
+    scriptingCore->executeFunctionWithOwner(owner, "unzipFinish", 1, argumentsVector);
     
     delete [] argumentsVector;
 }
