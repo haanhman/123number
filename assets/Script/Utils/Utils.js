@@ -5,9 +5,9 @@ var Utils = {
         if (cc.sys.os == cc.sys.OS_IOS) {
             jsb.reflection.callStaticMethod("BridgeJS2IOS", "playVideo:", path);
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideoName", "(Ljava/lang/String;)V", path);
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideo", "(Ljava/lang/String;)V", path);
         } else {
-            var arrPath = cardname.split("/");
+            var arrPath = videoPath.split("/");
             var fileName = arrPath[arrPath.length - 1];
             var youtubeVideo = {
                 "a_song.mp4": "RgDAav0jxNs",

@@ -223,9 +223,6 @@ std::string DownloadCPlus::joinStringVector(std::vector<string> vv,std::string d
 
 void DownloadCPlus::CallBackJS(float pr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    return;
-#endif
     skipstep++;
     if(skipstep<step_download){
         return;
@@ -248,9 +245,6 @@ void DownloadCPlus::CallBackJS(float pr)
 }
 void DownloadCPlus::CallBackJSErrorDownload(int stt)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    return;
-#endif
     int spp=stt;
     ScriptingCore * scriptingCore = ScriptingCore::getInstance();
     
@@ -268,9 +262,6 @@ void DownloadCPlus::CallBackJSErrorDownload(int stt)
 }
 void DownloadCPlus::CallBackJSFinishDownload(int stt)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    return;
-#endif
     int spp=stt;
     ScriptingCore * scriptingCore = ScriptingCore::getInstance();
     
@@ -288,9 +279,6 @@ void DownloadCPlus::CallBackJSFinishDownload(int stt)
 }
 void DownloadCPlus::CallBackJSUnzipFinish()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    return;
-#endif
     ScriptingCore * scriptingCore = ScriptingCore::getInstance();
     
     JSContext * context = scriptingCore->getGlobalContext();
