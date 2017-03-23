@@ -110,9 +110,22 @@ cc.Class({
         Utils.play_game_letter = this.selectedLetter.toLowerCase();
         var latter = this.selectedLetter;
         Utils.index_sc = 0;
-        Utils.arrScene = ["Trace" + latter.toUpperCase(), "Trace" + latter + "_low", "Game_Touch", "GameWord", "GameBongBay"];
+
+        //random thu tu game
+        Utils.arrScene = [];
+        var threeGame = ["trace", "Game_Touch", "GameWord"];
+        Utils.arrayShuffle(threeGame);
+        for(var index in threeGame) {
+            if(threeGame[index] == "trace") {
+                Utils.arrScene.push("Trace" + latter.toUpperCase());
+                Utils.arrScene.push("Trace" + latter + "_low");
+            } else {
+                Utils.arrScene.push(threeGame[index]);
+            }
+        }
+        Utils.arrScene.push("GameBongBay");
+        cc.log(Utils.arrScene);
         // Utils.arrScene = ["GameBongBay"];
-        // se random o day, nhung gio test theo thu tu truoc da
 
         var namesc = Utils.arrScene[Utils.index_sc];
         Utils.index_sc++;
