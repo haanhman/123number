@@ -16,12 +16,16 @@ cc.Class({
         btnDownload: cc.Sprite,
         btnBuy: cc.Sprite,
         btnClose: cc.Sprite,
+        //download
+        downloadPanel: cc.Node,
         progressBar: cc.ProgressBar,
+        lblPercent: cc.Label,
+
         lbtitle: cc.Label
     },
 
     validateCardInfo: function () {
-        this.progressBar.node.active = false;
+        this.downloadPanel.active = false;
         this.btnWrite.node.active = false;
         this.btnSong.node.active = false;
         this.btnLearn.node.active = false;
@@ -117,16 +121,24 @@ cc.Class({
     },
     actionPlaySong: function () {
         Utils.playVideoForCard('video/' + this.strCardName.toLowerCase() + '_song.mp4');
+        this.actionShowBgNoTouch(true);
+        this.node.removeFromParent(true);
     },
 
     actionTraceVideo: function () {
         Utils.playVideoForCard('video/' + this.strCardName.toLowerCase() + '_trace.mp4');
+        this.actionShowBgNoTouch(true);
+        this.node.removeFromParent(true);
+    },
+
+    actionShowBgNoTouch: function (active) {
+        this.node.parent.getComponent("HomeUIScript").activeBgNoTouch(active);
     },
 
     actionDownload: function () {
         Utils.beginDownloadFile(Utils.getUrlDownload(this.strCardName.toLowerCase()));
         this.btnDownload.node.active = false;
-        this.progressBar.node.active = true;
+        this.downloadPanel.active = true;
         this.btnClose.node.active = false;
     },
 
@@ -140,6 +152,7 @@ cc.Class({
 
     //--------download delegate----
     nativedownloadProgess: function (prdownload) {
+        this.lblPercent.string = prdownload + "%";
         this.progressBar.progress = (prdownload / 100);
     },
     errorDownload: function (status) {

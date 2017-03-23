@@ -18,7 +18,8 @@ cc.Class({
             type:cc.Node,
             default: null
         },
-        btnBuy: cc.Sprite
+        btnBuy: cc.Sprite,
+        bgDisableTouch: cc.Sprite,
     },
 
     configDisplay:function(){
@@ -57,10 +58,12 @@ cc.Class({
     },
 
     videoCompleteCallback: function () {
+        this.activeBgNoTouch(false);
         cc.log("============= Play video complete =============");
     },
     closeVideoButton: function () {
         cc.log("============= Close video button =============");
+        this.activeBgNoTouch(false);
     },
     actionClickCard:function(nodebutton){
         var namebutton=nodebutton.target.name;
@@ -94,5 +97,14 @@ cc.Class({
     },
     unlockDataError: function() {
         cc.log("Unlock data that bai");
+    },
+
+    activeBgNoTouch: function (active) {
+        this.bgDisableTouch.node.active = active;
+        this.bgDisableTouch.node.setLocalZOrder(11);
+    },
+
+    bgClickAction: function() {
+        cc.log("====> Bg click");
     },
 });
