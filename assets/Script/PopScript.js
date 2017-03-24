@@ -125,7 +125,7 @@ cc.Class({
         }
         Utils.arrScene.push("GameBongBay");
         cc.log(Utils.arrScene);
-        // Utils.arrScene = ["GameBongBay"];
+        Utils.arrScene = ["Game_Touch"];
 
         var namesc = Utils.arrScene[Utils.index_sc];
         Utils.index_sc++;

@@ -42,16 +42,25 @@ cc.Class({
     getWordList:function(numberword){
         var listW=[];
         var allWord=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","Y","X","Z"];
+
+        var removeIndex = allWord.indexOf(Utils.play_game_letter.toUpperCase());
+        allWord.splice(removeIndex,1);
+        listW.push(Utils.play_game_letter.toUpperCase());
+        if(Utils.play_game_letter.toUpperCase() == "I") {
+            lowercase=true;
+        }
+
         var lowercase=false;
-        for(var iw=0;iw<numberword;iw++){
+        for(var iw=0;iw<numberword-1;iw++){
             var index_rd=this.getRandomNumber(0,allWord.length-1);
             var rdlate=allWord[index_rd];
             if(rdlate=="I"){
                 lowercase=true;
             }
-            listW[iw]=rdlate;
+            listW.push(rdlate);
             allWord.splice(index_rd,1);
         }
+
         //listW=["B","D","E","G","S"];
         if((this.getRandomNumber(0,10)>5)||lowercase){
             var cc=listW.length;
@@ -87,7 +96,14 @@ cc.Class({
 
             var c_w=indexprefab-1;
             if(c_w>=1){
-                self.true_index=self.getRandomNumber(0,c_w);
+
+                for(var index in scriptNode_tmp.arrWord) {
+                    if(scriptNode_tmp.arrWord[index].toLowerCase() == Utils.play_game_letter.toLowerCase()) {
+                        self.true_index=index;
+                        break;
+                    }
+                }
+
                 var strw=scriptNode_tmp.arrWord[self.true_index];
                 self.true_word=strw.toLowerCase();
                 self.source_audio_path==null
