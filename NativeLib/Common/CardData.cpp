@@ -29,6 +29,20 @@ void CardData::copyCardData() {
         DownloadCPlus *download = DownloadCPlus::getInstance();
         download->fileSavePath = dest;
         download->unzipfile();
-    }
-    ScriptingCore::getInstance()->runScript("install_data_success.js");
+    }    
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        ScriptingCore::getInstance()->runScript("install_data_success.js");
+    #endif
 }
+
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+extern "C"
+{
+    void Java_org_cocos2dx_javascript_BridgeAndroid_beginInstallCardData(JNIEnv* env, jobject thiz)
+    {
+        CardData::getInstance()->copyCardData();
+    }
+}
+
+#endif
