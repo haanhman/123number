@@ -25,12 +25,15 @@
 
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
-
 #import "AppController.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
 #import "SmIAB.h"
+#import "DownloadCPlus.hpp"
+USING_NS_CC;
+using namespace std;
+
 @implementation AppController
 
 #pragma mark -
@@ -83,9 +86,26 @@ static AppDelegate s_sharedApplication;
     
     cocos2d::Application::getInstance()->run();
     [SmIAB IABInit];
+    [self copyCardData];
     return YES;
 }
 
+-(void)copyCardData {
+    FileUtils *fileManager = FileUtils::getInstance();
+    CCLOG("Document: %s", fileManager->getWritablePath().c_str());
+    string checkFileExist = fileManager->getWritablePath() + "resources/cards/a.json";
+    if(!fileManager->isFileExist(checkFileExist)) {
+        CCLOG("copy card data");
+        string zipFile = "card.zip";
+        string dest = fileManager->getWritablePath() + zipFile;
+        Data db_data = fileManager->getDataFromFile(zipFile);
+        fileManager->writeDataToFile(db_data, dest);
+        
+        DownloadCPlus *download = DownloadCPlus::getInstance();
+        download->fileSavePath = dest;
+        download->unzipfile();
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
