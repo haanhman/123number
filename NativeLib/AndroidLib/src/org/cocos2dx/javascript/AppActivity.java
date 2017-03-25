@@ -29,6 +29,7 @@ package org.cocos2dx.javascript;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
@@ -40,6 +41,9 @@ public class AppActivity extends Cocos2dxActivity {
         super.onCreate(savedInstanceState);
         SDKWrapper.getInstance().init(this);
         SmIAB.initIABHelper();
+
+        //luon bat sang man hinh
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
 

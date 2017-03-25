@@ -178,7 +178,16 @@ var Utils = {
                 callback(rsdata);
             }
         });
-    }
+    },
+
+    /**
+     * lay random 1 phan tu cua mang
+     * @param array
+     * @returns {*}
+     */
+    randomElement: function (array) {
+        return array[Math.floor(Math.random() * array.length)];
+    },
 
 }
 module.exports = Utils;

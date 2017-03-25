@@ -21,6 +21,7 @@ cc.Class({
         btnBuy: cc.Sprite,
         bgDisableTouch: cc.Sprite,
         installData: cc.Prefab,
+        parental: cc.Prefab,
     },
 
     configDisplay: function () {
@@ -55,9 +56,18 @@ cc.Class({
 
     },
     actionBuyAll: function () {
+        var parental = cc.instantiate(this.parental);
+        parental.parentScene = this;
+        parental.setName("parental");
+        parental.setLocalZOrder(10);
+        parental.x = 0;
+        parental.y = 0;
+        this.node.addChild(parental);
+    },
+    buyNowAction: function () {
+        cc.log("buy now");
         BridgeInappPurchase.unlockData();
     },
-
     videoCompleteCallback: function () {
         this.activeBgNoTouch(false);
         cc.log("============= Play video complete =============");

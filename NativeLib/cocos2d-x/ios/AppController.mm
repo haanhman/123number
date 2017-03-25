@@ -83,6 +83,7 @@ static AppDelegate s_sharedApplication;
     
     cocos2d::Application::getInstance()->run();
     [SmIAB IABInit];
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     return YES;
 }
 
