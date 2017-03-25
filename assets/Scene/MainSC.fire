@@ -5747,6 +5747,9 @@
     },
     "bgDisableTouch": {
       "__id__": 147
+    },
+    "installData": {
+      "__uuid__": "b8552ba7-6311-4f06-a78b-ed7f2876dc11"
     }
   }
 ]
