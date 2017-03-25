@@ -36,7 +36,7 @@ static  bool downloading;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 extern "C"
 {
-    void Java_org_cocos2dx_javascript_BridgeAndroid_BeginDownload(JNIEnv* env, jobject thiz,jstring textStr)
+    void Java_org_cocos2dx_javascript_BridgeAndroid_beginDownload(JNIEnv* env, jobject thiz,jstring textStr)
     {
         const char* str;
         str = env->GetStringUTFChars(textStr, NULL);

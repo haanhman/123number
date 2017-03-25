@@ -1,7 +1,7 @@
 #import "BridgeJS2IOS.h"
 #include "DownloadCPlus.hpp"
 #import "VideoPlayerJS.h"
-
+#import "CardData.h"
 @interface BridgeJS2IOS(){
 }
 @end
@@ -20,6 +20,10 @@ static BridgeJS2IOS *bridge_ios;
 +(void)playVideo:(NSString *)videoPath {
     VideoPlayerJS *videoJS = [[VideoPlayerJS alloc] init];
     [videoJS openVideoPlayer:videoPath];
+}
+
++(void)installCardData {
+    CardData::getInstance()->copyCardData();
 }
 
 //MARK: -------------END STATIC METHOD ------------------------
