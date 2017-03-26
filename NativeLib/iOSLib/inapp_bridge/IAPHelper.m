@@ -297,45 +297,21 @@
     
     self.checkReceiptCompleteBlock = completion;
 
-    NSError *jsonError = nil;
     NSString *receiptBase64 = [NSString base64StringFromData:receiptData length:[receiptData length]];
 
-
-    NSData *jsonData = nil;
-
-    if(secretKey !=nil && ![secretKey isEqualToString:@""]) {
-        
-        jsonData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:receiptBase64,@"receipt-data",
-                                                            secretKey,@"password",
-                                                            nil]
-                                                   options:NSJSONWritingPrettyPrinted
-                                                     error:&jsonError];
-        
-    }
-    else {
-        jsonData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                receiptBase64,@"receipt-data",
-                                                                nil]
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&jsonError
-                        ];
-    }
-
-
-//    NSString* jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
     NSURL *requestURL = nil;
-    if(_production)
-    {
-        requestURL = [NSURL URLWithString:@"https://buy.itunes.apple.com/verifyReceipt"];
-    }
-    else {
-        requestURL = [NSURL URLWithString:@"https://sandbox.itunes.apple.com/verifyReceipt"];
-    }
-
+    requestURL = [NSURL URLWithString:@"http://api.sm.dev/api/receipt/verify?debug=0"];
+    #ifndef NDEBUG
+        requestURL = [NSURL URLWithString:@"http://api.sm.dev/api/receipt/verify?debug=1"];
+    #endif
+    
+    NSString *myRequestString = [NSString stringWithFormat:@"receipt-data=%@", receiptBase64];
+    NSData *myRequestData = [NSData dataWithBytes: [myRequestString UTF8String] length:[myRequestString length]];
+    
     NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:requestURL];
     [req setHTTPMethod:@"POST"];
-    [req setHTTPBody:jsonData];
+    [req setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    [req setHTTPBody:myRequestData];
 
     NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
     if(conn) {
