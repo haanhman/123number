@@ -1,0 +1,146 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "animationBubblegame",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 1.5833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "closebutton": {
+        "props": {
+          "scaleX": [
+            {
+              "frame": 0,
+              "value": 0.3
+            },
+            {
+              "frame": 0.4166666666666667,
+              "value": 1
+            }
+          ],
+          "scaleY": [
+            {
+              "frame": 0,
+              "value": 0.5
+            },
+            {
+              "frame": 0.4166666666666667,
+              "value": 1
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.4166666666666667,
+              "value": 255
+            }
+          ]
+        }
+      },
+      "node": {
+        "props": {
+          "position": [
+            {
+              "frame": 0,
+              "value": [
+                0,
+                539
+              ]
+            },
+            {
+              "frame": 0.35,
+              "value": [
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.5166666666666667,
+              "value": [
+                0,
+                123
+              ]
+            },
+            {
+              "frame": 0.6,
+              "value": [
+                0,
+                69
+              ]
+            },
+            {
+              "frame": 0.7,
+              "value": [
+                0,
+                0
+              ]
+            },
+            {
+              "frame": 0.7833333333333333,
+              "value": [
+                0,
+                24
+              ]
+            },
+            {
+              "frame": 0.8833333333333333,
+              "value": [
+                0,
+                0
+              ]
+            }
+          ],
+          "scaleX": [
+            {
+              "frame": 0.8833333333333333,
+              "value": 1
+            },
+            {
+              "frame": 1.25,
+              "value": 1.3
+            },
+            {
+              "frame": 1.5833333333333333,
+              "value": 1
+            }
+          ],
+          "scaleY": [
+            {
+              "frame": 0.8833333333333333,
+              "value": 1
+            },
+            {
+              "frame": 1.25,
+              "value": 1.3
+            },
+            {
+              "frame": 1.4833333333333334,
+              "value": 1
+            }
+          ]
+        }
+      },
+      "node/game_02_bubble_04": {
+        "props": {
+          "opacity": [
+            {
+              "frame": 0.9,
+              "value": 255
+            },
+            {
+              "frame": 1.25,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": []
+}
