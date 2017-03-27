@@ -24,7 +24,7 @@ public class SmIAB {
     // Debug tag, for logging
     static final String TAG = "SmIAB";
 
-    static final String product_id = "com.sonman.inappdemo.goi5";
+    static final String product_id = "com.sonman.inappdemo.goi8";
 
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10111;
@@ -34,7 +34,7 @@ public class SmIAB {
 
     private static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApeoELU1M81j98Z9JRSvWtQ+avl/LGtcrWOYOHaDL1oG9J/QIeyqXI/2OTGMJuM6ac8W6JbpvgcnejPk4Jj27sXmiKK+RndMBCK8qJCbGnc/jCECNKcQPMW+ono5BKjuFFNYQxV8UHik9hi+or4afilOBGCAnfm5Jt7mKXJS7OKBAbhmud0FhgJLp0itar15VYrXgSHECqOTmHIoajK7dwOpBA9hDLFpo2dF56gL2WihPWqcbzJNZ2g0GJFu4nhJX2T1QHF3T94VFIddb/CZkL8ULcnQLLO9juFaQeS2X6MJJ0mDyP572LXJo3T5FMjj66N3Ar6+Q9NicBZlHajc72QIDAQAB";
 
-    private static String payload = "bat_cu_noi_dung_gi_cung_duoc";
+    private static String payload = "7kIm1Odyb3eF0HOXy3CD";
     private static Cocos2dxActivity activity;
 
     public static void initIABHelper() {
@@ -102,6 +102,7 @@ public class SmIAB {
         }
     };
 
+
     // unlock content
     public static void unlockContent() {
 
@@ -123,7 +124,10 @@ public class SmIAB {
     /** Verifies the developer payload of a purchase. */
     private static boolean verifyDeveloperPayload(Purchase p) {
         String payload = p.getDeveloperPayload();
+        String token = p.getToken();
 
+        Log.d(TAG, "getOriginalJson: " + p.getOriginalJson());
+        Log.d(TAG, "getSignature: " + p.getSignature());
         /*
          * TODO: verify that the developer payload of the purchase is correct.
          * It will be the same one that you sent when initiating the purchase.
