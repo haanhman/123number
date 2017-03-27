@@ -5,6 +5,7 @@ cc.Class({
     properties: {
         lblQuestion: cc.Label,
         lblAnswer: cc.Label,
+        calculator: cc.Sprite
     },
 
     onLoad: function () {
@@ -45,6 +46,8 @@ cc.Class({
             this.node.parent.getComponent("HomeUIScript").buyNowAction();
             this.closeBtn();
         } else {
+            var animation = this.calculator.node.getComponent("cc.Animation");
+            animation.play("parental_fail");
             this.chooseNumber = [];
             this.lblAnswer.string = "";
             this.fail++;
