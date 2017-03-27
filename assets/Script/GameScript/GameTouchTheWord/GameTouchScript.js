@@ -16,7 +16,7 @@ cc.Class({
         this.index_countRS=0;
         this.arrRS=[];
         this.loadGameRandom();
-
+        this.isClosed=false;
 
 
 
@@ -149,7 +149,18 @@ cc.Class({
     },
 
     actionClose:function(){
-        cc.director.loadScene("Game_Touch.fire");
+        if(this.isClosed){
+            return;
+        }
+        this.isClosed=true;
+        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,false);
+        cc.director.setClearColor(cc.Color.WHITE);
+        this.node.runAction(cc.fadeTo(0.4,0));
+
+        this.scheduleOnce(this.gotoHomePage,0.5);
+    },
+    gotoHomePage:function(){
+        cc.director.loadScene("MainSC");
     },
 
     onDisable: function() {// bat buoc phai co de giai phong bo nho

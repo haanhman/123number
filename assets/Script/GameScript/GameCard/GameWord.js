@@ -40,6 +40,8 @@ cc.Class({
 
     onLoad: function () {
 
+        this.isClosed=false;
+
         this.index_countRS=0;
         this.arrRS=[];
 
@@ -82,6 +84,25 @@ cc.Class({
     },
 
     renderUI: function () {
+
+        var allchild=this.node.children;
+        for(var iac in allchild){
+            var tmp_node=allchild[iac];
+            if(tmp_node.name=="bg"||tmp_node.name=="closeButton"){
+                continue;
+            }
+            if(tmp_node.name=="picture"){
+                var bx=tmp_node.x;
+                var scsize=this.node.width/1.5;
+                tmp_node.x=tmp_node.x+scsize;
+                tmp_node.runAction(cc.moveTo(0.4,cc.p(bx,tmp_node.y)));
+            }
+        }
+        this.ovuong.node.opacity=0;
+        this.ovuong.node.runAction(cc.sequence(cc.delayTime(0.4),cc.fadeTo(0.4,255)));
+
+
+
         cc.log('render lai thong tin card');
         var cardInfo = this.cardData["images"][this.cardIndex];
         this.cardName = cardInfo["card_name"];
@@ -95,7 +116,6 @@ cc.Class({
         if(cardInfo["end_word"] == 0) {
             this.lblTouch.node.setPosition(lblTouchWidth/2, -223);
             this.lblTouch.node.setAnchorPoint(1, 0.5);
-            this.ovuong.node.setPosition(0, -22.2);
             this.ovuong.node.setAnchorPoint(1, 0.5);
             this.lblName.node.setPosition(0, -25);
             this.lblName.node.setAnchorPoint(0, 0.5);
@@ -176,11 +196,15 @@ cc.Class({
         this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
 
-        var callFunc=cc.callFunc(this.playKidsSayYay,this);
+        //var callFunc=cc.callFunc(this.playKidsSayYay,this);
         this.ovuong.node.runAction(cc.sequence(cc.scaleTo(0.4,1.3),cc.scaleTo(0.4,1.0)));
         this.lblTouch.node.runAction(cc.sequence(cc.scaleTo(0.4,1.3),cc.scaleTo(0.4,1.0)));
+        //this.node.stopAllActions();
+        //this.node.runAction(cc.sequence(cc.delayTime(this.audioAuration + 0.1),callFunc));
+
+        var callFunc=cc.callFunc(this.nextCard,this);
         this.node.stopAllActions();
-        this.node.runAction(cc.sequence(cc.delayTime(this.audioAuration + 0.1),callFunc));
+        this.node.runAction(cc.sequence(cc.delayTime(1.0),callFunc));
     },
 
 
@@ -194,16 +218,20 @@ cc.Class({
         this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
 
-        var callFunc=cc.callFunc(this.nextCard,this);
+        var callFunc=cc.callFunc(this.exitGame,this);
         this.node.stopAllActions();
         this.node.runAction(cc.sequence(cc.delayTime(5.0),callFunc));
     },
 
     nextCard: function () {
-        this.node.getChildByName("success_effect").removeFromParent(true);
+        var effectNode=this.node.getChildByName("success_effect");
+        if(effectNode!=null){
+            effectNode.removeFromParent(true);
+        }
+
         cc.log("this.cardIndex: %s, %s", this.cardIndex, this.limitCard);
         if (this.cardIndex >= (this.limitCard - 1)) {
-            this.exitGame();
+            this.playKidsSayYay();
             return;
         }
         this.blockTouchLeteer = false;
@@ -233,6 +261,26 @@ cc.Class({
         if (!this.blockTouchLeteer) {
 
         }
+    },
+
+    actionCloseButton:function(){
+        if(this.isClosed){
+            return;
+        }
+        this.isClosed=true;
+        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,false);
+        cc.director.setClearColor(cc.Color.WHITE);
+        this.node.runAction(cc.fadeTo(0.4,0));
+
+        this.scheduleOnce(this.gotoHomePage,0.5);
+    },
+    gotoHomePage:function(){
+        cc.director.loadScene("MainSC");
+    },
+    actionReloadButton:function(){
+        var mp3File = 'Sound/card/' + this.cardName + '.mp3';
+        this.addResourcePath(mp3File);
+        Utils.playSoundSource(mp3File, false,true);
     },
 
 });

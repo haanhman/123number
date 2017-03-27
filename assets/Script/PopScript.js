@@ -106,30 +106,50 @@ cc.Class({
     },
 
 
+    getRandomInt:function (min, max) { 
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+     },
     actionPlayGame: function () {
         Utils.play_game_letter = this.selectedLetter.toLowerCase();
         var latter = this.selectedLetter;
         Utils.index_sc = 0;
 
         //random thu tu game
+
+        var arrloadsc=[];
+        arrloadsc[0]="Trace" + latter.toUpperCase();
+        arrloadsc[1]="Trace" + latter + "_low";
+        arrloadsc[2]="Game_Touch";
+        arrloadsc[3]="Game_Touch";
+        arrloadsc[4]="Game_Touch";
+        arrloadsc[5]="GameWord";
         Utils.arrScene = [];
-        var threeGame = ["trace", "Game_Touch", "GameWord"];
-        Utils.arrayShuffle(threeGame);
-        for(var index in threeGame) {
-            if(threeGame[index] == "trace") {
-                Utils.arrScene.push("Trace" + latter.toUpperCase());
-                Utils.arrScene.push("Trace" + latter + "_low");
-            } else {
-                Utils.arrScene.push(threeGame[index]);
-            }
+
+        while (arrloadsc.length>=1){
+            var ir=this.getRandomInt(0,arrloadsc.length-1);
+            var obj_tmp=arrloadsc[ir];
+            cc.log("----: %s",obj_tmp);
+            Utils.arrScene.push(obj_tmp);
+            arrloadsc.splice(ir,1);
         }
+
         Utils.arrScene.push("GameBongBay");
-        cc.log(Utils.arrScene);
-        Utils.arrScene = ["Game_Touch"];
+
+
+        //Utils.arrScene.push("GameBongBay");
+        cc.log("--------: %s",Utils.arrScene.length);;
+        //Utils.arrScene = ["Game_Touch"];
+        //SlideInRTransition(t, s);
 
         var namesc = Utils.arrScene[Utils.index_sc];
+
         Utils.index_sc++;
+
         cc.director.loadScene(namesc);
+
+
+
+
 
     },
     actionPlaySong: function () {

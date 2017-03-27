@@ -23,11 +23,11 @@ cc.Class({
     },
 
     configDisplay:function(){
-        var sizesc=cc.director.getVisibleSize();
-        if(sizesc.height>800){
-            this.bgDisplay.scaleY=sizesc.height/800;
-            cc.log("---------size: %s %s %s",JSON.stringify(sizesc),sizesc.width,sizesc.height);
-        }
+        //var sizesc=cc.director.getVisibleSize();
+        //if(sizesc.height>800){
+        //    this.bgDisplay.scaleY=sizesc.height/800;
+        //    cc.log("---------size: %s %s %s",JSON.stringify(sizesc),sizesc.width,sizesc.height);
+        //}
     },
     // use this for initialization
     onLoad: function () {
