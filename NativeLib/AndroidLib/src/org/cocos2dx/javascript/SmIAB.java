@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.ResponseHandlerInterface;
 import com.sonman.inapp.IabException;
 import com.sonman.inapp.IabHelper;
 import com.sonman.inapp.IabResult;
@@ -14,6 +17,15 @@ import com.sonman.inapp.SkuDetails;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.Random;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.util.EntityUtils;
 
 /**
  * Created by anhmantk on 3/7/17.
@@ -24,7 +36,7 @@ public class SmIAB {
     // Debug tag, for logging
     static final String TAG = "SmIAB";
 
-    static final String product_id = "com.sonman.inappdemo.goi8";
+    static final String product_id = "com.sonman.inappdemo.goi9";
 
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10111;
@@ -42,6 +54,8 @@ public class SmIAB {
         mHelper = new IabHelper(activity, base64EncodedPublicKey);
 
         mHelper.enableDebugLogging(true);
+
+
 
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
@@ -70,6 +84,14 @@ public class SmIAB {
                 }
             }
         });
+    }
+
+    private static String createPayload() {
+        Random r = new Random();
+        int Low = 10;
+        int High = 10000000;
+        int Result = r.nextInt(High-Low) + Low;
+        return Result + "";
     }
 
     // Listener that's called when we finish querying the items and
@@ -105,7 +127,7 @@ public class SmIAB {
 
     // unlock content
     public static void unlockContent() {
-
+        payload = createPayload();
         Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
             @Override
             public void run() {
@@ -123,11 +145,127 @@ public class SmIAB {
 
     /** Verifies the developer payload of a purchase. */
     private static boolean verifyDeveloperPayload(Purchase p) {
-        String payload = p.getDeveloperPayload();
-        String token = p.getToken();
+        RequestParams params = new RequestParams();
+        params.put("signed_data", p.getOriginalJson());
+        params.put("signature", p.getSignature());
 
-        Log.d(TAG, "getOriginalJson: " + p.getOriginalJson());
-        Log.d(TAG, "getSignature: " + p.getSignature());
+        String url = "http://54.218.122.252/api/receipt/android";
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        client.post(url, params, new ResponseHandlerInterface() {
+            @Override
+            public void sendResponseMessage(HttpResponse httpResponse) throws IOException {
+
+            }
+
+            @Override
+            public void sendStartMessage() {
+
+            }
+
+            @Override
+            public void sendFinishMessage() {
+
+            }
+
+            @Override
+            public void sendProgressMessage(long l, long l1) {
+
+            }
+
+            @Override
+            public void sendCancelMessage() {
+
+            }
+
+            @Override
+            public void sendSuccessMessage(int i, Header[] headers, byte[] bytes) {
+
+            }
+
+            @Override
+            public void sendFailureMessage(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+            }
+
+            @Override
+            public void sendRetryMessage(int i) {
+
+            }
+
+            @Override
+            public URI getRequestURI() {
+                return null;
+            }
+
+            @Override
+            public void setRequestURI(URI uri) {
+
+            }
+
+            @Override
+            public Header[] getRequestHeaders() {
+                return new Header[0];
+            }
+
+            @Override
+            public void setRequestHeaders(Header[] headers) {
+
+            }
+
+            @Override
+            public boolean getUseSynchronousMode() {
+                return false;
+            }
+
+            @Override
+            public void setUseSynchronousMode(boolean b) {
+
+            }
+
+            @Override
+            public boolean getUsePoolThread() {
+                return false;
+            }
+
+            @Override
+            public void setUsePoolThread(boolean b) {
+
+            }
+
+            @Override
+            public void onPreProcessResponse(ResponseHandlerInterface responseHandlerInterface, HttpResponse httpResponse) {
+
+            }
+
+            @Override
+            public void onPostProcessResponse(ResponseHandlerInterface responseHandlerInterface, HttpResponse httpResponse) {
+                try {
+                    String result = EntityUtils.toString(httpResponse.getEntity());
+                    JSONObject myObject = new JSONObject(result);
+                    if(myObject.getInt("status") == 1) {
+                        unlockContentSuccess();
+                    } else {
+                        complain("Error purchasing. Authenticity verification failed.");
+                    }
+                }catch (Exception ex) {
+                    Log.d(TAG, ex.getMessage());
+                }
+            }
+
+            @Override
+            public Object getTag() {
+                return null;
+            }
+
+            @Override
+            public void setTag(Object o) {
+
+            }
+        });
+        return false;
+
         /*
          * TODO: verify that the developer payload of the purchase is correct.
          * It will be the same one that you sent when initiating the purchase.
@@ -153,7 +291,7 @@ public class SmIAB {
          * Using your own server to store and verify developer payloads across
          * app installations is recommended.
          */
-        return true;
+        //return true;
     }
 
     public static boolean checkRestore() {
@@ -178,22 +316,16 @@ public class SmIAB {
             if (result.isFailure()) {
                 if(checkRestore()) {
                     unlockContentSuccess();
-                } else {
-                    complain("Error purchasing: " + result);
                 }
                 return;
             }
-            if (!verifyDeveloperPayload(purchase)) {
-                complain("Error purchasing. Authenticity verification failed.");
-                return;
-            }
+
 
             Log.d(TAG, "Purchase successful.");
 
             if (purchase.getSku().equals(product_id)) {
                 // bought the premium upgrade!
-                unlockContentSuccess();
-
+                verifyDeveloperPayload(purchase);
             }
         }
     };
@@ -223,8 +355,7 @@ public class SmIAB {
 
     private static void complain(String message) {
         unlockContentFail();
-//        Log.e(TAG, "**** TrivialDrive Error: " + message);
-//        alert("Error: " + message);
+        alert(message);
     }
 
     private static void alert(final String message) {

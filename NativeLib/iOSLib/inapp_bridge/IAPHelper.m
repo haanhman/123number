@@ -300,9 +300,9 @@
     NSString *receiptBase64 = [NSString base64StringFromData:receiptData length:[receiptData length]];
 
     NSURL *requestURL = nil;
-    requestURL = [NSURL URLWithString:@"http://api.sm.dev/api/receipt/verify?debug=0"];
+    requestURL = [NSURL URLWithString:@"http://54.218.122.252/api/receipt/verify?debug=0"];
     #ifndef NDEBUG
-        requestURL = [NSURL URLWithString:@"http://api.sm.dev/api/receipt/verify?debug=1"];
+        requestURL = [NSURL URLWithString:@"http://54.218.122.252/api/receipt/verify?debug=1"];
     #endif
     
     NSString *myRequestString = [NSString stringWithFormat:@"receipt-data=%@", receiptBase64];
