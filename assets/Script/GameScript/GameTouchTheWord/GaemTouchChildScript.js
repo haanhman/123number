@@ -18,6 +18,8 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         this.disabletouch=false;
+        this.node.opacity=0;
+        this.node.runAction(cc.fadeTo(0.8,255));
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
         cc.loader.releaseRes("PrefabGame/starboom");

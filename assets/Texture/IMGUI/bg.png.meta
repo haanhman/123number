@@ -7,9 +7,9 @@
   "subMetas": {
     "bg": {
       "ver": "1.0.3",
-      "uuid": "32835a75-3146-464a-9b93-fb60dd982fdd",
+      "uuid": "a5a8c718-4a60-4ed8-9be6-91beec41815f",
       "rawTextureUuid": "ba0bf024-ebb9-4364-ad9a-649a7870f738",
-      "trimType": "auto",
+      "trimType": "custom",
       "trimThreshold": 1,
       "rotated": false,
       "offsetX": 0,

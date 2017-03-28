@@ -8,6 +8,8 @@ cc.Class({
         effect_touch:cc.Prefab,
         cloudNode:cc.Node,
         eventButton:cc.Component.EventHandler,
+        hubNode:cc.Node,
+        lbHubFinish:cc.Label,
 
     },
 
@@ -40,6 +42,8 @@ cc.Class({
     // use this for initialization
     onLoad: function () {
         //var bt=this.node.getChildByName("Bubble");
+        this.isClosed=false;
+        this.hubNode.active=false;
         this.index_countRS=0;
         this.arrRS=[];
 
@@ -151,8 +155,37 @@ cc.Class({
 
         this.blockLoad=false;
         // show ra chuc mung
-        this.scheduleOnce(this.loadNextScene,3);
+        this.scheduleOnce(this.actionShowHubFinish,3);
     },
+
+    actionCloseGame:function(){
+        if(this.isClosed){
+            return;
+        }
+        this.isClosed=true;
+        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,false);
+        cc.director.setClearColor(cc.Color.WHITE);
+        this.scheduleOnce(this.loadNextScene,1.5);
+
+        this.node.runAction(cc.fadeTo(1.0,0));
+    },
+
+    actionShowHubFinish:function(){
+        this.hubNode.active=true;
+        var animationhub=this.hubNode.getComponent(cc.Animation);
+        animationhub.play("animationBubblegame");
+        this.lbHubFinish.string=Utils.play_game_letter.toUpperCase();
+        this.scheduleOnce(this.playAudioGroup,0.8);
+
+        this.node.getChildByName("buttonClosetop").active=false;
+    },
+
+    playAudioGroup:function(){
+        cc.log("-----play audio group----");
+        Utils.playSoundSource("groupaudio/"+Utils.play_game_letter+".mp3",false,false);
+    },
+
+
     loadNextScene:function(){
         //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
         if(this.blockLoad){

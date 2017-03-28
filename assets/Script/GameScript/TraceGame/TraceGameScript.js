@@ -11,10 +11,78 @@ cc.Class({
         }
     },
 
+
+    update: function (dt) {
+        this.timeAddDot=this.timeAddDot+dt;
+    },
+
     // use this for initialization
     onLoad: function () {
+        this.timeAddDot=0;
         this.scSize=cc.director.getVisibleSize();
-        cc.log("---- %s    %s",this.scSize.width,this.scSize.height);
+        //this.scheduleOnce(this.loadConfigGame,0.5);
+        this.loadgame=false;
+        this.loadConfigGame();
+        var allchildx=this.node.children;
+        for(var cid in allchildx){
+            var tmp_node=allchildx[cid];
+            if(tmp_node.name=="reloadbutton"||tmp_node.name=="bgNode"){
+                continue;
+            }
+            var cposx=tmp_node.x;
+            tmp_node.x=this.scSize.width/2;
+            tmp_node.runAction(cc.moveTo(0.3,cc.p(cposx,tmp_node.y)));
+        }
+        this.playAudioGame();
+        this.loadConfigButton();
+    },
+
+
+    loadConfigButton:function(){
+        var button_reload=this.node.getChildByName("reloadbutton");
+        var widget_cpn=button_reload.getComponent(cc.Widget);
+        widget_cpn.isAlignRight=false;
+        widget_cpn.isAlignLeft=true;
+        widget_cpn.left=28;
+
+        var self=this;
+        cc.loader.loadRes("PrefabGame/HubCloseButton",cc.Prefab, function (err, prefab_file) {
+            if (!(err == null)) {
+                cc.log("----err===  %s ", err);
+                return;
+            }
+            var node_tmp = cc.instantiate(prefab_file);
+            self.node.addChild(node_tmp);
+        });
+
+
+    },
+
+    playAudioGame:function(){
+        var rid=Math.floor(Math.random()*10)>5?1:0;
+        var soundms_bg="Sound/gamevoice/trace"+rid+".mp3";
+        Utils.playSoundSource(soundms_bg,false,false);
+        this.scheduleOnce(this.playNextSoundCard,1.8);
+    },
+    playNextSoundCard:function(){
+        var allWord=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","Y","X","Z"];
+        var letter=Utils.play_game_letter;
+        if(letter==null||(typeof(letter )=="undefine")){
+            letter="B";
+        }
+        var index_letter=allWord.indexOf(letter.toUpperCase());
+        index_letter=index_letter+1;
+        var soundms_bg="Sound/speak/"+index_letter+"e.mp3";
+        cc.log("soundms_bg----: %s",soundms_bg);
+        Utils.playSoundSource(soundms_bg,false,false);
+    },
+
+    loadConfigGame:function(){
+        if(this.loadgame){
+            return;
+        }
+        this.loadgame=true;
+
         this.size_screen=cc.p(568,320);
         this.index_trace=0;
 
@@ -33,13 +101,14 @@ cc.Class({
         this.scriptDraw=this.drawNodeContent.getComponent("TraceGameDaw");
 
         this.createMask();
-
-        this.loadHelp();
-
-        //this.node.runAction(cc.sequence(cc.delayTime(9),cc.callFunc(this.loadHelp, this)));
+        this.scheduleOnce(this.loadHelp,0.5);
 
 
     },
+
+
+
+
 
     onDisable: function onDisable() {
         this.scriptDraw=null;
@@ -64,6 +133,9 @@ cc.Class({
         this.createMask();
 
         this.loadHelp();
+        cc.audioEngine.stopAll();
+        this.unscheduleAllCallbacks();
+        this.playAudioGame();
     },
 
     loadHelp:function(){
@@ -83,6 +155,9 @@ cc.Class({
                 cc.log("---removeFromParent");
                 getLastOBJ=null;
             }
+
+            Utils.playSoundSource("Sound/gamevoice/wc.mp3",false,false);
+            //Utils.playSoundSource("Sound/gamevoice/kids_say_yay.mp3",false,false);
             getLastOBJ=cc.instantiate(this.particleEffect);
             getLastOBJ.x=0;
             this.node.addChild(getLastOBJ);
@@ -233,6 +308,11 @@ cc.Class({
                 if(handNode.opacity>0){
                     handNode.stopAllActions();
                     handNode.opacity=0;
+                }
+                if(this.timeAddDot>0.2){
+                    this.timeAddDot=0;
+                    var soundms_bg="Sound/gamevoice/wtd.mp3";
+                    Utils.playSoundSource(soundms_bg,false,false);
                 }
 
 

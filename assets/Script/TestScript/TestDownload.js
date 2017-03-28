@@ -20,7 +20,10 @@ cc.Class({
     },
 
     actionStart:function(){
-        Utils.beginDownloadFile(Utils.getUrlDownload('a'));
+        //Utils.beginDownloadFile(Utils.getUrlDownload('a'));
+        var animation=this.node.getComponent(cc.Animation);
+        //animation.play();
+        animation.play('at1');
     },
     actionStop:function(){
 
