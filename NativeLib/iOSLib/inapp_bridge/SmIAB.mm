@@ -11,7 +11,7 @@ static bool clickBuyBtn = NO;
         NSSet* dataSet = [[NSSet alloc] initWithObjects:@"com.vkids.abcsong.fullcontent", nil];
         [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
     }
-    [IAPShare sharedHelper].iap.production = NO;
+    
     NSLog(@"bat dau load cac goi mua ban");
     
     [[IAPShare sharedHelper].iap requestProductsWithCompletion:^(SKProductsRequest* request,SKProductsResponse* response){
@@ -45,12 +45,13 @@ static bool clickBuyBtn = NO;
         }
         else if(trans.transactionState == SKPaymentTransactionStatePurchased) {
             
-            [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:@"your sharesecret" onCompletion:^(NSString *response, NSError *error) {
+            [[IAPShare sharedHelper].iap checkReceipt:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]] AndSharedSecret:nil onCompletion:^(NSString *response, NSError *error) {
                 
                 //Convert JSON String to NSDictionary
                 NSDictionary* rec = [IAPShare toJSON:response];
+                NSLog(@"rec: %@", rec);
                 
-                if([rec[@"status"] integerValue]==0)
+                if([rec[@"status"] integerValue] == 1)
                 {
                     
                     [[IAPShare sharedHelper].iap provideContentWithTransaction:trans];

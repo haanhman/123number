@@ -8,7 +8,7 @@
     UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
     
     NSLog(@"stringVideoName: %@",stringVideoName);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:stringVideoName]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:stringVideoName]) {
         NSLog(@"video not found");
     }
     NSURL *urlVideoFile = [NSURL fileURLWithPath:stringVideoName];

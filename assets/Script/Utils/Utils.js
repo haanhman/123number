@@ -75,6 +75,14 @@ var Utils = {
         }
     },
 
+    installCardData: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "installCardData");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "installCardData", "()V");
+        }
+    },
+
     //phan nay danh cho viec lay link download
     //neu co them server thi chi can cho vao day la xong
     getServer: function () {
@@ -220,7 +228,16 @@ var Utils = {
                 callback(rsdata);
             }
         });
-    }
+    },
+
+    /**
+     * lay random 1 phan tu cua mang
+     * @param array
+     * @returns {*}
+     */
+    randomElement: function (array) {
+        return array[Math.floor(Math.random() * array.length)];
+    },
 
 }
 module.exports = Utils;

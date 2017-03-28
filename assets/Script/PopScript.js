@@ -134,13 +134,6 @@ cc.Class({
         }
 
         Utils.arrScene.push("GameBongBay");
-
-
-        //Utils.arrScene.push("GameBongBay");
-        cc.log("--------: %s",Utils.arrScene.length);;
-        //Utils.arrScene = ["Game_Touch"];
-        //SlideInRTransition(t, s);
-
         var namesc = Utils.arrScene[Utils.index_sc];
 
         Utils.index_sc++;

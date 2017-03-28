@@ -25,12 +25,12 @@
 
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
-
 #import "AppController.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
 #import "SmIAB.h"
+
 @implementation AppController
 
 #pragma mark -
@@ -83,6 +83,7 @@ static AppDelegate s_sharedApplication;
     
     cocos2d::Application::getInstance()->run();
     [SmIAB IABInit];
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     return YES;
 }
 
