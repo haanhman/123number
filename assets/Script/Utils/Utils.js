@@ -1,4 +1,54 @@
+
+
+var iOS_appid="";
+var Android_appid="";
+
+var iOS_devid="";
+var Android_devid="";
+
+var mailSupport="abc@gmail.com";
+
+
 var Utils = {
+    rateApp:function(){
+        var urlRateApp="";
+        if(cc.sys.os==cc.sys.OS_IOS){
+            urlRateApp="itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id="+iOS_appid+"&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software";
+
+        }else{// la android
+            urlRateApp="market://details?id="+Android_appid;
+        }
+        cc.sys.openURL(urlRateApp);
+    },
+    openOurStore:function(){
+        var urlRateApp="";
+        if(cc.sys.os==cc.sys.OS_IOS){
+            urlRateApp="itms://itunes.apple.com/us/app/apple-store/id"+iOS_devid+"?mt=8";
+
+        }else{// la android
+            urlRateApp="market://details?id="+Android_devid;
+        }
+        cc.sys.openURL(urlRateApp);
+    },
+    shareAppURL:function(){
+        if(cc.sys.os==cc.sys.OS_IOS){
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionShareApp:","https://itunes.apple.com/app/id"+iOS_appid);
+        }
+        if(cc.sys.os==cc.sys.OS_ANDROID){
+            console.log("ShareAppURLShareAppURLShareAppURL");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionShareApp", "(Ljava/lang/String;)V","https://play.google.com/store/apps/details?id="+Android_appid);
+        }
+    },
+    feedBackMail:function(){
+        if(cc.sys.os==cc.sys.OS_IOS){
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionFeedBack:",mailSupport);
+        }
+        if(cc.sys.os==cc.sys.OS_ANDROID){
+            console.log("ShareAppURLShareAppURLShareAppURL");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionFeedBack", "(Ljava/lang/String;)V",mailSupport);
+        }
+    },
+
 
     playVideoForCard: function (videoPath) {
         var path = this.getFilePath("resources/" + videoPath);

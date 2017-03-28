@@ -42,16 +42,17 @@ cc.Class({
     },
 
     actionShare:function(){
-        BridgeDownload.startDownload('https://fir-e5fd4.firebaseapp.com/zip/b.zip');
+        //BridgeDownload.startDownload('https://fir-e5fd4.firebaseapp.com/zip/b.zip');
+        Utils.shareAppURL();
     },
     actionRate:function(){
-
+        Utils.rateApp();
     },
     actionAddMore:function(){
-
+        Utils.openOurStore();
     },
     actionSettings:function(){
-
+        Utils.feedBackMail();
     },
     actionBuyAll:function(){
         BridgeInappPurchase.unlockData();
