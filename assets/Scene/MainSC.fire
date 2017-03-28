@@ -7121,6 +7121,8 @@
     },
     "bgDisableTouch": {
       "__id__": 186
-    }
+    },
+    "installData": null,
+    "parental": null
   }
 ]
