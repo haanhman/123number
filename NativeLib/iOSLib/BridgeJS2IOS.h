@@ -8,5 +8,7 @@
 
 +(void)beginDownloadData:(NSString *)strurlDownload;
 +(void)playVideo:(NSString *)videoPath;
-+(void)installCardData;
+
++(void)actionFeedBack:(NSString *)emailAdress;
++(void)actionShareApp:(NSString*)strurl;
 @end

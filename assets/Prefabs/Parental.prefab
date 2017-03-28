@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Background",
+    "_name": "Parental",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -827,8 +827,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -964,7 +964,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 0,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -1077,8 +1077,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -1214,7 +1214,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -1327,8 +1327,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -1464,7 +1464,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -1577,8 +1577,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -1714,7 +1714,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -1827,8 +1827,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -1964,7 +1964,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -2077,8 +2077,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -2214,7 +2214,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -2327,8 +2327,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -2464,7 +2464,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -2577,8 +2577,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -2714,7 +2714,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -2827,8 +2827,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -2964,7 +2964,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -3077,8 +3077,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 56,
-      "height": 56
+      "width": 70,
+      "height": 70
     },
     "_children": [
       {
@@ -3214,7 +3214,7 @@
       "__uuid__": "0ae1f0be-0cfa-42fa-9d3f-4e5055a46c37"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 2,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",

@@ -1,7 +1,9 @@
 #import "BridgeJS2IOS.h"
 #include "DownloadCPlus.hpp"
 #import "VideoPlayerJS.h"
-#import "CardData.h"
+#include "AppController.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 @interface BridgeJS2IOS(){
 }
 @end
@@ -22,12 +24,6 @@ static BridgeJS2IOS *bridge_ios;
     [videoJS openVideoPlayer:videoPath];
 }
 
-+(void)installCardData {
-    CardData::getInstance()->copyCardData();
-}
-
-//MARK: -------------END STATIC METHOD ------------------------
-
 
 +(BridgeJS2IOS*)shareInstance{
     if (bridge_ios==nil) {
@@ -35,6 +31,44 @@ static BridgeJS2IOS *bridge_ios;
     }
     return bridge_ios;
 }
+
+
++(void)actionFeedBack:(NSString *)emailAdress{
+    [[BridgeJS2IOS shareInstance] sendMailFeedBack:emailAdress];
+}
++(void)actionShareApp:(NSString*)strurl{
+    AppController *appcntroller=(AppController *)[[UIApplication sharedApplication] delegate];
+    NSURL *url=[NSURL URLWithString:strurl];
+    NSArray *activityItems = @[@"Share game",strurl,url];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    if (([[[UIDevice currentDevice] systemVersion] floatValue])>=8) {
+        activityController.popoverPresentationController.sourceView = [appcntroller rootView].view;
+        
+    }
+    [activityController setValue:@"" forKey:@"subject"];
+    [[appcntroller rootView] presentViewController:activityController   animated:YES completion:nil];
+}
+//MARK: -------------END STATIC METHOD ------------------------
+
+-(void)sendMailFeedBack:(NSString *)emailAdress{
+    if([MFMailComposeViewController canSendMail]) {
+        
+        AppController *appcntroller=(AppController *)[[UIApplication sharedApplication] delegate];
+        
+        MFMailComposeViewController *mailCont = [[MFMailComposeViewController alloc] init];
+        mailCont.mailComposeDelegate =(id)self;        // Required to invoke mailComposeController when send
+        
+        [mailCont setSubject:@"Email subject"];
+        [mailCont setToRecipients:[NSArray arrayWithObject:emailAdress]];
+        [mailCont setMessageBody:@"" isHTML:NO];
+        
+        [[appcntroller rootView] presentViewController:mailCont animated:YES completion:nil];
+    }
+}
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end
 
 

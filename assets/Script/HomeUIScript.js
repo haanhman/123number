@@ -22,6 +22,10 @@ cc.Class({
         bgDisableTouch: cc.Sprite,
         installData: cc.Prefab,
         parental: cc.Prefab,
+        markLock:cc.Prefab,
+        rqdownload:cc.Prefab,
+        contentNode:cc.Node,
+
     },
 
     configDisplay:function(){
@@ -32,12 +36,38 @@ cc.Class({
         //}
     },
     // use this for initialization
+
+    reloadAllCard:function(){
+       
+        var allPage=this.contentNode.children;
+        var c_card=0;
+        for(var pid in allPage){
+            var page_node=allPage[pid];
+            var cards=page_node.children;
+            for(var ic in cards){
+                var tmp_card=cards[ic];
+                if(c_card<4){
+                    tmp_card.removeAllChildren(true);
+                }else if(c_card<6){
+                    var rdl=cc.instantiate(this.rqdownload);
+                    tmp_card.addChild(rdl);
+                }else{
+                    var rdl=cc.instantiate(this.markLock);
+                    tmp_card.addChild(rdl);
+                }
+                c_card++;
+
+            }
+        }
+    },
+
     onLoad: function () {
         this.configDisplay();
         var vkids_buy_content = cc.sys.localStorage.getItem('vkids_buy_content');
         if (vkids_buy_content) {
             this.removeBuyBtn();
         }
+        this.reloadAllCard();
     },
     removeBuyBtn: function () {
         this.btnBuy.node.removeFromParent(true);
