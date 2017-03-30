@@ -141,14 +141,17 @@ cc.Class({
         var imgUrl = 'cards/' + cardInfo['card_name'] + imageIndex + '.png';
 
         this.addResourcePath(imgUrl);
-        Utils.setSpriteFrame(this.picture, imgUrl);
-
-        this.picture.node.runAction(cc.sequence(cc.scaleTo(0.4,1.15),cc.scaleTo(0.4,1.0)));
-
-        this.audioAuration = cardInfo["audio_duration"];
-        cc.log('this.audioAuration: ' + this.audioAuration);
-        this.playSoundHelp();
-
+        Utils.setSpriteFrame(this.picture, imgUrl, function () {
+            //scale anh
+            var imgScale = 250 / this.picture.node.getContentSize().height;
+            if(imgScale < 1) {
+                this.picture.node.setScale(imgScale);
+            }
+            this.picture.node.runAction(cc.sequence(cc.scaleTo(0.4,1.15 * imgScale),cc.scaleTo(0.4,1.0 * imgScale)));
+            this.audioAuration = cardInfo["audio_duration"];
+            cc.log('this.audioAuration: ' + this.audioAuration);
+            this.playSoundHelp();
+        }.bind(this));
     },
 
     touchLetter: function () {
@@ -268,7 +271,7 @@ cc.Class({
             return;
         }
         this.isClosed=true;
-        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,false);
+        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,true);
         cc.director.setClearColor(cc.Color.WHITE);
         this.node.runAction(cc.fadeTo(0.4,0));
 

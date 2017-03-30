@@ -163,7 +163,7 @@ cc.Class({
             return;
         }
         this.isClosed=true;
-        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,false);
+        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,true);
         cc.director.setClearColor(cc.Color.WHITE);
         this.scheduleOnce(this.loadNextScene,1.5);
 
