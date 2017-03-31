@@ -50,6 +50,10 @@ cc.Class({
         var img = child_card.getComponent(cc.Sprite);
         Utils.setSpriteFrame(img, this.node.pathIMG, function () {
             var scale = bubble.node.getContentSize().width / img.node.getContentSize().width;
+            var scaleH = bubble.node.getContentSize().height / img.node.getContentSize().height;
+            if(scale > scaleH) {
+                scale = scaleH;
+            }
             if(scale < 1) {
                 img.node.setScale(scale * 0.6);
             }

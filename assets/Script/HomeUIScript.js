@@ -1,5 +1,3 @@
-var BridgeInappPurchase = require('BridgeInappPurchase');
-var BridgeDownload = require('BridgeDownload');
 var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
@@ -38,33 +36,56 @@ cc.Class({
     // use this for initialization
 
     reloadAllCard:function(){
-       
+        var limitFree = Utils.limitFree();
+        var limitRateToUnlock = Utils.limitRateToUnlock();
+
         var allPage=this.contentNode.children;
-        var c_card=0;
         for(var pid in allPage){
             var page_node=allPage[pid];
             var cards=page_node.children;
             for(var ic in cards){
                 var tmp_card=cards[ic];
-                if(c_card<4){
-                    tmp_card.removeAllChildren(true);
-                }else if(c_card<6){
-                    var rdl=cc.instantiate(this.rqdownload);
-                    tmp_card.addChild(rdl);
-                }else{
-                    var rdl=cc.instantiate(this.markLock);
-                    tmp_card.addChild(rdl);
-                }
-                c_card++;
+                //xoa tat ca nhung phan tu con truoc khi kiem tra luat mua ban
+                tmp_card.removeAllChildren(true);
+                var letter = tmp_card.name.toLowerCase();
 
+                if(limitFree.indexOf(letter) >= 0) {
+                    tmp_card.removeAllChildren(true);
+                } else if(limitRateToUnlock.indexOf(letter) >= 0) {
+                    /*
+                    * Kiểm tra đã rate app hay chua
+                    * - nếu rate rồi
+                    *   + đã download hay chua
+                    * - nếu chưa rate, khi ấn vào card popup sẽ phải hiển thị nut rate app
+                    * */
+                    if(!Utils.checkRateApp() || !Utils.checkDownload(letter)) {
+                        var rdl=cc.instantiate(this.rqdownload);
+                        tmp_card.addChild(rdl);
+                    }
+                } else {
+                    // neu chua mua thi hien thi mark lock
+                    // mua roi ma chua down thi hien thi icon download
+                    // download roi thi cho choi luon
+                    if(!Utils.isUnlockContent()) {
+                        var rdl=cc.instantiate(this.markLock);
+                        tmp_card.addChild(rdl);
+                    } else {
+                        if(Utils.checkDownload(letter)) {
+                            tmp_card.removeAllChildren(true);
+                        } else {
+                            var rdl=cc.instantiate(this.rqdownload);
+                            tmp_card.addChild(rdl);
+                        }
+                    }
+
+                }
             }
         }
     },
 
     onLoad: function () {
         this.configDisplay();
-        var vkids_buy_content = cc.sys.localStorage.getItem('vkids_buy_content');
-        if (vkids_buy_content) {
+        if (Utils.isUnlockContent()) {
             this.removeBuyBtn();
         }
         this.reloadAllCard();
@@ -74,30 +95,19 @@ cc.Class({
     },
     
     actionShare:function(){
-        //BridgeDownload.startDownload('https://fir-e5fd4.firebaseapp.com/zip/b.zip');
-        Utils.shareAppURL();
+        this.addParentalPopup('share');
     },
     actionRate:function(){
-        Utils.rateApp();
+        this.addParentalPopup('rate');
     },
     actionAddMore:function(){
-        Utils.openOurStore();
+        this.addParentalPopup('ourapp');
     },
     actionSettings:function(){
-        Utils.feedBackMail();
+        this.addParentalPopup('feedback');
     },
     actionBuyAll: function () {
-        var parental = cc.instantiate(this.parental);
-        parental.parentScene = this;
-        parental.setName("parental");
-        parental.setLocalZOrder(10);
-        parental.x = 0;
-        parental.y = 0;
-        this.node.addChild(parental);
-    },
-    buyNowAction: function () {
-        cc.log("buy now");
-        BridgeInappPurchase.unlockData();
+        this.addParentalPopup('buy');
     },
     videoCompleteCallback: function () {
         this.activeBgNoTouch(false);
@@ -136,6 +146,7 @@ cc.Class({
         cc.log("Nguoi dung da unlock data thanh cong");
         cc.sys.localStorage.setItem('vkids_buy_content', true);
         this.removeBuyBtn();
+        this.reloadAllCard();
     },
     unlockDataError: function () {
         cc.log("Unlock data that bai");
@@ -182,4 +193,15 @@ cc.Class({
         cc.log("removePopupInstallData");
         this.node.getChildByName("InstallDataPopup").removeFromParent(true);
     },
+
+    addParentalPopup: function (action) {
+        Utils.parentAction = action;
+        var parental = cc.instantiate(this.parental);
+        parental.setName("parental");
+        parental.setLocalZOrder(10);
+        parental.x = 0;
+        parental.y = 0;
+        this.node.addChild(parental);
+    },
+
 });

@@ -29,10 +29,10 @@ void CardData::copyCardData() {
         DownloadCPlus *download = DownloadCPlus::getInstance();
         download->fileSavePath = dest;
         download->unzipfile();
-    }    
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         ScriptingCore::getInstance()->runScript("install_data_success.js");
-    #endif
+#endif
+    }
 }
 
 

@@ -1,3 +1,11 @@
+/**
+ * bien action
+ * share: Utils.shareAppURL();
+ * rate: Utils.rateApp();
+ * ourapp: Utils.openOurStore();
+ * feedback: Utils.feedBackMail();
+ * buy: Utils.unlockData();
+ */
 var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
@@ -43,7 +51,7 @@ cc.Class({
         if(this.chooseNumber[0] == this.randomNumber[0] &&
             this.chooseNumber[1] == this.randomNumber[1] &&
             this.chooseNumber[2] == this.randomNumber[2]) {
-            this.node.parent.getComponent("HomeUIScript").buyNowAction();
+            this.runAction();
             this.closeBtn();
         } else {
             var animation = this.calculator.node.getComponent("cc.Animation");
@@ -54,6 +62,26 @@ cc.Class({
             if(this.fail >= 3) {
                 this.closeBtn();
             }
+        }
+    },
+
+    runAction: function () {
+        switch(Utils.parentAction) {
+            case 'share':
+                Utils.shareAppURL();
+                break;
+            case 'rate':
+                Utils.rateApp();
+                break;
+            case 'ourapp':
+                Utils.openOurStore();
+                break;
+            case 'feedback':
+                Utils.feedBackMail();
+                break;
+            case 'buy':
+                Utils.unlockData();
+                break;
         }
     },
 
