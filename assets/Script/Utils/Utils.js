@@ -1,51 +1,58 @@
+var iOS_appid = "";
+var Android_appid = "";
 
+var iOS_devid = "";
+var Android_devid = "";
 
-var iOS_appid="";
-var Android_appid="";
-
-var iOS_devid="";
-var Android_devid="";
-
-var mailSupport="abc@gmail.com";
-
-
+var mailSupport = "abc@gmail.com";
 var Utils = {
-    rateApp:function(){
-        var urlRateApp="";
-        if(cc.sys.os==cc.sys.OS_IOS){
-            urlRateApp="itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id="+iOS_appid+"&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software";
+    limitFree: function () {
+        return ['a', 'b', 'c', 'd'];
+    },
+    limitRateToUnlock: function () {
+        if (cc.sys.localStorage.getItem('vkids_need_rate_app') == true) {
+            return ['e'];
+        }
+        return [];
+    },
 
-        }else{// la android
-            urlRateApp="market://details?id="+Android_appid;
+    rateApp: function () {
+        var urlRateApp = "";
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            urlRateApp = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=" + iOS_appid + "&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software";
+
+        } else {// la android
+            urlRateApp = "market://details?id=" + Android_appid;
+        }
+        cc.sys.localStorage.setItem('vkids_rated', true);
+        cc.sys.openURL(urlRateApp);
+    },
+    openOurStore: function () {
+        var urlRateApp = "";
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            urlRateApp = "itms://itunes.apple.com/us/app/apple-store/id" + iOS_devid + "?mt=8";
+
+        } else {// la android
+            urlRateApp = "market://details?id=" + Android_devid;
         }
         cc.sys.openURL(urlRateApp);
     },
-    openOurStore:function(){
-        var urlRateApp="";
-        if(cc.sys.os==cc.sys.OS_IOS){
-            urlRateApp="itms://itunes.apple.com/us/app/apple-store/id"+iOS_devid+"?mt=8";
-
-        }else{// la android
-            urlRateApp="market://details?id="+Android_devid;
+    shareAppURL: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionShareApp:", "https://itunes.apple.com/app/id" + iOS_appid);
         }
-        cc.sys.openURL(urlRateApp);
-    },
-    shareAppURL:function(){
-        if(cc.sys.os==cc.sys.OS_IOS){
-            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionShareApp:","https://itunes.apple.com/app/id"+iOS_appid);
-        }
-        if(cc.sys.os==cc.sys.OS_ANDROID){
+        if (cc.sys.os == cc.sys.OS_ANDROID) {
             console.log("ShareAppURLShareAppURLShareAppURL");
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionShareApp", "(Ljava/lang/String;)V","https://play.google.com/store/apps/details?id="+Android_appid);
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionShareApp", "(Ljava/lang/String;)V", "https://play.google.com/store/apps/details?id=" + Android_appid);
         }
     },
-    feedBackMail:function(){
-        if(cc.sys.os==cc.sys.OS_IOS){
-            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionFeedBack:",mailSupport);
+    feedBackMail: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionFeedBack:", mailSupport);
         }
-        if(cc.sys.os==cc.sys.OS_ANDROID){
+        if (cc.sys.os == cc.sys.OS_ANDROID) {
             console.log("ShareAppURLShareAppURLShareAppURL");
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionFeedBack", "(Ljava/lang/String;)V",mailSupport);
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionFeedBack", "(Ljava/lang/String;)V", mailSupport);
         }
     },
 
@@ -74,7 +81,6 @@ var Utils = {
             }
         }
     },
-
     installCardData: function () {
         if (cc.sys.os == cc.sys.OS_IOS) {
             jsb.reflection.callStaticMethod("BridgeJS2IOS", "installCardData");
@@ -82,9 +88,8 @@ var Utils = {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "installCardData", "()V");
         }
     },
-
-    //phan nay danh cho viec lay link download
-    //neu co them server thi chi can cho vao day la xong
+//phan nay danh cho viec lay link download
+//neu co them server thi chi can cho vao day la xong
     getServer: function () {
         var server = [
             // "http://api.sm.dev",
@@ -149,7 +154,7 @@ var Utils = {
             a[j] = x;
         }
     },
-    //de lay duong dan cua file goi qua ham nay nhe
+//de lay duong dan cua file goi qua ham nay nhe
     getFilePath: function (path) {
         var fullPath = cc.url.raw(path);
         if (cc.sys.os != cc.sys.OS_IOS && cc.sys.os != cc.sys.OS_ANDROID) {
@@ -181,7 +186,7 @@ var Utils = {
             } else {
                 sprite.spriteFrame = cc.SpriteFrame(tex);
             }
-            if(callback != undefined) {
+            if (callback != undefined) {
                 callback();
             }
         });
@@ -194,20 +199,20 @@ var Utils = {
      * @param stopAll truoc khi play audio co stop het tat ca audio dang chay hay khong
      * @param callback callback function neu co
      */
-    playSoundSource:function(pathSource,loopAudio,stopAll, callback){
-        if(stopAll){
+    playSoundSource: function (pathSource, loopAudio, stopAll, callback) {
+        if (stopAll) {
             cc.audioEngine.stopAll();
         }
         var path = this.getFilePath("resources/" + pathSource);
 
-        cc.loader.load(path,function (err, audioFile) {
-            if(!(err==null)){
-                cc.log("----error load word  %s ",err);
+        cc.loader.load(path, function (err, audioFile) {
+            if (!(err == null)) {
+                cc.log("----error load word  %s ", err);
                 return;
             }
-            cc.audioEngine.play(audioFile,loopAudio);
+            cc.audioEngine.play(audioFile, loopAudio);
         });
-        if(callback != undefined) {
+        if (callback != undefined) {
             callback();
         }
     },
@@ -220,11 +225,11 @@ var Utils = {
     loadJson: function (jsonPath, callback) {
         var path = this.getFilePath("resources/" + jsonPath);
         cc.loader.load(path, function (err, rsdata) {
-            if(!(err==null)){
-                cc.log("----error load word  %s = ",err);
+            if (!(err == null)) {
+                cc.log("----error load word  %s = ", err);
                 return;
             }
-            if(callback != undefined) {
+            if (callback != undefined) {
                 callback(rsdata);
             }
         });
@@ -238,6 +243,35 @@ var Utils = {
     randomElement: function (array) {
         return array[Math.floor(Math.random() * array.length)];
     },
+
+    unlockData: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("SmIAB", "unlockContent");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            cc.log("Unlock data function");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "unlockContent", "()V");
+        } else {
+            cc.log("This device not support inapp purchase %s", cc.sys.os);
+            //nếu đang chạy simulator của thằng CC thì coi như mua luôn
+            if (cc.sys.os == 'OS X') {
+                var currentsc = cc.director.getScene();
+                var runningScene = currentsc.children[0].getComponent("HomeUIScript");
+                runningScene.unlockDataSuccess();
+            }
+        }
+    },
+
+    isUnlockContent: function () {
+        return cc.sys.localStorage.getItem('vkids_buy_content');
+    },
+    checkRateApp: function () {
+        return cc.sys.localStorage.getItem('vkids_rated');
+    },
+
+    checkDownload: function (letter) {
+        var checkDownload = "download_pack_" + letter;
+        return cc.sys.localStorage.getItem(checkDownload);
+    }
 
 }
 module.exports = Utils;
