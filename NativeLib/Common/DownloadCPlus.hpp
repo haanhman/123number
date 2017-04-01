@@ -14,6 +14,10 @@
 #include <cstring>
 #include <string>
 #include "cocos2d.h"
+#include "network/HttpClient.h"
+#include "cocos-ext.h"
+
+using namespace cocos2d::network;
 using namespace cocos2d;
 using namespace std;
 
@@ -25,6 +29,7 @@ class  DownloadCPlus
 public:
     virtual bool init();
     static DownloadCPlus* getInstance();
+    std::unique_ptr<network::Downloader> downloader;
     
     static void CallBackJS(float pr);
     static void CallBackJSErrorDownload(int stt);

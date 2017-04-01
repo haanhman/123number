@@ -20,6 +20,10 @@ static BridgeJS2IOS *bridge_ios;
     DownloadCPlus::getInstance()->beginDownload(strurlDownload.UTF8String);
 }
 
++(void)stopDownload {
+    DownloadCPlus::getInstance()->stopAllDownload();
+}
+
 +(void)playVideo:(NSString *)videoPath {
     VideoPlayerJS *videoJS = [[VideoPlayerJS alloc] init];
     [videoJS openVideoPlayer:videoPath];
