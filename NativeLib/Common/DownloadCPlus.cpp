@@ -41,6 +41,10 @@ extern "C"
         CCLOG("----BridgeAndroid--------XXXX----: %s",str);
         DownloadCPlus::getInstance()->beginDownload(str);
     }
+    void Java_org_cocos2dx_javascript_BridgeAndroid_stopDownloadCardData(JNIEnv* env, jobject thiz)
+    {
+        DownloadCPlus::getInstance()->stopAllDownload();
+    }
 }
 
 #endif

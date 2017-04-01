@@ -15,10 +15,15 @@ public class BridgeAndroid extends Cocos2dxActivity {
 
     public static native void beginDownload(String textStr);
     public static native void beginInstallCardData();
+    public static native void stopDownloadCardData();
 
     public static void beginDownloadFile(String urlDownload) {
         Log.d(TAG, urlDownload);
         beginDownload(urlDownload);// goi sang C++ , chi can goi the nay thoi
+    }
+
+    public static void stopDownload() {
+        stopDownloadCardData();
     }
 
     public static void playVideo(String videoPath) {
