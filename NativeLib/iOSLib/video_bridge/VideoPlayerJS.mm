@@ -26,7 +26,13 @@
     }];
     
     [self createHomeButton];
-    _playerViewController.view.backgroundColor=[UIColor whiteColor];
+    //trace
+    NSRange rangs=[stringVideoName rangeOfString:@"trace.mp4"];
+    if (rangs.location==NSNotFound) {
+        _playerViewController.view.backgroundColor=[UIColor whiteColor];
+    }else{
+        _playerViewController.view.backgroundColor=[UIColor colorWithRed:243/255.0f green:243/255.0f blue:243/255.0f alpha:1];
+    }
     [rootView.view addSubview:_playerViewController.view];
     rootView.view.autoresizesSubviews = YES;
     
