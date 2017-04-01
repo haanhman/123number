@@ -140,7 +140,9 @@ static AppDelegate s_sharedApplication;
 - (void)dealloc {
     [super dealloc];
 }
-
+-(UIViewController *)rootView{
+    return viewController;
+}
 
 @end
 
