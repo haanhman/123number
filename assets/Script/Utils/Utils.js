@@ -13,7 +13,7 @@ var Utils = {
         if (cc.sys.localStorage.getItem('vkids_need_rate_app') == true) {
             return ['e'];
         }
-        return [];
+        return ['e', 'f'];
     },
 
     rateApp: function () {
@@ -138,6 +138,14 @@ var Utils = {
             jsb.reflection.callStaticMethod("BridgeJS2IOS", "beginDownloadData:", strfileDownload);
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "beginDownloadFile", "(Ljava/lang/String;)V", strfileDownload);
+        }
+    },
+
+    stopDownload: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "stopDownload");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "stopDownload", "()V");
         }
     },
 

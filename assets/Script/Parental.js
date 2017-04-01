@@ -1,11 +1,3 @@
-/**
- * bien action
- * share: Utils.shareAppURL();
- * rate: Utils.rateApp();
- * ourapp: Utils.openOurStore();
- * feedback: Utils.feedBackMail();
- * buy: Utils.unlockData();
- */
 var Utils = require('Utils');
 cc.Class({
     extends: cc.Component,
@@ -66,7 +58,7 @@ cc.Class({
     },
 
     runAction: function () {
-        switch(Utils.parentAction) {
+        switch(this.node.action) {
             case 'share':
                 Utils.shareAppURL();
                 break;
@@ -81,6 +73,9 @@ cc.Class({
                 break;
             case 'buy':
                 Utils.unlockData();
+                break;
+            case 'download':
+                this.node.parentScene.downloadNow();
                 break;
         }
     },

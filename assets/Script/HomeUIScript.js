@@ -95,19 +95,19 @@ cc.Class({
     },
     
     actionShare:function(){
-        this.addParentalPopup('share');
+        this.addParentalPopup('share', this);
     },
     actionRate:function(){
-        this.addParentalPopup('rate');
+        this.addParentalPopup('rate', this);
     },
     actionAddMore:function(){
-        this.addParentalPopup('ourapp');
+        this.addParentalPopup('ourapp', this);
     },
     actionSettings:function(){
-        this.addParentalPopup('feedback');
+        this.addParentalPopup('feedback', this);
     },
     actionBuyAll: function () {
-        this.addParentalPopup('buy');
+        this.addParentalPopup('buy', this);
     },
     videoCompleteCallback: function () {
         this.activeBgNoTouch(false);
@@ -194,9 +194,10 @@ cc.Class({
         this.node.getChildByName("InstallDataPopup").removeFromParent(true);
     },
 
-    addParentalPopup: function (action) {
-        Utils.parentAction = action;
+    addParentalPopup: function (action, parent) {
         var parental = cc.instantiate(this.parental);
+        parental.parentScene = parent;
+        parental.action = action;
         parental.setName("parental");
         parental.setLocalZOrder(10);
         parental.x = 0;

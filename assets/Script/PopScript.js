@@ -177,10 +177,22 @@ cc.Class({
     },
 
     actionDownload: function () {
+        this.node.parent.getComponent("HomeUIScript").addParentalPopup('download', this);
+    },
+
+    downloadNow: function () {
         Utils.beginDownloadFile(Utils.getUrlDownload(this.strCardName.toLowerCase()));
         this.btnDownload.node.active = false;
         this.downloadPanel.active = true;
         this.btnClose.node.active = false;
+    },
+
+    stopDownload: function () {
+        Utils.stopDownload();
+        this.nativedownloadProgess(0);
+        this.btnDownload.node.active = true;
+        this.downloadPanel.active = false;
+        this.btnClose.node.active = true;
     },
 
     actionBuy: function () {

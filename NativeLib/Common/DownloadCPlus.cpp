@@ -7,7 +7,6 @@
 //
 
 #include "DownloadCPlus.hpp"
-#include "network/CCDownloader.h"
 #include "cocos2d.h"
 #include <iterator>
 #include <iostream>
@@ -31,7 +30,6 @@ USING_NS_CC;
 
 // singleton stuff
 static DownloadCPlus *s_download = nullptr;
-static  bool downloading;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 extern "C"
@@ -69,22 +67,21 @@ void DownloadCPlus::removeFile() {
 }
 
 void DownloadCPlus::beginDownload(const char* c_str_input){
-    if (downloading) {
-        CCLOG("------ dang ton tai 1 luong download roi----");
-        return;
-    }
-  
-    downloading=true;
-    std::string url=c_str_input;// neu co loi la do ep kieu
-    //url="https://github.com/MaVuong/GameAnalytics/blob/master/videodata.zip?raw=true";
-    s_download->fileSavePath = FileUtils::getInstance()->getWritablePath() + "data.zip";
+    s_download->stopAllDownload();
+    
+    std::string url=c_str_input;
+    
+    long timex = time(nullptr);
+    string fileName = StringUtils::format("%li.zip", timex);
+    
+    s_download->fileSavePath = FileUtils::getInstance()->getWritablePath() + fileName;
     if(FileUtils::getInstance()->isFileExist(s_download->fileSavePath)){
         CCLOG("------ remove file first-----");
         s_download->removeFile();
     }
-    network::Downloader *downloader = new (std::nothrow) network::Downloader();
     
-    downloader->onTaskProgress = ([] (const network::DownloadTask& task, int64_t bytesReceived, int64_t totalBytesReceived, int64_t totalBytesExpected) {
+    s_download->downloader->createDownloadFileTask(url, s_download->fileSavePath);
+    s_download->downloader->onTaskProgress = ([] (const network::DownloadTask& task, int64_t bytesReceived, int64_t totalBytesReceived, int64_t totalBytesExpected) {
         //downloading progress
         float percent = float(totalBytesReceived * 100) / totalBytesExpected;
         //CCLOG("percent: %f",percent);
@@ -92,18 +89,16 @@ void DownloadCPlus::beginDownload(const char* c_str_input){
         
     });
     
-    downloader->onFileTaskSuccess = ([] (const network::DownloadTask& task) {
+    s_download->downloader->onFileTaskSuccess = ([] (const network::DownloadTask& task) {
         //file downloaded, do what you need next
         CCLOG("download thanh cong: %s",s_download->fileSavePath.c_str());
         s_download->unzipfile();
         DownloadCPlus::CallBackJSFinishDownload(1);
-        downloading=false;
     });
     
-    downloader->onTaskError = ([] (const network::DownloadTask& task, int errorCode, int errorCodeInternal, const std::string& errorStr) {
+    s_download->downloader->onTaskError = ([] (const network::DownloadTask& task, int errorCode, int errorCodeInternal, const std::string& errorStr) {
         //file downloading error
-        DownloadCPlus::CallBackJSErrorDownload(errorCode);
-        downloading=false;
+        DownloadCPlus::CallBackJSErrorDownload(errorCode);        
         CCLOG("Failed to download : %s, identifier(%s) error code(%d), internal error code(%d) desc(%s)"
               , task.requestURL.c_str()
               , task.identifier.c_str()
@@ -112,13 +107,12 @@ void DownloadCPlus::beginDownload(const char* c_str_input){
               , errorStr.c_str());
     });
     
-    downloader->createDownloadFileTask(url, s_download->fileSavePath);
     //downloader->release();
     
 }
 
 void DownloadCPlus::stopAllDownload(){
-    
+    s_download->downloader.reset(new network::Downloader());
 }
 
 void DownloadCPlus::unzipfile(){

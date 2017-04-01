@@ -20,6 +20,10 @@ static BridgeJS2IOS *bridge_ios;
     DownloadCPlus::getInstance()->beginDownload(strurlDownload.UTF8String);
 }
 
++(void)stopDownload {
+    DownloadCPlus::getInstance()->stopAllDownload();
+}
+
 +(void)playVideo:(NSString *)videoPath {
     VideoPlayerJS *videoJS = [[VideoPlayerJS alloc] init];
     [videoJS openVideoPlayer:videoPath];
@@ -41,33 +45,33 @@ static BridgeJS2IOS *bridge_ios;
     [[BridgeJS2IOS shareInstance] sendMailFeedBack:emailAdress];
 }
 +(void)actionShareApp:(NSString*)strurl{
-//    AppController *appcntroller=(AppController *)[[UIApplication sharedApplication] delegate];
-//    NSURL *url=[NSURL URLWithString:strurl];
-//    NSArray *activityItems = @[@"Share game",strurl,url];
-//    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-//    if (([[[UIDevice currentDevice] systemVersion] floatValue])>=8) {
-//        activityController.popoverPresentationController.sourceView = [appcntroller rootView].view;
-//        
-//    }
-//    [activityController setValue:@"" forKey:@"subject"];
-//    [[appcntroller rootView] presentViewController:activityController   animated:YES completion:nil];
+    AppController *appcntroller=(AppController *)[[UIApplication sharedApplication] delegate];
+    NSURL *url=[NSURL URLWithString:strurl];
+    NSArray *activityItems = @[@"Share game",strurl,url];
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    if (([[[UIDevice currentDevice] systemVersion] floatValue])>=8) {
+        activityController.popoverPresentationController.sourceView = [appcntroller rootView].view;
+        
+    }
+    [activityController setValue:@"" forKey:@"subject"];
+    [[appcntroller rootView] presentViewController:activityController   animated:YES completion:nil];
 }
 //MARK: -------------END STATIC METHOD ------------------------
 
 -(void)sendMailFeedBack:(NSString *)emailAdress{
-//    if([MFMailComposeViewController canSendMail]) {
-//        
-//        AppController *appcntroller=(AppController *)[[UIApplication sharedApplication] delegate];
-//        
-//        MFMailComposeViewController *mailCont = [[MFMailComposeViewController alloc] init];
-//        mailCont.mailComposeDelegate =(id)self;        // Required to invoke mailComposeController when send
-//        
-//        [mailCont setSubject:@"Email subject"];
-//        [mailCont setToRecipients:[NSArray arrayWithObject:emailAdress]];
-//        [mailCont setMessageBody:@"" isHTML:NO];
-//        
-//        [[appcntroller rootView] presentViewController:mailCont animated:YES completion:nil];
-//    }
+    if([MFMailComposeViewController canSendMail]) {
+        
+        AppController *appcntroller=(AppController *)[[UIApplication sharedApplication] delegate];
+        
+        MFMailComposeViewController *mailCont = [[MFMailComposeViewController alloc] init];
+        mailCont.mailComposeDelegate =(id)self;        // Required to invoke mailComposeController when send
+        
+        [mailCont setSubject:@"Email subject"];
+        [mailCont setToRecipients:[NSArray arrayWithObject:emailAdress]];
+        [mailCont setMessageBody:@"" isHTML:NO];
+        
+        [[appcntroller rootView] presentViewController:mailCont animated:YES completion:nil];
+    }
 }
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [controller dismissViewControllerAnimated:YES completion:nil];

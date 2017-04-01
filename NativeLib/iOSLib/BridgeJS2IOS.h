@@ -12,4 +12,5 @@
 +(void)actionFeedBack:(NSString *)emailAdress;
 +(void)actionShareApp:(NSString*)strurl;
 +(void)installCardData;
++(void)stopDownload;
 @end
