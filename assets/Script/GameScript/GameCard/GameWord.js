@@ -168,9 +168,7 @@ cc.Class({
             var sequence = [];
             sequence.push(cc.delayTime(1.2));
             var pos_move=this.ovuong.node.getPosition();
-            if (cc.sys.isBrowser){
-                pos_move.y-=12;
-            }
+            pos_move.y-=12;
             sequence.push(cc.moveTo(0.5, pos_move));
             this.lblTouch.node.runAction(cc.sequence(sequence));
 

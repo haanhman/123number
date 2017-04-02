@@ -514,7 +514,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 256.37,
+      "width": 276.72,
       "height": 100
     },
     "_children": [],
@@ -557,7 +557,7 @@
     "_lineHeight": 100,
     "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
+      "__uuid__": "d1e1f42f-3cd2-4b6d-8232-f4bc94a0f72f"
     },
     "_isSystemFontUsed": false,
     "_N$string": "lligator",
@@ -614,8 +614,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88.89,
-      "height": 120
+      "width": 79.92,
+      "height": 130
     },
     "_children": [],
     "_rotationX": 0,
@@ -657,10 +657,10 @@
     "_useOriginalSize": false,
     "_actualFontSize": 120,
     "_fontSize": 120,
-    "_lineHeight": 120,
+    "_lineHeight": 130,
     "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
+      "__uuid__": "d1e1f42f-3cd2-4b6d-8232-f4bc94a0f72f"
     },
     "_isSystemFontUsed": false,
     "_N$string": "A",
