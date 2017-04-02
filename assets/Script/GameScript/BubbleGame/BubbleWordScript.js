@@ -37,11 +37,17 @@ cc.Class({
         var idcolor=this.getRandomBubbleWord(0,4);
         var childNodelb=this.node.children[0];
         childNodelb.color=this.colorWord[idcolor];
+
+        var label = childNodelb.getComponent(cc.Label);
         if (Math.round(Math.random()*10)>=5){
-            childNodelb.getComponent(cc.Label).string=this.node.word_name.toUpperCase();
+            label.string=this.node.word_name.toUpperCase();
+            label.node.setPosition(0, -130);
+            label.node.setAnchorPoint(0.5, 0);
         }else {
-            childNodelb.getComponent(cc.Label).string=this.node.word_name;
-            childNodelb.scale=1.3;
+            label.string=this.node.word_name;
+            label.node.setPosition(0, 0);
+            label.node.setAnchorPoint(0.5, 0.5);
+            childNodelb.scale=1.1;
         }
     },
 
