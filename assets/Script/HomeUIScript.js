@@ -23,7 +23,7 @@ cc.Class({
         markLock:cc.Prefab,
         rqdownload:cc.Prefab,
         contentNode:cc.Node,
-
+        btnMoreApp: cc.Sprite
     },
 
     configDisplay:function(){
@@ -36,10 +36,6 @@ cc.Class({
     // use this for initialization
 
     reloadAllCard:function(){
-
-        cc.sys.localStorage.removeItem('vkids_buy_content');
-        cc.sys.localStorage.removeItem('vkids_rated');
-
         var limitFree = Utils.limitFree();
         var limitRateToUnlock = Utils.limitRateToUnlock();
 
@@ -88,14 +84,29 @@ cc.Class({
     },
 
     onLoad: function () {
+
+        // if (cc.sys.os == cc.sys.OS_OSX) {
+        //     cc.sys.localStorage.removeItem('vkids_buy_content');
+        //     cc.sys.localStorage.removeItem('vkids_rated');
+        // }
+
         this.configDisplay();
         if (Utils.isUnlockContent()) {
+            this.btnMoreApp.node.active = true;
+            this.btnMoreApp.node.opacity = 255;
             this.removeBuyBtn();
         }
         this.reloadAllCard();
     },
     removeBuyBtn: function () {
         this.btnBuy.node.removeFromParent(true);
+
+        var sequence = [];
+        sequence.push(cc.delayTime(1.0));
+        sequence.push(cc.fadeIn(0.3));
+
+        this.btnMoreApp.node.active = true;
+        this.btnMoreApp.node.runAction(cc.sequence(sequence));
     },
     
     actionShare:function(){
@@ -107,7 +118,7 @@ cc.Class({
     actionAddMore:function(){
         this.addParentalPopup('ourapp', this);
     },
-    actionSettings:function(){
+    actionFeedback:function(){
         this.addParentalPopup('feedback', this);
     },
     actionBuyAll: function () {

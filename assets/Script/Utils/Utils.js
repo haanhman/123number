@@ -261,7 +261,7 @@ var Utils = {
         } else {
             cc.log("This device not support inapp purchase %s", cc.sys.os);
             //nếu đang chạy simulator của thằng CC thì coi như mua luôn
-            if (cc.sys.os == 'OS X') {
+            if (cc.sys.os == cc.sys.OS_OSX) {
                 var currentsc = cc.director.getScene();
                 var runningScene = currentsc.children[0].getComponent("HomeUIScript");
                 runningScene.unlockDataSuccess();
