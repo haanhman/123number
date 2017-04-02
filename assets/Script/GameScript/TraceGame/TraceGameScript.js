@@ -1,4 +1,5 @@
 var Utils = require('Utils');
+var GameData = require('GameData');
 cc.Class({
     extends: cc.Component,
 
@@ -66,7 +67,7 @@ cc.Class({
     },
     playNextSoundCard:function(){
         var allWord=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","Y","X","Z"];
-        var letter=Utils.play_game_letter;
+        var letter=GameData.playGameLetter;
         if(letter==null||(typeof(letter )=="undefine")){
             letter="B";
         }
@@ -156,12 +157,13 @@ cc.Class({
                 getLastOBJ=null;
             }
 
+            this.node.getChildByName("reloadbutton").active = false;
+
             Utils.playSoundSource("Sound/gamevoice/wc.mp3",false,false);
             //Utils.playSoundSource("Sound/gamevoice/kids_say_yay.mp3",false,false);
             getLastOBJ=cc.instantiate(this.particleEffect);
             getLastOBJ.x=0;
             this.node.addChild(getLastOBJ);
-            this.blockLoad=false;
             this.scheduleOnce(this.loadNextScene,3);
         }else{
             var current_help=this.helpNode[this.index_trace];
@@ -180,21 +182,7 @@ cc.Class({
     },
 
     loadNextScene:function(){
-        //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
-        if(this.blockLoad){
-            return;
-        }
-        this.blockLoad=true;
-        if (typeof (Utils.arrScene)=="undefined"){
-            return;
-        }
-        if(Utils.arrScene.length<=Utils.index_sc){
-            return;
-        }
-        var nextScName=Utils.arrScene[Utils.index_sc];
-        Utils.index_sc++;
-        cc.director.loadScene(nextScName);
-
+        GameData.nextGame();
     },
 
     createMask:function(){

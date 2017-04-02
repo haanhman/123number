@@ -1,4 +1,5 @@
 var Utils = require('Utils');
+var GameData = require('GameData');
 cc.Class({
     extends: cc.Component,
 
@@ -59,19 +60,15 @@ cc.Class({
 
         this.allowLoad=false;
 
-        this.word_name=Utils.play_game_letter;
+        this.word_name=GameData.playGameLetter;
         if (typeof (this.word_name)=="undefined"){
             this.word_name="d";
             //khong bao gio xay ra truong hop nay, cai nay chi de test thoi
         }
 
-        var json_path="cards/"+this.word_name+".json";
-        this.addResourcePath(json_path);
         var self=this;
-        Utils.loadJson(json_path, function (jsonResponse) {
-            self.arrayCard=jsonResponse.images;
-            self.allowLoad=true;
-        }.bind(this));
+        self.arrayCard = GameData.jsonData.images;
+        self.allowLoad=true;
 
         var soundms_bg="Sound/msbg/simplemsbg.mp3";
         this.addResourcePath(soundms_bg);
@@ -130,8 +127,6 @@ cc.Class({
                  this.addResourcePath(spbutton.audioPath);
              }else{
                  spbutton=cc.instantiate(this.bubbleNode);
-                 //spbutton.arrayCard=this.arrayCard;
-
                  var crCard=this.arrayCard[this.getRandomTime(0,this.arrayCard.length-1)];
                  spbutton.audioPath="Sound/card/"+crCard.card_name+".mp3";
                  this.addResourcePath(spbutton.audioPath);
@@ -152,8 +147,6 @@ cc.Class({
             return;
         }
         this.blockCallFun=true;
-
-        this.blockLoad=false;
         // show ra chuc mung
         this.scheduleOnce(this.actionShowHubFinish,3);
     },
@@ -174,7 +167,7 @@ cc.Class({
         this.hubNode.active=true;
         var animationhub=this.hubNode.getComponent(cc.Animation);
         animationhub.play("animationBubblegame");
-        this.lbHubFinish.string=Utils.play_game_letter.toUpperCase();
+        this.lbHubFinish.string=GameData.playGameLetter.toUpperCase();
         this.scheduleOnce(this.playAudioGroup,0.8);
 
         this.node.getChildByName("buttonClosetop").active=false;
@@ -182,28 +175,11 @@ cc.Class({
 
     playAudioGroup:function(){
         cc.log("-----play audio group----");
-        Utils.playSoundSource("groupaudio/"+Utils.play_game_letter+".mp3",false,false);
+        Utils.playSoundSource("groupaudio/"+GameData.playGameLetter+".mp3",false,false);
     },
 
 
     loadNextScene:function(){
-        //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
-        if(this.blockLoad){
-            return;
-        }
-        this.blockLoad=true;
-        if (typeof (Utils.arrScene)=="undefined"){
-            return;
-        }
-        if(Utils.arrScene.length<=Utils.index_sc){
-
-            cc.director.loadScene("MainSC");
-        }{
-            var nextScName=Utils.arrScene[Utils.index_sc];
-            Utils.index_sc++;
-            cc.director.loadScene(nextScName);
-        }
-
-
+        GameData.nextGame();
     },
 });

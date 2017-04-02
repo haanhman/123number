@@ -1,5 +1,6 @@
 var Utils = require('Utils');
 var NativeMobileJS = require('NativeMobile');
+var GameData = require('GameData');
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -127,38 +128,40 @@ cc.Class({
     getRandomInt: function (min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
+
     actionPlayGame: function () {
-        Utils.play_game_letter = this.selectedLetter.toLowerCase();
+        GameData.playGameLetter = this.selectedLetter.toLowerCase();
         var latter = this.selectedLetter;
-        Utils.index_sc = 0;
-
-        //random thu tu game
-
-        var arrloadsc = [];
-        arrloadsc[0] = "Trace" + latter.toUpperCase();
-        arrloadsc[1] = "Trace" + latter + "_low";
-        arrloadsc[2] = "Game_Touch";
-        arrloadsc[3] = "Game_Touch";
-        arrloadsc[4] = "Game_Touch";
-        arrloadsc[5] = "GameWord";
-        Utils.arrScene = [];
-
-        while (arrloadsc.length >= 1) {
-            var ir = this.getRandomInt(0, arrloadsc.length - 1);
-            var obj_tmp = arrloadsc[ir];
-            cc.log("----: %s", obj_tmp);
-            Utils.arrScene.push(obj_tmp);
-            arrloadsc.splice(ir, 1);
-        }
-
-        Utils.arrScene.push("GameBongBay");
-        var namesc = Utils.arrScene[Utils.index_sc];
-
-        Utils.index_sc++;
-
-        cc.director.loadScene(namesc);
+        GameData.restartGameData();
 
 
+        var jsonUrl = 'cards/' + GameData.playGameLetter + '.json';
+        Utils.loadJson(jsonUrl, function (jsonResponse) {
+            GameData.jsonData = jsonResponse;
+
+            GameData.gameCard.cardData.text = jsonResponse.text;
+            var tmp = jsonResponse.images;
+            Utils.arrayShuffle(tmp);
+
+            //chi lay 2 card ra de choi thoi
+            GameData.gameCard.cardData.images = tmp.slice(0, 2);
+
+            //random thu tu game
+            GameData.arrayScene = [];
+            GameData.arrayScene.push("Trace" + latter.toUpperCase())
+            GameData.arrayScene.push("Trace" + latter + "_low")
+            GameData.arrayScene.push("Game_Touch")
+            GameData.arrayScene.push("Game_Touch")
+            GameData.arrayScene.push("Game_Touch")
+            GameData.arrayScene.push("GameWord")
+            GameData.arrayScene.push("GameWord")
+            Utils.arrayShuffle(GameData.arrayScene);
+            GameData.arrayScene.push("GameBongBay");
+
+            var gameScene = GameData.arrayScene[GameData.gameIndex];
+            GameData.gameIndex++;
+            cc.director.loadScene(gameScene);
+        }.bind(this));
     },
     actionPlaySong: function () {
         Utils.playVideoForCard('video/' + this.strCardName.toLowerCase() + '_song.mp4');
