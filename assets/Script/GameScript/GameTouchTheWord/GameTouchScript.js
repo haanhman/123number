@@ -1,4 +1,5 @@
 var Utils = require('Utils');
+var GameData = require('GameData');
 cc.Class({
     extends: cc.Component,
 
@@ -17,9 +18,6 @@ cc.Class({
         this.arrRS=[];
         this.loadGameRandom();
         this.isClosed=false;
-
-
-
     },
 
     addResourcePath:function(str_path){
@@ -43,10 +41,10 @@ cc.Class({
         var listW=[];
         var allWord=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","Y","X","Z"];
 
-        var removeIndex = allWord.indexOf(Utils.play_game_letter.toUpperCase());
+        var removeIndex = allWord.indexOf(GameData.playGameLetter.toUpperCase());
         allWord.splice(removeIndex,1);
-        listW.push(Utils.play_game_letter.toUpperCase());
-        if(Utils.play_game_letter.toUpperCase() == "I") {
+        listW.push(GameData.playGameLetter.toUpperCase());
+        if(GameData.playGameLetter.toUpperCase() == "I") {
             lowercase=true;
         }
 
@@ -98,7 +96,7 @@ cc.Class({
             if(c_w>=1){
 
                 for(var index in scriptNode_tmp.arrWord) {
-                    if(scriptNode_tmp.arrWord[index].toLowerCase() == Utils.play_game_letter.toLowerCase()) {
+                    if(scriptNode_tmp.arrWord[index].toLowerCase() == GameData.playGameLetter.toLowerCase()) {
                         self.true_index=index;
                         break;
                     }
@@ -136,8 +134,6 @@ cc.Class({
             this.addResourcePath(source_path);
             Utils.playSoundSource(source_path, false, true);
             this.buttonsound.active=false;
-
-            this.blockLoad=false;
             this.scheduleOnce(this.loadNextScene,3);
             return true;
         }else{
@@ -183,21 +179,7 @@ cc.Class({
 
 
     loadNextScene:function(){
-        //cc.log("-------asdlhaskjdksa load next+"+ Math.random());
-        if(this.blockLoad){
-            return;
-        }
-        this.blockLoad=true;
-        if (typeof (Utils.arrScene)=="undefined"){
-            return;
-        }
-        if(Utils.arrScene.length<=Utils.index_sc){
-            return;
-        }
-        var nextScName=Utils.arrScene[Utils.index_sc];
-        Utils.index_sc++;
-        cc.director.loadScene(nextScName);
-
+        GameData.nextGame();
     },
 
 });

@@ -1,4 +1,5 @@
 var Utils = require('Utils');
+var GameData = require('GameData');
 cc.Class({
     extends: cc.Component,
 
@@ -12,7 +13,7 @@ cc.Class({
             default: []
         },
         particleEffect: cc.Prefab,
-        limitCard: 0
+        btnSound: cc.Sprite
     },
 
     addResourcePath:function(str_path){
@@ -45,13 +46,11 @@ cc.Class({
         this.index_countRS=0;
         this.arrRS=[];
 
-        this.cardData = {};
-        this.cardIndex = 0;
         this.blockTouchLeteer = false;
         this.cardName = "";
         this.audioAuration = 0;
         this.ovuongColor = this.ovuong.node.color;
-        this.loadJsonData();
+        this.renderUI();
     },
 
 
@@ -64,27 +63,8 @@ cc.Class({
         Utils.playSoundSource(mp3File, false,true);
     },
 
-    loadJsonData: function () {
-        var letter = Utils.play_game_letter;
-        if (typeof (letter)=="undefined"){
-            letter="a";
-            //khong bao gio xay ra truong hop nay, cai nay chi de test thoi
-        }
-
-        var jsonUrl = 'cards/' + letter + '.json';
-        this.addResourcePath(jsonUrl);
-        Utils.loadJson(jsonUrl, function (jsonResponse) {
-            this.cardData = jsonResponse;
-            //random mang du lieu
-            Utils.arrayShuffle(this.cardData["images"]);
-            //chi lay 2 card ra de choi thoi
-            this.cardData["images"] = this.cardData["images"].slice(0, this.limitCard);
-            this.renderUI();
-        }.bind(this));
-    },
-
     renderUI: function () {
-
+        this.btnSound.node.active = true;
         var allchild=this.node.children;
         for(var iac in allchild){
             var tmp_node=allchild[iac];
@@ -104,12 +84,12 @@ cc.Class({
 
 
         cc.log('render lai thong tin card');
-        var cardInfo = this.cardData["images"][this.cardIndex];
+        var cardInfo = GameData.gameCard.cardData["images"][GameData.gameCard.cardIndex];
         this.cardName = cardInfo["card_name"];
 
         var colorIndex = Math.floor(Math.random() * this.colorRandom.length);
         this.lblTouch.node.color = this.colorRandom[colorIndex];
-        this.lblTouch.string = this.cardData["text"];
+        this.lblTouch.string = GameData.gameCard.cardData["text"];
 
         var lblTouchWidth = this.lblTouch.node.getContentSize().width;
 
@@ -159,9 +139,9 @@ cc.Class({
             cc.log("Da touch vao letter roi");
             return;
         }
+        this.btnSound.node.active = false;
         this.blockTouchLeteer = true;
-
-        var mp3File = 'Sound/card/' + this.cardData["text"].toLowerCase() + '.mp3';
+        var mp3File = 'Sound/card/' + GameData.gameCard.cardData["text"].toLowerCase() + '.mp3';
         this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
         {
@@ -215,46 +195,22 @@ cc.Class({
         effect.x = 0;
         this.node.addChild(effect);
 
-        var mp3File = 'Sound/gamevoice/kids_say_yay.mp3';
+        var mp3File = 'Sound/gamevoice/wc.mp3';
         this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
 
         var callFunc=cc.callFunc(this.exitGame,this);
         this.node.stopAllActions();
-        this.node.runAction(cc.sequence(cc.delayTime(5.0),callFunc));
+        this.node.runAction(cc.sequence(cc.delayTime(3.0),callFunc));
     },
 
     nextCard: function () {
-        var effectNode=this.node.getChildByName("success_effect");
-        if(effectNode!=null){
-            effectNode.removeFromParent(true);
-        }
-
-        cc.log("this.cardIndex: %s, %s", this.cardIndex, this.limitCard);
-        if (this.cardIndex >= (this.limitCard - 1)) {
-            this.playKidsSayYay();
-            return;
-        }
-        this.blockTouchLeteer = false;
-        this.cardIndex++;
-        this.renderUI();
-        this.ovuong.node.color = this.ovuongColor;
+        GameData.gameCard.cardIndex++;
+        this.playKidsSayYay();
     },
 
     exitGame: function () {
-        // cc.audioEngine.stopAll();
-        // cc.director.loadScene('MainSC');
-        // return;
-        if (typeof (Utils.arrScene)=="undefined"){
-            return;
-        }
-        if(Utils.arrScene.length<=Utils.index_sc){
-            return;
-        }
-        var nextScName=Utils.arrScene[Utils.index_sc];
-        Utils.index_sc++;
-        cc.director.loadScene(nextScName);
-
+        GameData.nextGame();
     },
 
 

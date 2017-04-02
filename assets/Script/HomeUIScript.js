@@ -36,6 +36,10 @@ cc.Class({
     // use this for initialization
 
     reloadAllCard:function(){
+
+        cc.sys.localStorage.removeItem('vkids_buy_content');
+        cc.sys.localStorage.removeItem('vkids_rated');
+
         var limitFree = Utils.limitFree();
         var limitRateToUnlock = Utils.limitRateToUnlock();
 

@@ -1319,6 +1319,9 @@
     "particleEffect": {
       "__uuid__": "1e92011a-8b7d-4def-b592-7134253e2a92"
     },
+    "btnSound": {
+      "__id__": 26
+    },
     "limitCard": 2
   }
 ]
