@@ -96,8 +96,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 212.11,
-      "height": 200
+      "width": 201.6,
+      "height": 220
     },
     "_children": [],
     "_rotationX": 0,
@@ -141,10 +141,10 @@
     "_useOriginalSize": false,
     "_actualFontSize": 200,
     "_fontSize": 200,
-    "_lineHeight": 200,
-    "_enableWrapText": false,
+    "_lineHeight": 220,
+    "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
+      "__uuid__": "d1e1f42f-3cd2-4b6d-8232-f4bc94a0f72f"
     },
     "_isSystemFontUsed": false,
     "_N$string": "W",
@@ -249,8 +249,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148.14,
-      "height": 200
+      "width": 133.2,
+      "height": 220
     },
     "_children": [],
     "_rotationX": 0,
@@ -294,10 +294,10 @@
     "_useOriginalSize": false,
     "_actualFontSize": 200,
     "_fontSize": 200,
-    "_lineHeight": 200,
-    "_enableWrapText": false,
+    "_lineHeight": 220,
+    "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
+      "__uuid__": "d1e1f42f-3cd2-4b6d-8232-f4bc94a0f72f"
     },
     "_isSystemFontUsed": false,
     "_N$string": "A",
@@ -402,8 +402,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148.14,
-      "height": 200
+      "width": 133.2,
+      "height": 220
     },
     "_children": [],
     "_rotationX": 0,
@@ -447,10 +447,10 @@
     "_useOriginalSize": false,
     "_actualFontSize": 200,
     "_fontSize": 200,
-    "_lineHeight": 200,
-    "_enableWrapText": false,
+    "_lineHeight": 220,
+    "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
+      "__uuid__": "d1e1f42f-3cd2-4b6d-8232-f4bc94a0f72f"
     },
     "_isSystemFontUsed": false,
     "_N$string": "A",
@@ -555,8 +555,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148.14,
-      "height": 200
+      "width": 133.2,
+      "height": 220
     },
     "_children": [],
     "_rotationX": 0,
@@ -600,10 +600,10 @@
     "_useOriginalSize": false,
     "_actualFontSize": 200,
     "_fontSize": 200,
-    "_lineHeight": 200,
-    "_enableWrapText": false,
+    "_lineHeight": 220,
+    "_enableWrapText": true,
     "_N$file": {
-      "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
+      "__uuid__": "d1e1f42f-3cd2-4b6d-8232-f4bc94a0f72f"
     },
     "_isSystemFontUsed": false,
     "_N$string": "A",
