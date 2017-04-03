@@ -32,12 +32,11 @@ cc.Class({
         }
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
-        cc.log("---------onDisable");
         for(var ir=0;ir<this.index_countRS;ir++){
-            cc.log("    ---release rs: %s ",this.arrRS[ir]);
             cc.loader.releaseRes(this.arrRS[ir]);
         }
         cc.audioEngine.stopAll();
+        Utils.removeUnusedSpriteFrames();
     },
 
     // use this for initialization
@@ -174,7 +173,6 @@ cc.Class({
     },
 
     playAudioGroup:function(){
-        cc.log("-----play audio group----");
         Utils.playSoundSource("groupaudio/"+GameData.playGameLetter+".mp3",false,false);
     },
 

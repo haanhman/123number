@@ -30,7 +30,8 @@ var GameData = {
             nextScName=this.arrayScene[this.gameIndex];
         }
         this.gameIndex++;
-        if(nextScName != "") {
+        cc.log('nextScName: ' + nextScName);
+        if(nextScName.length > 0) {
             cc.director.loadScene(nextScName);
         }
     }

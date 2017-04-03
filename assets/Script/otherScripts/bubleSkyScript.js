@@ -42,7 +42,6 @@ cc.Class({
              this.node.removeAllChildren(true);
              this.node.removeFromParent(true);
              this.node.destroy();
-             //cc.log("----removeFromParentremoveFromParent ---");
              return;
          }
 

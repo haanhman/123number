@@ -40,6 +40,9 @@ static BridgeJS2IOS *bridge_ios;
     return bridge_ios;
 }
 
++(void)removeCache {
+    CardData::getInstance()->clearCache();
+}
 
 +(void)actionFeedBack:(NSString *)emailAdress{
     [[BridgeJS2IOS shareInstance] sendMailFeedBack:emailAdress];
@@ -56,6 +59,8 @@ static BridgeJS2IOS *bridge_ios;
     [activityController setValue:@"" forKey:@"subject"];
     [[appcntroller rootView] presentViewController:activityController   animated:YES completion:nil];
 }
+
+
 //MARK: -------------END STATIC METHOD ------------------------
 
 -(void)sendMailFeedBack:(NSString *)emailAdress{

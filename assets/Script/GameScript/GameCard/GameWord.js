@@ -31,12 +31,10 @@ cc.Class({
         }
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
-        cc.log("---------onDisable");
         for(var ir=0;ir<this.index_countRS;ir++){
-            cc.log("    ---release rs: %s ",this.arrRS[ir]);
             cc.loader.releaseRes(this.arrRS[ir]);
         }
-
+        Utils.removeUnusedSpriteFrames();
     },
 
     onLoad: function () {
@@ -115,7 +113,6 @@ cc.Class({
         }
         //can ra center
         this.lblName.node.parent.x=50-this.lblName.node.width/2;
-        //cc.log("-----lenght : %s",this.lblName.node.width );
         //hien thi anh
         var imageIndex = Math.floor(Math.random() * cardInfo["total_image"]) + 1;
         var imgUrl = 'cards/' + cardInfo['card_name'] + imageIndex + '.png';

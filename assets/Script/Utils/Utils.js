@@ -6,6 +6,7 @@ var Android_devid = "";
 
 var mailSupport = "abc@gmail.com";
 var Utils = {
+    listTexture: [],
     limitFree: function () {
         return ['a', 'b', 'c', 'd'];
     },
@@ -184,20 +185,29 @@ var Utils = {
      */
     setSpriteFrame: function (sprite, filePath, callback) {
         var path = this.getFilePath("resources/" + filePath);
-        cc.loader.load(path, function (err, tex) {
-            if (err != null) {
-                console.log("----error load image----:" + err);
-                return;
-            }
-            if (cc.sys.isBrowser) {
-                sprite.spriteFrame = new cc.SpriteFrame(tex);
-            } else {
-                sprite.spriteFrame = cc.SpriteFrame(tex);
-            }
+
+        if (!cc.sys.isBrowser) {
+            var tex = cc.TextureCache.getInstance().addImage(path);
+            this.listTexture.push(tex);
+            sprite.spriteFrame = new cc.SpriteFrame(tex);
             if (callback != undefined) {
                 callback();
             }
-        });
+        } else {
+            cc.loader.load(path, function (err, tex) {
+                if (err != null) {
+                    return;
+                }
+                if (cc.sys.isBrowser) {
+                    sprite.spriteFrame = new cc.SpriteFrame(tex);
+                } else {
+                    sprite.spriteFrame = cc.SpriteFrame(tex);
+                }
+                if (callback != undefined) {
+                    callback();
+                }
+            });
+        }
     },
     /**
      *
@@ -215,7 +225,6 @@ var Utils = {
 
         cc.loader.load(path, function (err, audioFile) {
             if (!(err == null)) {
-                cc.log("----error load word  %s ", err);
                 return;
             }
             cc.audioEngine.play(audioFile, loopAudio);
@@ -234,7 +243,6 @@ var Utils = {
         var path = this.getFilePath("resources/" + jsonPath);
         cc.loader.load(path, function (err, rsdata) {
             if (!(err == null)) {
-                cc.log("----error load word  %s = ", err);
                 return;
             }
             if (callback != undefined) {
@@ -279,6 +287,23 @@ var Utils = {
     checkDownload: function (letter) {
         var checkDownload = "download_pack_" + letter;
         return cc.sys.localStorage.getItem(checkDownload);
+    },
+
+    removeUnusedSpriteFrames: function () {
+        if (cc.sys.isBrowser) {
+            return;
+
+        }
+
+        this.listTexture.forEach(function (img) {
+            cc.log('img: ' + (typeof img));
+            cc.TextureCache.getInstance().removeTexture(img);
+        });
+        this.listTexture = [];
+
+        // if (cc.sys.os == cc.sys.OS_IOS) {
+        //     jsb.reflection.callStaticMethod("BridgeJS2IOS", "removeCache");
+        // }
     }
 
 }

@@ -20,60 +20,59 @@ cc.Class({
         bgDisableTouch: cc.Sprite,
         installData: cc.Prefab,
         parental: cc.Prefab,
-        markLock:cc.Prefab,
-        rqdownload:cc.Prefab,
-        contentNode:cc.Node,
+        markLock: cc.Prefab,
+        rqdownload: cc.Prefab,
+        contentNode: cc.Node,
         btnMoreApp: cc.Sprite
     },
 
-    configDisplay:function(){
+    configDisplay: function () {
         //var sizesc=cc.director.getVisibleSize();
         //if(sizesc.height>800){
         //    this.bgDisplay.scaleY=sizesc.height/800;
-        //    cc.log("---------size: %s %s %s",JSON.stringify(sizesc),sizesc.width,sizesc.height);
         //}
     },
     // use this for initialization
 
-    reloadAllCard:function(){
+    reloadAllCard: function () {
         var limitFree = Utils.limitFree();
         var limitRateToUnlock = Utils.limitRateToUnlock();
 
-        var allPage=this.contentNode.children;
-        for(var pid in allPage){
-            var page_node=allPage[pid];
-            var cards=page_node.children;
-            for(var ic in cards){
-                var tmp_card=cards[ic];
+        var allPage = this.contentNode.children;
+        for (var pid in allPage) {
+            var page_node = allPage[pid];
+            var cards = page_node.children;
+            for (var ic in cards) {
+                var tmp_card = cards[ic];
                 //xoa tat ca nhung phan tu con truoc khi kiem tra luat mua ban
                 tmp_card.removeAllChildren(true);
                 var letter = tmp_card.name.toLowerCase();
 
-                if(limitFree.indexOf(letter) >= 0) {
+                if (limitFree.indexOf(letter) >= 0) {
                     tmp_card.removeAllChildren(true);
-                } else if(limitRateToUnlock.indexOf(letter) >= 0) {
+                } else if (limitRateToUnlock.indexOf(letter) >= 0) {
                     /*
-                    * Kiểm tra đã rate app hay chua
-                    * - nếu rate rồi
-                    *   + đã download hay chua
-                    * - nếu chưa rate, khi ấn vào card popup sẽ phải hiển thị nut rate app
-                    * */
-                    if(!Utils.checkRateApp() || !Utils.checkDownload(letter)) {
-                        var rdl=cc.instantiate(this.rqdownload);
+                     * Kiểm tra đã rate app hay chua
+                     * - nếu rate rồi
+                     *   + đã download hay chua
+                     * - nếu chưa rate, khi ấn vào card popup sẽ phải hiển thị nut rate app
+                     * */
+                    if (!Utils.checkRateApp() || !Utils.checkDownload(letter)) {
+                        var rdl = cc.instantiate(this.rqdownload);
                         tmp_card.addChild(rdl);
                     }
                 } else {
                     // neu chua mua thi hien thi mark lock
                     // mua roi ma chua down thi hien thi icon download
                     // download roi thi cho choi luon
-                    if(!Utils.isUnlockContent()) {
-                        var rdl=cc.instantiate(this.markLock);
+                    if (!Utils.isUnlockContent()) {
+                        var rdl = cc.instantiate(this.markLock);
                         tmp_card.addChild(rdl);
                     } else {
-                        if(Utils.checkDownload(letter)) {
+                        if (Utils.checkDownload(letter)) {
                             tmp_card.removeAllChildren(true);
                         } else {
-                            var rdl=cc.instantiate(this.rqdownload);
+                            var rdl = cc.instantiate(this.rqdownload);
                             tmp_card.addChild(rdl);
                         }
                     }
@@ -85,10 +84,10 @@ cc.Class({
 
     onLoad: function () {
 
-        // if (cc.sys.os == cc.sys.OS_OSX) {
-        //     cc.sys.localStorage.removeItem('vkids_buy_content');
-        //     cc.sys.localStorage.removeItem('vkids_rated');
-        // }
+        if (cc.sys.os == cc.sys.OS_OSX) {
+            cc.sys.localStorage.removeItem('vkids_buy_content');
+            cc.sys.localStorage.removeItem('vkids_rated');
+        }
 
         this.configDisplay();
         if (Utils.isUnlockContent()) {
@@ -108,17 +107,17 @@ cc.Class({
         this.btnMoreApp.node.active = true;
         this.btnMoreApp.node.runAction(cc.sequence(sequence));
     },
-    
-    actionShare:function(){
+
+    actionShare: function () {
         this.addParentalPopup('share', this);
     },
-    actionRate:function(){
+    actionRate: function () {
         this.addParentalPopup('rate', this);
     },
-    actionAddMore:function(){
+    actionAddMore: function () {
         this.addParentalPopup('ourapp', this);
     },
-    actionFeedback:function(){
+    actionFeedback: function () {
         this.addParentalPopup('feedback', this);
     },
     actionBuyAll: function () {
@@ -136,7 +135,6 @@ cc.Class({
         var namebutton = nodebutton.target.name;
         namebutton = namebutton.toLocaleLowerCase();
 
-        cc.log("---asd-as-d-sad-as:   %s", namebutton);
         var checkOldNode = this.node.getChildByName("PopOptions");
         if (checkOldNode == null) {
             var popnode = cc.instantiate(this.popOptionPrefab);
@@ -160,6 +158,7 @@ cc.Class({
     unlockDataSuccess: function () {
         cc.log("Nguoi dung da unlock data thanh cong");
         cc.sys.localStorage.setItem('vkids_buy_content', true);
+        cc.sys.localStorage.setItem('vkids_rated', true);
         this.removeBuyBtn();
         this.reloadAllCard();
     },
@@ -184,9 +183,9 @@ cc.Class({
             var checkFileExist = Utils.getFilePath("resources/video/a_song.mp4");
             cc.log("checkFileExist: %s", checkFileExist);
             if (!jsb.fileUtils.isFileExist(checkFileExist)) {
-                var callFunc=cc.callFunc(this.copyDataFromZipFile,this);
+                var callFunc = cc.callFunc(this.copyDataFromZipFile, this);
                 this.node.stopAllActions();
-                this.node.runAction(cc.sequence(cc.delayTime(1.0),callFunc));
+                this.node.runAction(cc.sequence(cc.delayTime(1.0), callFunc));
             }
         }
     },
@@ -198,11 +197,11 @@ cc.Class({
         installPopup.y = 0;
         this.node.addChild(installPopup);
 
-        var callFunc=cc.callFunc(function(){
+        var callFunc = cc.callFunc(function () {
             Utils.installCardData();
-        },this);
+        }, this);
         this.node.stopAllActions();
-        this.node.runAction(cc.sequence(cc.delayTime(1.0),callFunc));
+        this.node.runAction(cc.sequence(cc.delayTime(1.0), callFunc));
     },
     removePopupInstallData: function () {
         cc.log("removePopupInstallData");
@@ -218,6 +217,21 @@ cc.Class({
         parental.x = 0;
         parental.y = 0;
         this.node.addChild(parental);
+    },
+
+    onDisable: function () {
+        this.popOptionPrefab = null;
+        this.cardAtlas = null;
+        this.bgDisplay = null;
+        this.btnBuy = null;
+        this.bgDisableTouch = null;
+        this.installData = null;
+        this.parental = null;
+        this.markLock = null;
+        this.rqdownload = null;
+        this.contentNode = null;
+        this.btnMoreApp = null;
+        Utils.removeUnusedSpriteFrames();
     },
 
 });

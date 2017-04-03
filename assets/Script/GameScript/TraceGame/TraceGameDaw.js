@@ -58,7 +58,6 @@ cc.Class({
             var currentPath=this.pathsMask[ip];
             var len=currentPath.length;
             if(len<2){
-                cc.log("----stop draw because len: %s",len);
                 continue;
             }
 

@@ -23,7 +23,7 @@ cc.Class({
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
         cc.loader.releaseRes("PrefabGame/starboom");
-
+        Utils.removeUnusedSpriteFrames();
     },
 
 
@@ -33,7 +33,6 @@ cc.Class({
 
         var count_word=this.arrWord.length;
         if(count_child!=count_word){
-            cc.log("------ error load config: %s   / %s",count_child,count_word);
             return ;
         }
 
@@ -49,10 +48,8 @@ cc.Class({
             lbchild.string=this.arrWord[ic];
 
             var randomarray=this.getRandomInt(0,colorlist.length-1);
-            //cc.log("------randomarray: %s",randomarray);
             nodechild.color=colorlist[randomarray];
             colorlist.splice(randomarray, 1);
-            //cc.log("------colorlist.length: %s",colorlist.length);
         }
     },
 
@@ -92,7 +89,6 @@ cc.Class({
         }
         var namebutton = nodebutton.target.name;
         namebutton = namebutton.toLocaleLowerCase();
-        cc.log("------ namebutton: %s",Number(namebutton));
         var parrentScript=this.node.parent.getComponent("GameTouchScript");
         var truecorrect=parrentScript.touchIndex(Number(namebutton));
         if(truecorrect){

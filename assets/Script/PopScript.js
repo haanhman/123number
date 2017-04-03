@@ -87,7 +87,6 @@ cc.Class({
         this.touchListen = cc.eventManager.addListener({
             event: cc.EventListener.TOUCH_ONE_BY_ONE, swallowTouches: true,
             onTouchBegan: function (touch, event) {
-                cc.log("-------this.name: " + this.node.name);
                 return true;
             }.bind(this),
 
@@ -104,9 +103,7 @@ cc.Class({
     onDisable: function onDisable() {
         NativeMobileJS.scriptReceiveDownload = null;
         cc.eventManager.removeListener(this.touchListen);
-
-
-        // cc.eventManager.removeAllListeners();
+        Utils.removeUnusedSpriteFrames();
     },
 
     actionCloseButton: function () {
