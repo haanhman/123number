@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.cocos2d.helloworld"
+    package="com.sonman.inappdemo"
     android:installLocation="auto">
 
     <uses-feature android:glEsVersion="0x00020000" />
@@ -38,6 +38,4 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="com.android.vending.BILLING" />
-
 </manifest>

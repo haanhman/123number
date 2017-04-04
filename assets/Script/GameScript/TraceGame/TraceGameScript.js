@@ -74,7 +74,6 @@ cc.Class({
         var index_letter=allWord.indexOf(letter.toUpperCase());
         index_letter=index_letter+1;
         var soundms_bg="Sound/speak/"+index_letter+"e.mp3";
-        cc.log("soundms_bg----: %s",soundms_bg);
         Utils.playSoundSource(soundms_bg,false,false);
     },
 
@@ -117,7 +116,6 @@ cc.Class({
 
     actionReload:function(){
         this.index_trace=0;
-        cc.log("-----actionReload:-----");
         this.indexDraw=[];
         for(var ii=0;ii<10;ii++){
             this.indexDraw[ii]=0;
@@ -191,7 +189,7 @@ cc.Class({
         var len_help=this.helpNode.length;
 
         if(this.index_trace>=len_help){
-            cc.log("-------error: len_help= %s",len_help);
+            // cc.log("-------error: len_help= %s",len_help);
         }else{
 
             for(var ih=0;ih<len_help;ih++){
@@ -200,7 +198,7 @@ cc.Class({
                 var dots=helpNode.children;
                 var len_dot=helpNode.childrenCount;
                 if(len_dot<=2){
-                    console.log("-----error len_dot= %s",len_dot);
+                    // console.log("-----error len_dot= %s",len_dot);
                 }
                 for(var i_d=0;i_d<len_dot;i_d++){
                     var dot_node=dots[i_d];
@@ -251,7 +249,6 @@ cc.Class({
         var current_index=this.indexDraw[this.index_trace];
 
         if(count_dots<=current_index){
-            cc.log("--------- load next help");
             this.index_trace++;
             this.loadHelp();
         }
@@ -314,5 +311,21 @@ cc.Class({
 
 
     },
+
+    exitGame: function () {
+        // this.drawNodeContent.getComponent("TraceGameDaw").removeFromParent(true);
+        this.drawNodeContent.removeFromParent(true);
+        this.node.getChildByName("gamebg").removeFromParent(true);
+        this.node.getChildByName("Word").removeFromParent(true);
+        this.node.getChildByName("bantay").removeFromParent(true);
+        var sequence = [];
+        var fadeTo = cc.fadeTo(0.4,0);
+        var callFunc = cc.callFunc(function(){
+            cc.director.loadScene("MainSC");
+        });
+        sequence.push(fadeTo);
+        sequence.push(callFunc);
+        this.node.runAction(cc.sequence(sequence));
+    }
 
 });

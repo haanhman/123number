@@ -119,7 +119,6 @@ cc.Class({
             return;
         }
         if(this.source_audio_path==null){
-            cc.log("----this.source_audio_path==null");
             this.source_audio_path="Sound/gametouch/t"+this.true_word + ".mp3";
             this.addResourcePath(this.source_audio_path);
         }
@@ -134,6 +133,7 @@ cc.Class({
             this.addResourcePath(source_path);
             Utils.playSoundSource(source_path, false, true);
             this.buttonsound.active=false;
+            this.blockLoad=false;
             this.scheduleOnce(this.loadNextScene,3);
             return true;
         }else{
@@ -159,26 +159,11 @@ cc.Class({
         cc.director.loadScene("MainSC");
     },
 
-    onDisable: function() {// bat buoc phai co de giai phong bo nho
-        cc.log("---------onDisable");
-        for(var ir=0;ir<this.index_countRS;ir++){
-            cc.log("    ---release rs: %s ",this.arrRS[ir]);
-            cc.loader.releaseRes(this.arrRS[ir]);
-        }
-        this.buttonsound=null;
-        this.colorList=null;
-        this.soundTouch=null;
-    },
-
-    onDestroy:function(){
-        cc.log("---------onDestroy");
-
-    },
-
-
-
-
     loadNextScene:function(){
+        if(this.blockLoad){
+            return;
+        }
+        this.blockLoad=true;
         GameData.nextGame();
     },
 

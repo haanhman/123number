@@ -41,7 +41,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "4c307ff4-3f29-4904-819a-b00b5a08479d",
-    "autoReleaseAssets": false
+    "autoReleaseAssets": true
   },
   {
     "__type__": "cc.Node",
@@ -1586,7 +1586,7 @@
     "node": {
       "__id__": 6
     },
-    "_enabled": true,
+    "_enabled": false,
     "bbPrefab": {
       "__uuid__": "f8078817-4d17-4051-ad0b-98fa09f057ab"
     }

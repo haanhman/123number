@@ -6,6 +6,7 @@ var Android_devid = "";
 
 var mailSupport = "abc@gmail.com";
 var Utils = {
+    listTexture: [],
     limitFree: function () {
         return ['a', 'b', 'c', 'd'];
     },
@@ -186,7 +187,6 @@ var Utils = {
         var path = this.getFilePath("resources/" + filePath);
         cc.loader.load(path, function (err, tex) {
             if (err != null) {
-                console.log("----error load image----:" + err);
                 return;
             }
             if (cc.sys.isBrowser) {
@@ -215,7 +215,6 @@ var Utils = {
 
         cc.loader.load(path, function (err, audioFile) {
             if (!(err == null)) {
-                cc.log("----error load word  %s ", err);
                 return;
             }
             cc.audioEngine.play(audioFile, loopAudio);
@@ -234,7 +233,6 @@ var Utils = {
         var path = this.getFilePath("resources/" + jsonPath);
         cc.loader.load(path, function (err, rsdata) {
             if (!(err == null)) {
-                cc.log("----error load word  %s = ", err);
                 return;
             }
             if (callback != undefined) {
@@ -279,7 +277,7 @@ var Utils = {
     checkDownload: function (letter) {
         var checkDownload = "download_pack_" + letter;
         return cc.sys.localStorage.getItem(checkDownload);
-    }
+    },
 
 }
 module.exports = Utils;

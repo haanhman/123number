@@ -24,14 +24,12 @@ cc.Class({
         if(this.isClosed){
             return;
         }
+
         this.isClosed=true;
+        this.node.stopAllActions();
         Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,true);
         cc.director.setClearColor(cc.Color.WHITE);
-        this.node.parent.runAction(cc.fadeTo(0.4,0));
 
-        this.scheduleOnce(this.gotoHomePage,0.5);
-    },
-    gotoHomePage:function(){
-        cc.director.loadScene("MainSC");
-    },
+        this.node.parent.getComponent("TraceGameScript").exitGame();
+    }
 });
