@@ -13,5 +13,4 @@
 +(void)actionShareApp:(NSString*)strurl;
 +(void)installCardData;
 +(void)stopDownload;
-+(void)removeCache;
 @end

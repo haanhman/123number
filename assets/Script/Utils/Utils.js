@@ -185,29 +185,19 @@ var Utils = {
      */
     setSpriteFrame: function (sprite, filePath, callback) {
         var path = this.getFilePath("resources/" + filePath);
-
-        if (!cc.sys.isBrowser) {
-            var tex = cc.TextureCache.getInstance().addImage(path);
-            this.listTexture.push(tex);
-            sprite.spriteFrame = new cc.SpriteFrame(tex);
+        cc.loader.load(path, function (err, tex) {
+            if (err != null) {
+                return;
+            }
+            if (cc.sys.isBrowser) {
+                sprite.spriteFrame = new cc.SpriteFrame(tex);
+            } else {
+                sprite.spriteFrame = cc.SpriteFrame(tex);
+            }
             if (callback != undefined) {
                 callback();
             }
-        } else {
-            cc.loader.load(path, function (err, tex) {
-                if (err != null) {
-                    return;
-                }
-                if (cc.sys.isBrowser) {
-                    sprite.spriteFrame = new cc.SpriteFrame(tex);
-                } else {
-                    sprite.spriteFrame = cc.SpriteFrame(tex);
-                }
-                if (callback != undefined) {
-                    callback();
-                }
-            });
-        }
+        });
     },
     /**
      *
@@ -288,23 +278,6 @@ var Utils = {
         var checkDownload = "download_pack_" + letter;
         return cc.sys.localStorage.getItem(checkDownload);
     },
-
-    removeUnusedSpriteFrames: function () {
-        if (cc.sys.isBrowser) {
-            return;
-
-        }
-
-        this.listTexture.forEach(function (img) {
-            cc.log('img: ' + (typeof img));
-            cc.TextureCache.getInstance().removeTexture(img);
-        });
-        this.listTexture = [];
-
-        // if (cc.sys.os == cc.sys.OS_IOS) {
-        //     jsb.reflection.callStaticMethod("BridgeJS2IOS", "removeCache");
-        // }
-    }
 
 }
 module.exports = Utils;

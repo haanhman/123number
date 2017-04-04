@@ -15,11 +15,6 @@ CardData* CardData::getInstance()
     return instance;
 }
 
-void CardData::clearCache() {
-    SpriteFrameCache::getInstance()->removeUnusedSpriteFrames();
-    Director::getInstance()->getTextureCache()->removeUnusedTextures();
-}
-
 void CardData::copyCardData() {
     FileUtils *fileManager = FileUtils::getInstance();
     CCLOG("Document: %s", fileManager->getWritablePath().c_str());

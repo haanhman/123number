@@ -217,21 +217,6 @@ cc.Class({
         parental.x = 0;
         parental.y = 0;
         this.node.addChild(parental);
-    },
-
-    onDisable: function () {
-        this.popOptionPrefab = null;
-        this.cardAtlas = null;
-        this.bgDisplay = null;
-        this.btnBuy = null;
-        this.bgDisableTouch = null;
-        this.installData = null;
-        this.parental = null;
-        this.markLock = null;
-        this.rqdownload = null;
-        this.contentNode = null;
-        this.btnMoreApp = null;
-        Utils.removeUnusedSpriteFrames();
-    },
+    }
 
 });

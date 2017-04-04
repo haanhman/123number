@@ -112,7 +112,6 @@ cc.Class({
 
     onDisable: function onDisable() {
         this.scriptDraw=null;
-        Utils.removeUnusedSpriteFrames();
     },
 
     actionReload:function(){
@@ -312,5 +311,21 @@ cc.Class({
 
 
     },
+
+    exitGame: function () {
+        // this.drawNodeContent.getComponent("TraceGameDaw").removeFromParent(true);
+        this.drawNodeContent.removeFromParent(true);
+        this.node.getChildByName("gamebg").removeFromParent(true);
+        this.node.getChildByName("Word").removeFromParent(true);
+        this.node.getChildByName("bantay").removeFromParent(true);
+        var sequence = [];
+        var fadeTo = cc.fadeTo(0.4,0);
+        var callFunc = cc.callFunc(function(){
+            cc.director.loadScene("MainSC");
+        });
+        sequence.push(fadeTo);
+        sequence.push(callFunc);
+        this.node.runAction(cc.sequence(sequence));
+    }
 
 });

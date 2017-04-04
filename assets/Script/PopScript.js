@@ -103,7 +103,6 @@ cc.Class({
     onDisable: function onDisable() {
         NativeMobileJS.scriptReceiveDownload = null;
         cc.eventManager.removeListener(this.touchListen);
-        Utils.removeUnusedSpriteFrames();
     },
 
     actionCloseButton: function () {

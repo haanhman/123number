@@ -16,27 +16,6 @@ cc.Class({
         btnSound: cc.Sprite
     },
 
-    addResourcePath:function(str_path){
-        var path = Utils.getFilePath("resources/" + str_path);
-        var source_exits=false;
-        for(var is=0;is<this.arrRS.length;is++){
-            if(this.arrRS[is]==path){
-                source_exits=true;
-                break;
-            }
-        }
-        if(!source_exits){
-            this.arrRS[this.index_countRS]=path;
-            this.index_countRS++;
-        }
-    },
-    onDisable: function() {// bat buoc phai co de giai phong bo nho
-        for(var ir=0;ir<this.index_countRS;ir++){
-            cc.loader.releaseRes(this.arrRS[ir]);
-        }
-        Utils.removeUnusedSpriteFrames();
-    },
-
     onLoad: function () {
 
         this.isClosed=false;
@@ -57,7 +36,6 @@ cc.Class({
             return;
         }
         var mp3File = 'Sound/card/' + this.cardName + '.mp3';
-        this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
     },
 
@@ -117,7 +95,6 @@ cc.Class({
         var imageIndex = Math.floor(Math.random() * cardInfo["total_image"]) + 1;
         var imgUrl = 'cards/' + cardInfo['card_name'] + imageIndex + '.png';
 
-        this.addResourcePath(imgUrl);
         Utils.setSpriteFrame(this.picture, imgUrl, function () {
             //scale anh
             var imgScale = 250 / this.picture.node.getContentSize().height;
@@ -139,7 +116,6 @@ cc.Class({
         this.btnSound.node.active = false;
         this.blockTouchLeteer = true;
         var mp3File = 'Sound/card/' + GameData.gameCard.cardData["text"].toLowerCase() + '.mp3';
-        this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
         {
             var sequence = [];
@@ -171,7 +147,6 @@ cc.Class({
 
     playCardName: function () {
         var mp3File = 'Sound/card/' + this.cardName + '.mp3';
-        this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
 
         //var callFunc=cc.callFunc(this.playKidsSayYay,this);
@@ -193,7 +168,6 @@ cc.Class({
         this.node.addChild(effect);
 
         var mp3File = 'Sound/gamevoice/wc.mp3';
-        this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
 
         var callFunc=cc.callFunc(this.exitGame,this);
@@ -233,7 +207,6 @@ cc.Class({
     },
     actionReloadButton:function(){
         var mp3File = 'Sound/card/' + this.cardName + '.mp3';
-        this.addResourcePath(mp3File);
         Utils.playSoundSource(mp3File, false,true);
     },
 

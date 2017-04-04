@@ -17,26 +17,8 @@ cc.Class({
     getRandomTime:function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
-    addResourcePath:function(str_path){
-        var path = Utils.getFilePath("resources/" + str_path);
-        var source_exits=false;
-        for(var is=0;is<this.arrRS.length;is++){
-            if(this.arrRS[is]==path){
-                source_exits=true;
-                break;
-            }
-        }
-        if(!source_exits){
-            this.arrRS[this.index_countRS]=path;
-            this.index_countRS++;
-        }
-    },
-    onDisable: function() {// bat buoc phai co de giai phong bo nho
-        for(var ir=0;ir<this.index_countRS;ir++){
-            cc.loader.releaseRes(this.arrRS[ir]);
-        }
+    onDisable: function() {
         cc.audioEngine.stopAll();
-        Utils.removeUnusedSpriteFrames();
     },
 
     // use this for initialization
@@ -70,7 +52,6 @@ cc.Class({
         self.allowLoad=true;
 
         var soundms_bg="Sound/msbg/simplemsbg.mp3";
-        this.addResourcePath(soundms_bg);
         Utils.playSoundSource(soundms_bg,true,true);
 
         this.coundBubble=0;
@@ -98,7 +79,6 @@ cc.Class({
         }
 
         var source_path=btNode.audioPath;
-        this.addResourcePath(source_path);
         Utils.playSoundSource(source_path, false, false);
     },
 
@@ -123,16 +103,11 @@ cc.Class({
                  spbutton=cc.instantiate(this.bubbleLabel);
                  spbutton.word_name=this.word_name;
                  spbutton.audioPath="Sound/card/"+this.word_name+".mp3";
-                 this.addResourcePath(spbutton.audioPath);
              }else{
                  spbutton=cc.instantiate(this.bubbleNode);
                  var crCard=this.arrayCard[this.getRandomTime(0,this.arrayCard.length-1)];
                  spbutton.audioPath="Sound/card/"+crCard.card_name+".mp3";
-                 this.addResourcePath(spbutton.audioPath);
-
                  spbutton.pathIMG="cards/"+crCard.card_name+this.getRandomTime(1,Math.floor(crCard.total_image))+".png";
-                 this.addResourcePath(spbutton.pathIMG);
-
              }
              var btcom=spbutton.getComponent(cc.Button);
              btcom.clickEvents=[this.eventButton];

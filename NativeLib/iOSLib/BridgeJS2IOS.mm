@@ -40,10 +40,6 @@ static BridgeJS2IOS *bridge_ios;
     return bridge_ios;
 }
 
-+(void)removeCache {
-    CardData::getInstance()->clearCache();
-}
-
 +(void)actionFeedBack:(NSString *)emailAdress{
     [[BridgeJS2IOS shareInstance] sendMailFeedBack:emailAdress];
 }

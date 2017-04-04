@@ -23,7 +23,6 @@ cc.Class({
     },
     onDisable: function() {// bat buoc phai co de giai phong bo nho
         cc.loader.releaseRes("PrefabGame/starboom");
-        Utils.removeUnusedSpriteFrames();
     },
 
 

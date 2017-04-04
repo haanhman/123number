@@ -159,20 +159,6 @@ cc.Class({
         cc.director.loadScene("MainSC");
     },
 
-    onDisable: function() {// bat buoc phai co de giai phong bo nho
-        for(var ir=0;ir<this.index_countRS;ir++){
-            cc.loader.releaseRes(this.arrRS[ir]);
-        }
-        this.buttonsound=null;
-        this.colorList=null;
-        this.soundTouch=null;
-        Utils.removeUnusedSpriteFrames();
-    },
-
-    onDestroy:function(){
-
-    },
-
     loadNextScene:function(){
         if(this.blockLoad){
             return;

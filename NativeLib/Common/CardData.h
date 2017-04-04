@@ -11,8 +11,7 @@ class  CardData
     
 public:
     static CardData* getInstance();
-    void copyCardData();
-    void clearCache();
+    void copyCardData();    
 };
 
 #endif /* CardData_hpp */
