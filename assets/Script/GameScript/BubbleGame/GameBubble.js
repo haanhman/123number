@@ -1,7 +1,8 @@
 var Utils = require('Utils');
 var GameData = require('GameData');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
         bubbleNode:cc.Prefab,

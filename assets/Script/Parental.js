@@ -1,6 +1,7 @@
 var Utils = require('Utils');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
         lblQuestion: cc.Label,
