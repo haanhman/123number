@@ -1,6 +1,7 @@
 var Utils = require('Utils');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
         popOptionPrefab: {
@@ -217,6 +218,8 @@ cc.Class({
         parental.x = 0;
         parental.y = 0;
         this.node.addChild(parental);
-    }
+    },
+
+
 
 });

@@ -1,8 +1,9 @@
 var Utils = require('Utils');
 var NativeMobileJS = require('NativeMobile');
 var GameData = require('GameData');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
     properties: {
         cardSprite: {
             type: cc.Sprite,
