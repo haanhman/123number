@@ -49,12 +49,7 @@ cc.Class({
         if (!showContent) {
             if (limitRateToUnlock.indexOf(this.selectedLetter) >= 0) {
                 if (Utils.checkRateApp()) {
-                    //neu download roi thi show 3 nut ra de choi
-                    if (Utils.checkDownload(this.selectedLetter)) {
-                        showContent = true;
-                    } else {
-                        this.btnDownload.node.active = true;
-                    }
+                    showContent = true;
                 } else {
                     this.btnRate.node.active = true;
                 }

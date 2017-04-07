@@ -166,7 +166,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": false,
+    "_enabled": true,
     "isAlignOnce": true,
     "_target": null,
     "_alignFlags": 45,
@@ -604,6 +604,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "one, tow, three",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -749,6 +750,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "1    2    3",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -936,6 +938,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "1",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -1186,6 +1189,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "2",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -1436,6 +1440,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "3",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -1686,6 +1691,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "4",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -1936,6 +1942,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "5",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -2186,6 +2193,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "6",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -2436,6 +2444,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "7",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -2686,6 +2695,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "8",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -2936,6 +2946,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "9",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -3186,6 +3197,7 @@
       "__uuid__": "c4e5fa15-4535-40a5-a523-0538576b3910"
     },
     "_isSystemFontUsed": false,
+    "_spacingX": 0,
     "_N$string": "0",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -3371,7 +3383,7 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": false,
+    "_enabled": true,
     "isAlignOnce": true,
     "_target": null,
     "_alignFlags": 45,

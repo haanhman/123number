@@ -8,13 +8,13 @@ var mailSupport = "abc@gmail.com";
 var Utils = {
     listTexture: [],
     limitFree: function () {
-        return ['a', 'b', 'c', 'd'];
+        return ['a', 'b', 'c'];
     },
     limitRateToUnlock: function () {
         if (cc.sys.localStorage.getItem('vkids_need_rate_app') == true) {
-            return ['e'];
+            return ['d'];
         }
-        return ['e', 'f'];
+        return ['d'];
     },
 
     rateApp: function () {
