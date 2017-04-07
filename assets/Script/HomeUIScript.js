@@ -1,5 +1,6 @@
 var Utils = require('Utils');
 var vkidsScene = require("VkidsScene");
+var API = require("Api");
 cc.Class({
     extends: vkidsScene,
 
@@ -20,6 +21,8 @@ cc.Class({
         btnBuy: cc.Sprite,
         bgDisableTouch: cc.Sprite,
         installData: cc.Prefab,
+        RatePopup: cc.Prefab,
+        BuyPopup: cc.Prefab,
         parental: cc.Prefab,
         markLock: cc.Prefab,
         rqdownload: cc.Prefab,
@@ -36,8 +39,13 @@ cc.Class({
     // use this for initialization
 
     reloadAllCard: function () {
-        var limitFree = Utils.limitFree();
-        var limitRateToUnlock = Utils.limitRateToUnlock();
+        cc.log('vkids_need_rate_app: ' + cc.sys.localStorage.getItem('vkids_need_rate_app'));
+        var limitFree = null;
+        var limitRateToUnlock = null;
+        limitFree = Utils.limitFree();
+        limitRateToUnlock = Utils.limitRateToUnlock();
+        cc.log('limitFree: ' + limitFree.join(' - '));
+        cc.log('limitRateToUnlock: ' + limitRateToUnlock.join(' - '));
 
         var allPage = this.contentNode.children;
         for (var pid in allPage) {
@@ -45,6 +53,8 @@ cc.Class({
             var cards = page_node.children;
             for (var ic in cards) {
                 var tmp_card = cards[ic];
+                tmp_card.removeAllChildren(true);
+                tmp_card.cardType = "free";
                 //xoa tat ca nhung phan tu con truoc khi kiem tra luat mua ban
                 tmp_card.removeAllChildren(true);
                 var letter = tmp_card.name.toLowerCase();
@@ -58,9 +68,11 @@ cc.Class({
                      *   + đã download hay chua
                      * - nếu chưa rate, khi ấn vào card popup sẽ phải hiển thị nut rate app
                      * */
-                    if (!Utils.checkRateApp() || !Utils.checkDownload(letter)) {
+
+                    if (!Utils.checkRateApp()) {
                         var rdl = cc.instantiate(this.rqdownload);
                         tmp_card.addChild(rdl);
+                        tmp_card.cardType = "rate";
                     }
                 } else {
                     // neu chua mua thi hien thi mark lock
@@ -69,6 +81,7 @@ cc.Class({
                     if (!Utils.isUnlockContent()) {
                         var rdl = cc.instantiate(this.markLock);
                         tmp_card.addChild(rdl);
+                        tmp_card.cardType = "buy";
                     } else {
                         if (Utils.checkDownload(letter)) {
                             tmp_card.removeAllChildren(true);
@@ -84,11 +97,12 @@ cc.Class({
     },
 
     onLoad: function () {
-
         if (cc.sys.os == cc.sys.OS_OSX) {
             cc.sys.localStorage.removeItem('vkids_buy_content');
             cc.sys.localStorage.removeItem('vkids_rated');
+            cc.sys.localStorage.removeItem('vkids_need_rate_app')
         }
+        this.checkRateConfig();
 
         this.configDisplay();
         if (Utils.isUnlockContent()) {
@@ -113,6 +127,8 @@ cc.Class({
         this.addParentalPopup('share', this);
     },
     actionRate: function () {
+        this.reloadAllCard();
+        return;
         this.addParentalPopup('rate', this);
     },
     actionAddMore: function () {
@@ -133,18 +149,19 @@ cc.Class({
         this.activeBgNoTouch(false);
     },
     actionClickCard: function (nodebutton) {
+        if(nodebutton.target.cardType == 'rate') {
+            this.addPrefabs(this.RatePopup, "rate_popup");
+            return;
+        }
+        if(nodebutton.target.cardType == 'buy') {
+            return;
+        }
         var namebutton = nodebutton.target.name;
         namebutton = namebutton.toLocaleLowerCase();
 
         var checkOldNode = this.node.getChildByName("PopOptions");
         if (checkOldNode == null) {
-            var popnode = cc.instantiate(this.popOptionPrefab);
-            popnode.name = "PopOptions"
-            popnode.setLocalZOrder(10);
-            popnode.x = 0;
-            popnode.y = 0;
-            this.node.addChild(popnode);
-
+            var popnode = this.addPrefabs(this.popOptionPrefab, "PopOptions");
 
             var scriptCard = popnode.getComponent("PopScript");
             scriptCard.cardSprite.spriteFrame = this.cardAtlas.getSpriteFrame("characters-" + namebutton);
@@ -191,12 +208,7 @@ cc.Class({
         }
     },
     copyDataFromZipFile: function () {
-        var installPopup = cc.instantiate(this.installData);
-        installPopup.setName("InstallDataPopup");
-        installPopup.setLocalZOrder(10);
-        installPopup.x = 0;
-        installPopup.y = 0;
-        this.node.addChild(installPopup);
+        this.addPrefabs(this.installData, "InstallDataPopup");
 
         var callFunc = cc.callFunc(function () {
             Utils.installCardData();
@@ -210,16 +222,40 @@ cc.Class({
     },
 
     addParentalPopup: function (action, parent) {
-        var parental = cc.instantiate(this.parental);
-        parental.parentScene = parent;
-        parental.action = action;
-        parental.setName("parental");
-        parental.setLocalZOrder(10);
-        parental.x = 0;
-        parental.y = 0;
-        this.node.addChild(parental);
+        this.addPrefabs(this.parental, "parental", action, parent);
     },
 
+    addPrefabs: function (prefabs, name, action, parent) {
+        var popup = cc.instantiate(prefabs);
+        if(parent != undefined) {
+            popup.parentScene = parent;
+        }
+        if(action != undefined) {
+            popup.action = action;
+        }
+        if(name != undefined) {
+            popup.setName(name);
+        }
+        popup.setLocalZOrder(10);
+        popup.x = 0;
+        popup.y = 0;
+        this.node.addChild(popup);
+        return popup;
+    },
 
+    checkRateConfig: function () {
+        if(Utils.checkNeedRateApp()) {
+            return;
+        }
+        API.getApi('api/index/rate', function (str) {
+            var json = JSON.parse(str);
+            if(json.rate == 1) {
+                cc.sys.localStorage.setItem('vkids_need_rate_app', 1);
+                this.reloadAllCard();
+            } else {
+                cc.sys.localStorage.removeItem('vkids_need_rate_app')
+            }
+        }.bind(this));
+    }
 
 });

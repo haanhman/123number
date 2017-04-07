@@ -65,6 +65,7 @@ cc.Class({
                 break;
             case 'rate':
                 Utils.rateApp();
+                this.node.parentScene.reloadAllCard();
                 break;
             case 'ourapp':
                 Utils.openOurStore();
