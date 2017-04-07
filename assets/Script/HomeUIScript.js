@@ -127,8 +127,6 @@ cc.Class({
         this.addParentalPopup('share', this);
     },
     actionRate: function () {
-        this.reloadAllCard();
-        return;
         this.addParentalPopup('rate', this);
     },
     actionAddMore: function () {
