@@ -8,13 +8,22 @@ var mailSupport = "abc@gmail.com";
 var Utils = {
     listTexture: [],
     limitFree: function () {
-        return ['a', 'b', 'c'];
+        cc.log('vaihang1: ' + (typeof cc.sys.localStorage.getItem('vkids_need_rate_app')));
+        if (this.checkNeedRateApp()) {
+            return ['a', 'b', 'c'];
+        }
+        return ['a', 'b', 'c', 'd'];
     },
     limitRateToUnlock: function () {
-        if (cc.sys.localStorage.getItem('vkids_need_rate_app') == true) {
+        if (this.checkNeedRateApp()) {
             return ['d'];
         }
-        return ['d'];
+        return [];
+    },
+
+    checkNeedRateApp: function () {
+        var check = cc.sys.localStorage.getItem('vkids_need_rate_app');
+        return check != null;
     },
 
     rateApp: function () {

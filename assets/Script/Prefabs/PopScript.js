@@ -196,10 +196,6 @@ cc.Class({
         this.node.removeFromParent(true);
     },
 
-    onDestroy: function () {
-
-    },
-
     //--------download delegate----
     nativedownloadProgess: function (prdownload) {
         this.lblPercent.string = prdownload + "%";

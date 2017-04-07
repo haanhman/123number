@@ -1,5 +1,6 @@
 var Utils = require('Utils');
 var vkidsScene = require("VkidsScene");
+var API = require("Api");
 cc.Class({
     extends: vkidsScene,
 
@@ -38,8 +39,13 @@ cc.Class({
     // use this for initialization
 
     reloadAllCard: function () {
-        var limitFree = Utils.limitFree();
-        var limitRateToUnlock = Utils.limitRateToUnlock();
+        cc.log('vkids_need_rate_app: ' + cc.sys.localStorage.getItem('vkids_need_rate_app'));
+        var limitFree = null;
+        var limitRateToUnlock = null;
+        limitFree = Utils.limitFree();
+        limitRateToUnlock = Utils.limitRateToUnlock();
+        cc.log('limitFree: ' + limitFree.join(' - '));
+        cc.log('limitRateToUnlock: ' + limitRateToUnlock.join(' - '));
 
         var allPage = this.contentNode.children;
         for (var pid in allPage) {
@@ -91,11 +97,12 @@ cc.Class({
     },
 
     onLoad: function () {
-
         if (cc.sys.os == cc.sys.OS_OSX) {
             cc.sys.localStorage.removeItem('vkids_buy_content');
             cc.sys.localStorage.removeItem('vkids_rated');
+            cc.sys.localStorage.removeItem('vkids_need_rate_app')
         }
+        this.checkRateConfig();
 
         this.configDisplay();
         if (Utils.isUnlockContent()) {
@@ -120,6 +127,8 @@ cc.Class({
         this.addParentalPopup('share', this);
     },
     actionRate: function () {
+        this.reloadAllCard();
+        return;
         this.addParentalPopup('rate', this);
     },
     actionAddMore: function () {
@@ -232,6 +241,21 @@ cc.Class({
         popup.y = 0;
         this.node.addChild(popup);
         return popup;
+    },
+
+    checkRateConfig: function () {
+        if(Utils.checkNeedRateApp()) {
+            return;
+        }
+        API.getApi('api/index/rate', function (str) {
+            var json = JSON.parse(str);
+            if(json.rate == 1) {
+                cc.sys.localStorage.setItem('vkids_need_rate_app', 1);
+                this.reloadAllCard();
+            } else {
+                cc.sys.localStorage.removeItem('vkids_need_rate_app')
+            }
+        }.bind(this));
     }
 
 });
