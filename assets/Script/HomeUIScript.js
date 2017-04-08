@@ -22,7 +22,7 @@ cc.Class({
         bgDisableTouch: cc.Sprite,
         installData: cc.Prefab,
         RatePopup: cc.Prefab,
-        BuyPopup: cc.Prefab,
+        SalePopup: cc.Prefab,
         parental: cc.Prefab,
         markLock: cc.Prefab,
         rqdownload: cc.Prefab,
@@ -135,8 +135,12 @@ cc.Class({
     actionFeedback: function () {
         this.addParentalPopup('feedback', this);
     },
-    actionBuyAll: function () {
+    actionBuyNow: function() {
         this.addParentalPopup('buy', this);
+    },
+    actionBuyAll: function () {
+        this.addPrefabs(this.SalePopup, "sale_popup", undefined, this);
+        return;
     },
     videoCompleteCallback: function () {
         this.activeBgNoTouch(false);
@@ -148,10 +152,11 @@ cc.Class({
     },
     actionClickCard: function (nodebutton) {
         if(nodebutton.target.cardType == 'rate') {
-            this.addPrefabs(this.RatePopup, "rate_popup");
+            this.addPrefabs(this.RatePopup, "rate_popup", undefined, this);
             return;
         }
         if(nodebutton.target.cardType == 'buy') {
+            this.addPrefabs(this.SalePopup, "sale_popup", undefined, this);
             return;
         }
         var namebutton = nodebutton.target.name;

@@ -6,7 +6,6 @@ var Android_devid = "";
 
 var mailSupport = "abc@gmail.com";
 var Utils = {
-    listTexture: [],
     limitFree: function () {
         cc.log('vaihang1: ' + (typeof cc.sys.localStorage.getItem('vkids_need_rate_app')));
         if (this.checkNeedRateApp()) {
@@ -286,6 +285,23 @@ var Utils = {
     checkDownload: function (letter) {
         var checkDownload = "download_pack_" + letter;
         return cc.sys.localStorage.getItem(checkDownload);
+    },
+    getOldPrice: function(){
+        var price = cc.sys.localStorage.getItem("vkids_old_price");
+        if(price == null) {
+            price = '$17.99';
+        }
+        return price;
+    },
+    getNewPrice: function(){
+        var price = cc.sys.localStorage.getItem("vkids_new_price");
+        if(price == null) {
+            price = '$12.99';
+        }
+        return price;
+    },
+    cachePrice: function (strPrice, key) {
+        cc.sys.localStorage.setItem(key, strPrice);
     },
 
 }
