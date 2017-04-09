@@ -6,9 +6,7 @@ var Android_devid = "";
 
 var mailSupport = "abc@gmail.com";
 var Utils = {
-    listTexture: [],
     limitFree: function () {
-        cc.log('vaihang1: ' + (typeof cc.sys.localStorage.getItem('vkids_need_rate_app')));
         if (this.checkNeedRateApp()) {
             return ['a', 'b', 'c'];
         }
@@ -287,6 +285,31 @@ var Utils = {
         var checkDownload = "download_pack_" + letter;
         return cc.sys.localStorage.getItem(checkDownload);
     },
+    getOldPrice: function(){
+        var price = cc.sys.localStorage.getItem("vkids_old_price");
+        if(price == null) {
+            price = '$17.99';
+        }
+        return price;
+    },
+    getNewPrice: function(){
+        var price = cc.sys.localStorage.getItem("vkids_new_price");
+        if(price == null) {
+            price = '$12.99';
+        }
+        return price;
+    },
+    cachePrice: function (strPrice, key) {
+        cc.sys.localStorage.setItem(key, strPrice);
+    },
+
+    loadPackageInappPurchase: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("SmIAB", "IABInit");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "initIABHelper", "()V");
+        }
+    }
 
 }
 module.exports = Utils;

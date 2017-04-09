@@ -45,9 +45,40 @@ extern "C"
     {
         DownloadCPlus::getInstance()->stopAllDownload();
     }
+
+    //inapp native for android
+    void Java_org_cocos2dx_javascript_SmIAB_cachePrice(JNIEnv* env, jobject thiz,jstring strPrice, jstring strType)
+    {
+        const char* price = env->GetStringUTFChars(strPrice, NULL);
+        const char* type = env->GetStringUTFChars(strType, NULL);
+        DownloadCPlus::getInstance()->cachePriceAndroid(price, type);
+    }
+
 }
 
 #endif
+
+void DownloadCPlus::cachePriceAndroid(const char* strPrice, const char* strType) {
+    string price(strPrice);
+    string type(strType);
+    
+    CCLOG("strPrice: %s", price.c_str());
+    CCLOG("strType: %s", type.c_str());
+    
+    ScriptingCore * scriptingCore = ScriptingCore::getInstance();
+    
+    JSContext * context = scriptingCore->getGlobalContext();
+    JS::RootedObject object(context, scriptingCore->getGlobalObject());
+    JS::RootedValue owner(context);
+    
+    jsval * argumentsVector = new jsval[2];
+    argumentsVector[0] = std_string_to_jsval(context, price);
+    argumentsVector[1] = std_string_to_jsval(context, type);
+    
+    JS_GetProperty(context, object, "NativeMobile", &owner);
+    scriptingCore->executeFunctionWithOwner(owner, "setPrice", 2, argumentsVector);
+    delete [] argumentsVector;
+}
 
 
 bool DownloadCPlus::init()

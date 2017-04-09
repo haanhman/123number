@@ -21,11 +21,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.util.EntityUtils;
+
+import static android.R.id.list;
 
 /**
  * Created by anhmantk on 3/7/17.
@@ -36,8 +40,8 @@ public class SmIAB {
     // Debug tag, for logging
     static final String TAG = "SmIAB";
 
-    static final String product_id = "com.sonman.inappdemo.goi9";
-
+    static final String product_id = "com.sonman.inappdemo.fullcontent";
+    static final String product_original_id = "com.sonman.inappdemo.fullcontent_original";
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10111;
 
@@ -49,11 +53,18 @@ public class SmIAB {
     private static String payload = "7kIm1Odyb3eF0HOXy3CD";
     private static Cocos2dxActivity activity;
 
+    public static native void cachePrice(String strPrice, String type);
+
     public static void initIABHelper() {
         activity = (Cocos2dxActivity)Cocos2dxActivity.getContext();
         mHelper = new IabHelper(activity, base64EncodedPublicKey);
 
         mHelper.enableDebugLogging(true);
+
+        final List<String> listPackage = new ArrayList<String>();
+        listPackage.add(product_id);
+        listPackage.add(product_original_id);
+
 
 
 
@@ -78,7 +89,8 @@ public class SmIAB {
                 // own.
                 Log.d(TAG, "Setup successful. Querying inventory.");
                 try {
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
+//                    mHelper.queryInventoryAsync(mGotInventoryListener);
+                    mHelper.queryInventoryAsync(true, listPackage, listPackage, mGotInventoryListener);
                 } catch (IabHelper.IabAsyncInProgressException ex) {
                     Log.d(TAG, ex.getMessage());
                 }
@@ -111,9 +123,10 @@ public class SmIAB {
                 return;
             }
 
+
             SkuDetails sku = inventory.getSkuDetails(product_id);
             if (sku == null) {
-                Log.d(TAG, "co loi phan load goi mua ban");
+                Log.d(TAG, "co loi phan load goi mua ban 2");
                 return;
             }
 
@@ -121,6 +134,19 @@ public class SmIAB {
             Log.d(TAG, "name: " + sku.getTitle());
             Log.d(TAG, "price: " + sku.getPrice());
             Log.d(TAG, "============== END PRODUCT ID =============");
+            cachePrice(sku.getPrice(), "1");
+
+            SkuDetails skuOriginal = inventory.getSkuDetails(product_original_id);
+            if (skuOriginal == null) {
+                Log.d(TAG, "co loi phan load goi mua ban 2");
+                return;
+            }
+
+            Log.d(TAG, "============== PRODUCT ORIGINAL ID =================");
+            Log.d(TAG, "name: " + skuOriginal.getTitle());
+            Log.d(TAG, "price: " + skuOriginal.getPrice());
+            Log.d(TAG, "============== END PRODUCT ORIGINAL ID =============");
+            cachePrice(skuOriginal.getPrice(), "2");
         }
     };
 

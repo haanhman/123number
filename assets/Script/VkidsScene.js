@@ -5,7 +5,6 @@ cc.Class({
     extends: cc.Component,
 
     onDestroy: function () {
-        cc.log('====> free memory');
         cc.sys.garbageCollect();
     }
 });

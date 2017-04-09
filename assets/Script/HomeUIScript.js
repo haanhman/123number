@@ -22,7 +22,7 @@ cc.Class({
         bgDisableTouch: cc.Sprite,
         installData: cc.Prefab,
         RatePopup: cc.Prefab,
-        BuyPopup: cc.Prefab,
+        SalePopup: cc.Prefab,
         parental: cc.Prefab,
         markLock: cc.Prefab,
         rqdownload: cc.Prefab,
@@ -39,7 +39,6 @@ cc.Class({
     // use this for initialization
 
     reloadAllCard: function () {
-        cc.log('vkids_need_rate_app: ' + cc.sys.localStorage.getItem('vkids_need_rate_app'));
         var limitFree = null;
         var limitRateToUnlock = null;
         limitFree = Utils.limitFree();
@@ -135,8 +134,12 @@ cc.Class({
     actionFeedback: function () {
         this.addParentalPopup('feedback', this);
     },
-    actionBuyAll: function () {
+    actionBuyNow: function() {
         this.addParentalPopup('buy', this);
+    },
+    actionBuyAll: function () {
+        this.addPrefabs(this.SalePopup, "sale_popup", undefined, this);
+        return;
     },
     videoCompleteCallback: function () {
         this.activeBgNoTouch(false);
@@ -148,10 +151,11 @@ cc.Class({
     },
     actionClickCard: function (nodebutton) {
         if(nodebutton.target.cardType == 'rate') {
-            this.addPrefabs(this.RatePopup, "rate_popup");
+            this.addPrefabs(this.RatePopup, "rate_popup", undefined, this);
             return;
         }
         if(nodebutton.target.cardType == 'buy') {
+            this.addPrefabs(this.SalePopup, "sale_popup", undefined, this);
             return;
         }
         var namebutton = nodebutton.target.name;
@@ -193,6 +197,9 @@ cc.Class({
 
     start: function () {
         this.checkInstallData();
+        if(Utils.isUnlockContent() == null) {
+            Utils.loadPackageInappPurchase();
+        }
     },
     checkInstallData: function () {
         if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {

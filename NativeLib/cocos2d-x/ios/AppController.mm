@@ -29,7 +29,6 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
-#import "SmIAB.h"
 
 @implementation AppController
 
@@ -82,7 +81,6 @@ static AppDelegate s_sharedApplication;
     cocos2d::Director::getInstance()->setOpenGLView(glview);
     
     cocos2d::Application::getInstance()->run();
-    [SmIAB IABInit];
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     return YES;
 }
