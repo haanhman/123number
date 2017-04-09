@@ -197,6 +197,9 @@ cc.Class({
 
     start: function () {
         this.checkInstallData();
+        if(Utils.isUnlockContent() == null) {
+            Utils.loadPackageInappPurchase();
+        }
     },
     checkInstallData: function () {
         if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {

@@ -40,8 +40,6 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SDKWrapper.getInstance().init(this);
-        SmIAB.initIABHelper();
-
         //luon bat sang man hinh
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }

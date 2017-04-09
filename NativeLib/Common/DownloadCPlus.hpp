@@ -36,6 +36,8 @@ public:
     static void CallBackJSFinishDownload(int stt);
     static void CallBackJSUnzipFinish();
     
+    void cachePriceAndroid(const char* strPrice, const char* strType);
+    
     void beginDownload(const char* str);
     void removeFile();
     void stopAllDownload();

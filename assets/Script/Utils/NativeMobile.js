@@ -39,8 +39,9 @@ var NativeMobile = {
     },
 
     setPrice: function (strPrice, type) {
+        var mType = parseInt(type + "");
         cc.log('cache price');
-        Utils.cachePrice(strPrice, type == 1 ? "vkids_new_price" : "vkids_old_price");
+        Utils.cachePrice(strPrice, mType == 1 ? "vkids_new_price" : "vkids_old_price");
     }
 
 }

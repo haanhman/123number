@@ -303,6 +303,14 @@ var Utils = {
         cc.sys.localStorage.setItem(key, strPrice);
     },
 
+    loadPackageInappPurchase: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("SmIAB", "IABInit");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "initIABHelper", "()V");
+        }
+    }
+
 }
 module.exports = Utils;
 
