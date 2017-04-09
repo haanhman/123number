@@ -1,10 +1,7 @@
-var iOS_appid = "";
-var Android_appid = "";
+var iOS_appid = "1213910464";
+var Android_appid = "com.sonman.inappdemo";
 
-var iOS_devid = "";
-var Android_devid = "";
-
-var mailSupport = "abc@gmail.com";
+var mailSupport = "sonman.startup@gmail.com";
 var Utils = {
     limitFree: function () {
         if (this.checkNeedRateApp()) {
@@ -38,10 +35,10 @@ var Utils = {
     openOurStore: function () {
         var urlRateApp = "";
         if (cc.sys.os == cc.sys.OS_IOS) {
-            urlRateApp = "itms://itunes.apple.com/us/app/apple-store/id" + iOS_devid + "?mt=8";
+            urlRateApp = "itms://itunes.apple.com/us/app/apple-store/id" + iOS_appid + "?mt=8";
 
         } else {// la android
-            urlRateApp = "market://details?id=" + Android_devid;
+            urlRateApp = "market://details?id=" + Android_appid;
         }
         cc.sys.openURL(urlRateApp);
     },

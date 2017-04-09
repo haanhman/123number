@@ -1,5 +1,9 @@
 package org.cocos2dx.javascript;
 
+import android.content.Intent;
+import android.os.Debug;
+import android.text.Html;
+import android.util.DebugUtils;
 import android.util.Log;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
@@ -11,7 +15,7 @@ import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
  */
 public class BridgeAndroid extends Cocos2dxActivity {
     private static String TAG = "BridgeAndroid";
-
+    private static Cocos2dxActivity activity;
 
     public static native void beginDownload(String textStr);
     public static native void beginInstallCardData();
@@ -41,5 +45,30 @@ public class BridgeAndroid extends Cocos2dxActivity {
                         "runningScene.removePopupInstallData();");
             }
         });
+    }
+
+    public static void actionFeedBack(String mailSupport) {
+        activity = (Cocos2dxActivity)Cocos2dxActivity.getContext();
+        try {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("plain/text");
+            String[] to = {mailSupport};
+            i.putExtra(Intent.EXTRA_EMAIL, to);
+            i.putExtra(Intent.EXTRA_SUBJECT, "Need help with ABC Phonic");
+            i.putExtra(Intent.EXTRA_TEXT, "");
+            activity.startActivity(Intent.createChooser(i, "Select application"));
+        } catch (Exception e) {
+            Log.e("EduNativeBridge", e.getMessage());
+        }
+    }
+
+    public static void actionShareApp(String appUrl) {
+        activity = (Cocos2dxActivity)Cocos2dxActivity.getContext();
+        Log.d(TAG, "==> actionShareApp: " + appUrl);
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "ABC Phonic. " + appUrl);
+        sendIntent.setType("text/plain");
+        activity.startActivity(sendIntent);
     }
 }

@@ -46,7 +46,7 @@ static BridgeJS2IOS *bridge_ios;
 +(void)actionShareApp:(NSString*)strurl{
     AppController *appcntroller=(AppController *)[[UIApplication sharedApplication] delegate];
     NSURL *url=[NSURL URLWithString:strurl];
-    NSArray *activityItems = @[@"Share game",strurl,url];
+    NSArray *activityItems = @[@"ABC Phonic. ",strurl,url];
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
     if (([[[UIDevice currentDevice] systemVersion] floatValue])>=8) {
         activityController.popoverPresentationController.sourceView = [appcntroller rootView].view;
@@ -67,11 +67,16 @@ static BridgeJS2IOS *bridge_ios;
         MFMailComposeViewController *mailCont = [[MFMailComposeViewController alloc] init];
         mailCont.mailComposeDelegate =(id)self;        // Required to invoke mailComposeController when send
         
-        [mailCont setSubject:@"Email subject"];
+        [mailCont setSubject:@"Need help with ABC Phonic"];
         [mailCont setToRecipients:[NSArray arrayWithObject:emailAdress]];
         [mailCont setMessageBody:@"" isHTML:NO];
         
         [[appcntroller rootView] presentViewController:mailCont animated:YES completion:nil];
+    } else {
+        
+        UIAlertView *alertview=[[UIAlertView alloc] initWithTitle:@"Login Mail" message:@"You need to set up your mail on this device first." delegate:nil cancelButtonTitle:@"Close" otherButtonTitles: nil];
+        [alertview show];
+        
     }
 }
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
