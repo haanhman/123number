@@ -1,3 +1,4 @@
+var Utils = require('Utils');
 var NativeMobile = {
 
     downloadProgess:function(number_progress){//range 0-1000
@@ -36,6 +37,12 @@ var NativeMobile = {
     unzipFinish:function(){
         cc.log("Unzip file thanh cong");
     },
+
+    setPrice: function (strPrice, type) {
+        cc.log('cache price');
+        Utils.cachePrice(strPrice, type == 1 ? "vkids_new_price" : "vkids_old_price");
+    }
+
 }
 
 module.exports = NativeMobile;

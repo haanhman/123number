@@ -39,7 +39,6 @@ cc.Class({
     // use this for initialization
 
     reloadAllCard: function () {
-        cc.log('vkids_need_rate_app: ' + cc.sys.localStorage.getItem('vkids_need_rate_app'));
         var limitFree = null;
         var limitRateToUnlock = null;
         limitFree = Utils.limitFree();

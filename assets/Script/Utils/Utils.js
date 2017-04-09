@@ -7,7 +7,6 @@ var Android_devid = "";
 var mailSupport = "abc@gmail.com";
 var Utils = {
     limitFree: function () {
-        cc.log('vaihang1: ' + (typeof cc.sys.localStorage.getItem('vkids_need_rate_app')));
         if (this.checkNeedRateApp()) {
             return ['a', 'b', 'c'];
         }

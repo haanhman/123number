@@ -8,7 +8,8 @@ static bool clickBuyBtn = NO;
 
 +(void)IABInit {
     if(![IAPShare sharedHelper].iap) {
-        NSSet* dataSet = [[NSSet alloc] initWithObjects:@"com.vkids.abcsong.fullcontent", nil];
+        NSArray *inapps = [NSArray arrayWithObjects:@"com.vkids.abcsong.fullcontent", @"com.vkids.abcsong.fullcontent_original", nil];
+        NSSet* dataSet = [[NSSet alloc] initWithArray:inapps];
         [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
     }
     
@@ -16,9 +17,17 @@ static bool clickBuyBtn = NO;
     
     [[IAPShare sharedHelper].iap requestProductsWithCompletion:^(SKProductsRequest* request,SKProductsResponse* response){
          if(response > 0 ) {
-             _product = [[IAPShare sharedHelper].iap.products objectAtIndex:0];
-             NSLog(@"Price: %@",[[IAPShare sharedHelper].iap getLocalePrice:_product]);
-             NSLog(@"Title: %@",_product.localizedTitle);
+             
+             for (SKProduct *p in [IAPShare sharedHelper].iap.products) {
+                 NSLog(@"Price: %@",[[IAPShare sharedHelper].iap getLocalePrice:p]);
+                 NSLog(@"Title: %@",p.localizedTitle);
+                 if([p.productIdentifier isEqualToString:@"com.vkids.abcsong.fullcontent"]) {
+                     _product = p;
+                     [SmIAB setPrice:[[IAPShare sharedHelper].iap getLocalePrice:p] andType:1];
+                 } else {
+                     [SmIAB setPrice:[[IAPShare sharedHelper].iap getLocalePrice:p] andType:2];
+                 }
+             }             
              //neu click vao nut mua khi chua co mang, sau do bat mang len va load duoc thong tin mua ban se tu mua luon
              if(clickBuyBtn) {
                  [SmIAB unlockContent];
@@ -70,6 +79,24 @@ static bool clickBuyBtn = NO;
             [SmIAB unlockDataError];
         }
     }];//end of buy product    
+}
+
++(void)setPrice:(NSString*)price andType:(int)type{
+    
+    ScriptingCore * scriptingCore = ScriptingCore::getInstance();
+    
+    JSContext * context = scriptingCore->getGlobalContext();
+    JS::RootedObject object(context, scriptingCore->getGlobalObject());
+    JS::RootedValue owner(context);
+    
+    jsval * argumentsVector = new jsval[2];
+    argumentsVector[0] = std_string_to_jsval(context, [price UTF8String]);
+    argumentsVector[1] = INT_TO_JSVAL(type);
+    
+    JS_GetProperty(context, object, "NativeMobile", &owner);
+    scriptingCore->executeFunctionWithOwner(owner, "setPrice", 2, argumentsVector);
+    
+    delete [] argumentsVector;
 }
 
 +(void)unlockDataSuccess {
