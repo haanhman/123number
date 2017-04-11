@@ -1,6 +1,5 @@
 var iOS_appid = "1213910464";
-var Android_appid = "com.sonman.inappdemo";
-
+var Android_appid = "com.kidsapp.abcphonic.learnhandwriting";
 var mailSupport = "sonman.startup@gmail.com";
 var Utils = {
     limitFree: function () {

@@ -3,8 +3,14 @@
  */
 var Api = {
     domain: 'http://54.218.122.252',
+
+    addDefaultParam: function (endpoint) {
+        var os = cc.sys.os == cc.sys.OS_IOS ? "ios" : "android";
+        return endpoint + "?platform=" + os;
+    },
+
     getApi: function (endpoint, callback) {
-        var url = this.domain + '/' + endpoint;
+        var url = this.addDefaultParam(this.domain + '/' + endpoint);
         var request = cc.loader.getXMLHttpRequest();
         request.open("GET", url, true);
         request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

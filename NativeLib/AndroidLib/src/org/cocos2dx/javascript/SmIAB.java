@@ -29,8 +29,6 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.util.EntityUtils;
 
-import static android.R.id.list;
-
 /**
  * Created by anhmantk on 3/7/17.
  */
@@ -40,15 +38,15 @@ public class SmIAB {
     // Debug tag, for logging
     static final String TAG = "SmIAB";
 
-    static final String product_id = "com.sonman.inappdemo.fullcontent";
-    static final String product_original_id = "com.sonman.inappdemo.fullcontent_original";
+    static final String product_id = "com.kidsapp.abcphonic.learnhandwriting.fullcontent";
+    static final String product_original_id = "com.kidsapp.abcphonic.learnhandwriting.fullcontent_original";
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10111;
 
     // The helper object
     private static IabHelper mHelper;
 
-    private static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApeoELU1M81j98Z9JRSvWtQ+avl/LGtcrWOYOHaDL1oG9J/QIeyqXI/2OTGMJuM6ac8W6JbpvgcnejPk4Jj27sXmiKK+RndMBCK8qJCbGnc/jCECNKcQPMW+ono5BKjuFFNYQxV8UHik9hi+or4afilOBGCAnfm5Jt7mKXJS7OKBAbhmud0FhgJLp0itar15VYrXgSHECqOTmHIoajK7dwOpBA9hDLFpo2dF56gL2WihPWqcbzJNZ2g0GJFu4nhJX2T1QHF3T94VFIddb/CZkL8ULcnQLLO9juFaQeS2X6MJJ0mDyP572LXJo3T5FMjj66N3Ar6+Q9NicBZlHajc72QIDAQAB";
+    private static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkAhgQ9YQZFimEVDD2/vkZE7ZsZLELj+hKp5IoWK6ACiMY2YU1s/Fc3rMMy5a3MVzWP36g3gKgQYHCrALGENGY7Anpxjy5sSQ6p85NxduJagO9viaqoA4alrkBmQz1j9KWUgKT4hJCGhxNuLa+apRN5p73Z5UraAFWQg804pyxcAsrOrAbeFShJv2Jgw3Jy7h5/eI4b4A6KFJAKdsIwFQYM1qhMDPWu7O5tdt45Raibnv5dNitXOr7qJDdlwUOp+1kgfi0JBQEe1XYRknWAnt37Ro+cWZONAw0BBIJzntkUPASsamwEzC/lBsrjSHPV0rUerU8BXLHfApOvPAZdPEdQIDAQAB";
 
     private static String payload = "7kIm1Odyb3eF0HOXy3CD";
     private static Cocos2dxActivity activity;
