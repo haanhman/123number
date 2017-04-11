@@ -1,5 +1,8 @@
+var Utils = require('Utils');
+var GameData = require('GameData');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
         bubbleNode:cc.Prefab,
@@ -7,38 +10,23 @@ cc.Class({
         effect_touch:cc.Prefab,
         cloudNode:cc.Node,
         eventButton:cc.Component.EventHandler,
+        hubNode:cc.Node,
+        lbHubFinish:cc.Label,
 
     },
 
     getRandomTime:function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     },
-    addResourcePath:function(str_path){
-        var source_exits=false;
-        for(var is=0;is<this.arrRS.length;is++){
-            if(this.arrRS[is]==str_path){
-                source_exits=true;
-                break;
-            }
-        }
-        if(!source_exits){
-            this.arrRS[this.index_countRS]=str_path;
-            this.index_countRS++;
-        }
-
-    },
-    onDisable: function() {// bat buoc phai co de giai phong bo nho
-        cc.log("---------onDisable");
-        for(var ir=0;ir<this.index_countRS;ir++){
-            cc.log("    ---release rs: %s ",this.arrRS[ir]);
-            cc.loader.releaseRes(this.arrRS[ir]);
-        }
-
+    onDisable: function() {
+        cc.audioEngine.stopAll();
     },
 
     // use this for initialization
     onLoad: function () {
         //var bt=this.node.getChildByName("Bubble");
+        this.isClosed=false;
+        this.hubNode.active=false;
         this.index_countRS=0;
         this.arrRS=[];
 
@@ -54,32 +42,21 @@ cc.Class({
 
         this.allowLoad=false;
 
-        this.word_name="b";
-        var json_path="cards/"+this.word_name+".json";
-        this.addResourcePath(json_path);
+        this.word_name=GameData.playGameLetter;
+        if (typeof (this.word_name)=="undefined"){
+            this.word_name="d";
+            //khong bao gio xay ra truong hop nay, cai nay chi de test thoi
+        }
+
         var self=this;
-        cc.loader.loadRes(json_path, function (err, rsdata) {
-            if(!(err==null)){
-                cc.log("----error load word  %s = ",err);
-                return;
-            }
-            //console.log("------rsdata: "+rsdata);
-            //return;
-            self.arrayCard=rsdata.images;
-            self.allowLoad=true;
-        });
+        self.arrayCard = GameData.jsonData.images;
+        self.allowLoad=true;
 
         var soundms_bg="Sound/msbg/simplemsbg.mp3";
-        this.addResourcePath(soundms_bg);
-        cc.loader.loadRes(soundms_bg,cc.AudioClip, function (err, audiofile) {
-            if(!(err==null)){
-                cc.log("----error load word  %s ",err);
-            }
+        Utils.playSoundSource(soundms_bg,true,true);
 
-            cc.audioEngine.stopAll();
-            cc.audioEngine.play(audiofile,true);
-        });
-
+        this.coundBubble=0;
+        this.blockCallFun=false;
     },
 
 
@@ -97,23 +74,25 @@ cc.Class({
         effect.y=btNode.y;
         this.node.addChild(effect);
 
+        this.coundBubble++;
+        if(this.coundBubble>15){
 
+        }
 
         var source_path=btNode.audioPath;
-        this.addResourcePath(source_path);
-        cc.loader.loadRes(source_path,cc.AudioClip, function (err, audiofile) {
-            if(!(err==null)){
-                cc.log("----error load word  %s ",err);
-            }
-
-            cc.audioEngine.play(audiofile);
-        });
+        Utils.playSoundSource(source_path, false, false);
     },
+
+
 
 
     // called every frame, uncomment this function to activate update callback
      update: function (dt) {
          if(!this.allowLoad){
+             return;
+         }
+         if(this.coundBubble>15){
+             this.stopUpdate();
              return;
          }
          this.time_count+=dt;
@@ -125,22 +104,56 @@ cc.Class({
                  spbutton=cc.instantiate(this.bubbleLabel);
                  spbutton.word_name=this.word_name;
                  spbutton.audioPath="Sound/card/"+this.word_name+".mp3";
-                 this.addResourcePath(spbutton.audioPath);
              }else{
                  spbutton=cc.instantiate(this.bubbleNode);
-                 //spbutton.arrayCard=this.arrayCard;
-
                  var crCard=this.arrayCard[this.getRandomTime(0,this.arrayCard.length-1)];
                  spbutton.audioPath="Sound/card/"+crCard.card_name+".mp3";
-                 this.addResourcePath(spbutton.audioPath);
-
                  spbutton.pathIMG="cards/"+crCard.card_name+this.getRandomTime(1,Math.floor(crCard.total_image))+".png";
-                 this.addResourcePath(spbutton.pathIMG);
-
              }
              var btcom=spbutton.getComponent(cc.Button);
              btcom.clickEvents=[this.eventButton];
              this.node.addChild(spbutton);
          }
      },
+
+
+    stopUpdate:function(){
+        if(this.blockCallFun){
+            return;
+        }
+        this.blockCallFun=true;
+        // show ra chuc mung
+        this.scheduleOnce(this.actionShowHubFinish,3);
+    },
+
+    actionCloseGame:function(){
+        if(this.isClosed){
+            return;
+        }
+        this.isClosed=true;
+        Utils.playSoundSource("Sound/gamevoice/Goodbye.mp3",false,true);
+        cc.director.setClearColor(cc.Color.WHITE);
+        this.scheduleOnce(this.loadNextScene,1.5);
+
+        this.node.runAction(cc.fadeTo(1.0,0));
+    },
+
+    actionShowHubFinish:function(){
+        this.hubNode.active=true;
+        var animationhub=this.hubNode.getComponent(cc.Animation);
+        animationhub.play("animationBubblegame");
+        this.lbHubFinish.string=GameData.playGameLetter.toUpperCase();
+        this.scheduleOnce(this.playAudioGroup,0.8);
+
+        this.node.getChildByName("buttonClosetop").active=false;
+    },
+
+    playAudioGroup:function(){
+        Utils.playSoundSource("groupaudio/"+GameData.playGameLetter+".mp3",false,false);
+    },
+
+
+    loadNextScene:function(){
+        GameData.nextGame();
+    },
 });

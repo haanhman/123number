@@ -1,17 +1,10 @@
+var Utils = require('Utils');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
-        // foo: {
-        //    default: null,      // The default value will be used only when the component attaching
-        //                           to a node for the first time
-        //    url: cc.Texture2D,  // optional, default is typeof default
-        //    serializable: true, // optional, default is true
-        //    visible: true,      // optional, default is true
-        //    displayName: 'Foo', // optional
-        //    readonly: false,    // optional, default is false
-        // },
-        // ...
+
     },
 
     // use this for initialization
@@ -57,7 +50,6 @@ cc.Class({
             var currentPath=this.pathsMask[ip];
             var len=currentPath.length;
             if(len<2){
-                cc.log("----stop draw because len: %s",len);
                 continue;
             }
 

@@ -1,5 +1,8 @@
+var Utils = require('Utils');
+var GameData = require('GameData');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
         drawNodeContent:cc.Node,
@@ -10,10 +13,97 @@ cc.Class({
         }
     },
 
+
+    update: function (dt) {
+        this.timeAddDot=this.timeAddDot+dt;
+    },
+
+    randomBackground: function () {
+        //random background
+        var randomInt = Utils.getRandomInt(0, 1);
+        var imgPath = randomInt == 1 ? "Texture/GameIMG/gamebg1.png" : "Texture/GameIMG/gamebg2.png";
+        var gamebg = this.node.getChildByName("gamebg").getComponent(cc.Sprite);
+        cc.loader.load(cc.url.raw(imgPath), function (err, tex) {
+            if (err != null) {
+                return;
+            }
+            if (cc.sys.isBrowser) {
+                gamebg.spriteFrame = new cc.SpriteFrame(tex);
+            } else {
+                gamebg.spriteFrame = cc.SpriteFrame(tex);
+            }
+        });
+        //end random background
+    },
+
     // use this for initialization
     onLoad: function () {
+        this.randomBackground();
+
+        this.timeAddDot=0;
         this.scSize=cc.director.getVisibleSize();
-        cc.log("---- %s    %s",this.scSize.width,this.scSize.height);
+        //this.scheduleOnce(this.loadConfigGame,0.5);
+        this.loadgame=false;
+        this.loadConfigGame();
+        var allchildx=this.node.children;
+        for(var cid in allchildx){
+            var tmp_node=allchildx[cid];
+            if(tmp_node.name=="reloadbutton"||tmp_node.name=="bgNode"){
+                continue;
+            }
+            var cposx=tmp_node.x;
+            tmp_node.x=this.scSize.width/2;
+            tmp_node.runAction(cc.moveTo(0.3,cc.p(cposx,tmp_node.y)));
+        }
+        this.playAudioGame();
+        this.loadConfigButton();
+    },
+
+
+    loadConfigButton:function(){
+        var button_reload=this.node.getChildByName("reloadbutton");
+        var widget_cpn=button_reload.getComponent(cc.Widget);
+        widget_cpn.isAlignRight=false;
+        widget_cpn.isAlignLeft=true;
+        widget_cpn.left=28;
+
+        var self=this;
+        cc.loader.loadRes("PrefabGame/HubCloseButton",cc.Prefab, function (err, prefab_file) {
+            if (!(err == null)) {
+                cc.log("----err===  %s ", err);
+                return;
+            }
+            var node_tmp = cc.instantiate(prefab_file);
+            self.node.addChild(node_tmp);
+        });
+
+
+    },
+
+    playAudioGame:function(){
+        var rid=Math.floor(Math.random()*10)>5?1:0;
+        var soundms_bg="Sound/gamevoice/trace"+rid+".mp3";
+        Utils.playSoundSource(soundms_bg,false,false);
+        this.scheduleOnce(this.playNextSoundCard,1.8);
+    },
+    playNextSoundCard:function(){
+        var allWord=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","Y","X","Z"];
+        var letter=GameData.playGameLetter;
+        if(letter==null||(typeof(letter )=="undefine")){
+            letter="B";
+        }
+        var index_letter=allWord.indexOf(letter.toUpperCase());
+        index_letter=index_letter+1;
+        var soundms_bg="Sound/speak/"+index_letter+"e.mp3";
+        Utils.playSoundSource(soundms_bg,false,false);
+    },
+
+    loadConfigGame:function(){
+        if(this.loadgame){
+            return;
+        }
+        this.loadgame=true;
+
         this.size_screen=cc.p(568,320);
         this.index_trace=0;
 
@@ -32,21 +122,22 @@ cc.Class({
         this.scriptDraw=this.drawNodeContent.getComponent("TraceGameDaw");
 
         this.createMask();
-
-        this.loadHelp();
-
-        //this.node.runAction(cc.sequence(cc.delayTime(9),cc.callFunc(this.loadHelp, this)));
+        this.scheduleOnce(this.loadHelp,0.5);
 
 
     },
+
+
+
+
 
     onDisable: function onDisable() {
         this.scriptDraw=null;
     },
 
     actionReload:function(){
+        this.randomBackground();
         this.index_trace=0;
-        cc.log("-----actionReload:-----");
         this.indexDraw=[];
         for(var ii=0;ii<10;ii++){
             this.indexDraw[ii]=0;
@@ -63,6 +154,9 @@ cc.Class({
         this.createMask();
 
         this.loadHelp();
+        cc.audioEngine.stopAll();
+        this.unscheduleAllCallbacks();
+        this.playAudioGame();
     },
 
     loadHelp:function(){
@@ -82,9 +176,15 @@ cc.Class({
                 cc.log("---removeFromParent");
                 getLastOBJ=null;
             }
+
+            this.node.getChildByName("reloadbutton").active = false;
+
+            Utils.playSoundSource("Sound/gamevoice/wc.mp3",false,false);
+            //Utils.playSoundSource("Sound/gamevoice/kids_say_yay.mp3",false,false);
             getLastOBJ=cc.instantiate(this.particleEffect);
             getLastOBJ.x=0;
             this.node.addChild(getLastOBJ);
+            this.scheduleOnce(this.loadNextScene,3);
         }else{
             var current_help=this.helpNode[this.index_trace];
 
@@ -101,13 +201,17 @@ cc.Class({
 
     },
 
+    loadNextScene:function(){
+        GameData.nextGame();
+    },
+
     createMask:function(){
         var paths=[];
         var index_path=0;
         var len_help=this.helpNode.length;
 
         if(this.index_trace>=len_help){
-            cc.log("-------error: len_help= %s",len_help);
+            // cc.log("-------error: len_help= %s",len_help);
         }else{
 
             for(var ih=0;ih<len_help;ih++){
@@ -116,7 +220,7 @@ cc.Class({
                 var dots=helpNode.children;
                 var len_dot=helpNode.childrenCount;
                 if(len_dot<=2){
-                    console.log("-----error len_dot= %s",len_dot);
+                    // console.log("-----error len_dot= %s",len_dot);
                 }
                 for(var i_d=0;i_d<len_dot;i_d++){
                     var dot_node=dots[i_d];
@@ -167,7 +271,6 @@ cc.Class({
         var current_index=this.indexDraw[this.index_trace];
 
         if(count_dots<=current_index){
-            cc.log("--------- load next help");
             this.index_trace++;
             this.loadHelp();
         }
@@ -213,6 +316,11 @@ cc.Class({
                     handNode.stopAllActions();
                     handNode.opacity=0;
                 }
+                if(this.timeAddDot>0.2){
+                    this.timeAddDot=0;
+                    var soundms_bg="Sound/gamevoice/wtd.mp3";
+                    Utils.playSoundSource(soundms_bg,false,false);
+                }
 
 
                 active_Dot.isRemove=true;
@@ -225,5 +333,21 @@ cc.Class({
 
 
     },
+
+    exitGame: function () {
+        // this.drawNodeContent.getComponent("TraceGameDaw").removeFromParent(true);
+        this.drawNodeContent.removeFromParent(true);
+        this.node.getChildByName("gamebg").removeFromParent(true);
+        this.node.getChildByName("Word").removeFromParent(true);
+        this.node.getChildByName("bantay").removeFromParent(true);
+        var sequence = [];
+        var fadeTo = cc.fadeTo(0.4,0);
+        var callFunc = cc.callFunc(function(){
+            cc.director.loadScene("MainSC");
+        });
+        sequence.push(fadeTo);
+        sequence.push(callFunc);
+        this.node.runAction(cc.sequence(sequence));
+    }
 
 });

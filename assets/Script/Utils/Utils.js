@@ -1,12 +1,74 @@
+var iOS_appid = "1213910464";
+var Android_appid = "com.kidsapp.abcphonic.learnhandwriting";
+var mailSupport = "sonman.startup@gmail.com";
 var Utils = {
+    limitFree: function () {
+        if (this.checkNeedRateApp()) {
+            return ['a', 'b', 'c'];
+        }
+        return ['a', 'b', 'c', 'd'];
+    },
+    limitRateToUnlock: function () {
+        if (this.checkNeedRateApp()) {
+            return ['d'];
+        }
+        return [];
+    },
 
-    playVideoForCard: function (cardname) {
+    checkNeedRateApp: function () {
+        var check = cc.sys.localStorage.getItem('vkids_need_rate_app');
+        return check != null;
+    },
+
+    rateApp: function () {
+        var urlRateApp = "";
         if (cc.sys.os == cc.sys.OS_IOS) {
-            jsb.reflection.callStaticMethod("BridgeIOS", "playVideoName:", cardname);
+            urlRateApp = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=" + iOS_appid + "&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software";
+
+        } else {// la android
+            urlRateApp = "market://details?id=" + Android_appid;
+        }
+        cc.sys.localStorage.setItem('vkids_rated', true);
+        cc.sys.openURL(urlRateApp);
+    },
+    openOurStore: function () {
+        var urlRateApp = "";
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            urlRateApp = "itms://itunes.apple.com/us/app/apple-store/id" + iOS_appid + "?mt=8";
+
+        } else {// la android
+            urlRateApp = "market://details?id=" + Android_appid;
+        }
+        cc.sys.openURL(urlRateApp);
+    },
+    shareAppURL: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionShareApp:", "https://itunes.apple.com/app/id" + iOS_appid);
+        }
+        if (cc.sys.os == cc.sys.OS_ANDROID) {
+            console.log("ShareAppURLShareAppURLShareAppURL");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionShareApp", "(Ljava/lang/String;)V", "https://play.google.com/store/apps/details?id=" + Android_appid);
+        }
+    },
+    feedBackMail: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "actionFeedBack:", mailSupport);
+        }
+        if (cc.sys.os == cc.sys.OS_ANDROID) {
+            console.log("ShareAppURLShareAppURLShareAppURL");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "actionFeedBack", "(Ljava/lang/String;)V", mailSupport);
+        }
+    },
+
+
+    playVideoForCard: function (videoPath) {
+        var path = this.getFilePath("resources/" + videoPath);
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "playVideo:", path);
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
-            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideoName", "(Ljava/lang/String;)V", cardname);
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "playVideo", "(Ljava/lang/String;)V", path);
         } else {
-            var arrPath = cardname.split("/");
+            var arrPath = videoPath.split("/");
             var fileName = arrPath[arrPath.length - 1];
             var youtubeVideo = {
                 "a_song.mp4": "RgDAav0jxNs",
@@ -18,22 +80,28 @@ var Utils = {
                 "d_song.mp4": "DwhPe30f-D0",
                 "d_trace.mp4": "ifnmXmcV_4U"
             };
-            if(youtubeVideo[fileName] != undefined) {
+            if (youtubeVideo[fileName] != undefined) {
                 openVideoNow(youtubeVideo[fileName]);
             }
         }
     },
-
-    //phan nay danh cho viec lay link download
-    //neu co them server thi chi can cho vao day la xong
+    installCardData: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "installCardData");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "installCardData", "()V");
+        }
+    },
+//phan nay danh cho viec lay link download
+//neu co them server thi chi can cho vao day la xong
     getServer: function () {
         var server = [
             "https://vkidsdata.firebaseapp.com",
-            // "https://vkidsdata2.firebaseapp.com",
-            // "https://vkidsdata3.firebaseapp.com",
-            // "https://vkidsdata4.firebaseapp.com"
+            "https://vkidsdata2.firebaseapp.com",
+            "https://vkidsdata3.firebaseapp.com",
+            "https://vkidsdata4.firebaseapp.com"
         ];
-        return server[Math.floor(Math.random() * server.length)] + "/media";
+        return server[Math.floor(Math.random() * server.length)] + "/zip";
     },
 
     getUrlDownload: function (letter) {
@@ -65,7 +133,7 @@ var Utils = {
             "y": "a95430b60ba655ab74c213afe69efc5008cff51aaaffc691731f63e73f02f658",
             "z": "4ab8e4383c6576a4412ac393571cba8c1601f2a5504610f61f71638c8f3e2ab3"
         };
-        return getServer() + "/" + listFile[letter] + ".zip";
+        return this.getServer() + "/" + listFile[letter] + ".zip";
     },
 
     beginDownloadFile: function (strfileDownload) {
@@ -76,17 +144,12 @@ var Utils = {
         }
     },
 
-
-    playEffect: function (path, stop) {
-        cc.loader.load(this.getFilePath(path), function (error, audiofile) {
-            if (!(error == null)) {
-                cc.log("Play effect error: %s ", error);
-            }
-            if (stop == true) {
-                cc.audioEngine.stopAll();
-            }
-            cc.audioEngine.playEffect(audiofile);
-        });
+    stopDownload: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("BridgeJS2IOS", "stopDownload");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/BridgeAndroid", "stopDownload", "()V");
+        }
     },
 
     /**
@@ -102,7 +165,7 @@ var Utils = {
             a[j] = x;
         }
     },
-    //de lay duong dan cua file goi qua ham nay nhe
+//de lay duong dan cua file goi qua ham nay nhe
     getFilePath: function (path) {
         var fullPath = cc.url.raw(path);
         if (cc.sys.os != cc.sys.OS_IOS && cc.sys.os != cc.sys.OS_ANDROID) {
@@ -113,7 +176,144 @@ var Utils = {
             return fullPath;
         }
         return jsb.fileUtils.getWritablePath() + path;
-    }
+    },
+
+    /**
+     *
+     * @param sprite cc.Sprite
+     * @param filePath duong dan anh tinh tu thu muc resources
+     * VD: card/ant.png => full path /resources/card/ant.png
+     * @param callback callback function neu co
+     */
+    setSpriteFrame: function (sprite, filePath, callback) {
+        var path = this.getFilePath("resources/" + filePath);
+        cc.loader.load(path, function (err, tex) {
+            if (err != null) {
+                return;
+            }
+            if (cc.sys.isBrowser) {
+                sprite.spriteFrame = new cc.SpriteFrame(tex);
+            } else {
+                sprite.spriteFrame = cc.SpriteFrame(tex);
+            }
+            if (callback != undefined) {
+                callback();
+            }
+        });
+    },
+    /**
+     *
+     * @param pathSource duong dan file audio tinh tu thu muc resources
+     * VD: Sound/ant.mp3 => full path /resources/Sound/ant.mp3
+     * @param loopAudio chay lap lai audio hay khong
+     * @param stopAll truoc khi play audio co stop het tat ca audio dang chay hay khong
+     * @param callback callback function neu co
+     */
+    playSoundSource: function (pathSource, loopAudio, stopAll, callback) {
+        if (stopAll) {
+            cc.audioEngine.stopAll();
+        }
+        var path = this.getFilePath("resources/" + pathSource);
+
+        cc.loader.load(path, function (err, audioFile) {
+            if (!(err == null)) {
+                return;
+            }
+            cc.audioEngine.play(audioFile, loopAudio);
+        });
+        if (callback != undefined) {
+            callback();
+        }
+    },
+
+    /**
+     *
+     * @param json_path tinh tu thu muc resources
+     * @param callback callback function neu co
+     */
+    loadJson: function (jsonPath, callback) {
+        var path = this.getFilePath("resources/" + jsonPath);
+        cc.loader.load(path, function (err, rsdata) {
+            if (!(err == null)) {
+                return;
+            }
+            if (callback != undefined) {
+                callback(rsdata);
+            }
+        });
+    },
+
+    /**
+     * lay random 1 phan tu cua mang
+     * @param array
+     * @returns {*}
+     */
+    randomElement: function (array) {
+        return array[Math.floor(Math.random() * array.length)];
+    },
+
+    unlockData: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("SmIAB", "unlockContent");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            cc.log("Unlock data function");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "unlockContent", "()V");
+        } else {
+            cc.log("This device not support inapp purchase %s", cc.sys.os);
+            //nếu đang chạy simulator của thằng CC thì coi như mua luôn
+            if (cc.sys.os == cc.sys.OS_OSX) {
+                var currentsc = cc.director.getScene();
+                var runningScene = currentsc.children[0].getComponent("HomeUIScript");
+                runningScene.unlockDataSuccess();
+            }
+        }
+    },
+
+    isUnlockContent: function () {
+        return cc.sys.localStorage.getItem('vkids_buy_content');
+    },
+    checkRateApp: function () {
+        return cc.sys.localStorage.getItem('vkids_rated');
+    },
+
+    checkDownload: function (letter) {
+        var checkDownload = "download_pack_" + letter;
+        return cc.sys.localStorage.getItem(checkDownload);
+    },
+    getOldPrice: function () {
+        var price = cc.sys.localStorage.getItem("vkids_old_price");
+        if (price == null) {
+            price = '$17.99';
+        }
+        return price;
+    },
+    getNewPrice: function () {
+        var price = cc.sys.localStorage.getItem("vkids_new_price");
+        if (price == null) {
+            price = '$12.99';
+        }
+        return price;
+    },
+    cachePrice: function (strPrice, key) {
+        cc.sys.localStorage.setItem(key, strPrice);
+    },
+
+    loadPackageInappPurchase: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("SmIAB", "IABInit");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "initIABHelper", "()V");
+        }
+    },
+    /**
+     * Returns a random integer between min (inclusive) and max (inclusive)
+     * Using Math.round() will give you a non-uniform distribution!
+     */
+    getRandomInt: function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
+    videoUrl: "",
+    videoType: "song",
 }
 module.exports = Utils;
 

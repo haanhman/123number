@@ -1,5 +1,7 @@
+var Utils = require('Utils');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
         colorWord:{
@@ -29,25 +31,24 @@ cc.Class({
 
 
         var rdid=this.getRandomBubbleWord(1,7);
-        this.source_path_bubble="GameTouch/game_02_bubble_0"+rdid;
-        var self=this;
-        cc.loader.loadRes(this.source_path_bubble,cc.SpriteFrame, function (err, rsdata) {
-            if(!(err==null)){
-                cc.log("----error load word  %s = %s ",err,rd_index);
-            }
-            var child_mask=self.node.getChildByName("sp_bubble");
-            child_mask.getComponent(cc.Sprite).spriteFrame=rsdata;
-        });
-
+        this.source_path_bubble="GameTouch/game_02_bubble_0"+rdid+".png";
+        var child_mask=this.node.getChildByName("sp_bubble");
+        Utils.setSpriteFrame(child_mask.getComponent(cc.Sprite), this.source_path_bubble);
 
         var idcolor=this.getRandomBubbleWord(0,4);
         var childNodelb=this.node.children[0];
         childNodelb.color=this.colorWord[idcolor];
+
+        var label = childNodelb.getComponent(cc.Label);
         if (Math.round(Math.random()*10)>=5){
-            childNodelb.getComponent(cc.Label).string=this.node.word_name.toUpperCase();
+            label.string=this.node.word_name.toUpperCase();
+            label.node.setPosition(0, -130);
+            label.node.setAnchorPoint(0.5, 0);
         }else {
-            childNodelb.getComponent(cc.Label).string=this.node.word_name;
-            childNodelb.scale=1.3;
+            label.string=this.node.word_name;
+            label.node.setPosition(0, 0);
+            label.node.setAnchorPoint(0.5, 0.5);
+            childNodelb.scale=1.1;
         }
     },
 

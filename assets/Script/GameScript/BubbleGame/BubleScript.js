@@ -1,5 +1,7 @@
+var Utils = require('Utils');
+var vkidsScene = require("VkidsScene");
 cc.Class({
-    extends: cc.Component,
+    extends: vkidsScene,
 
     properties: {
         // foo: {
@@ -39,32 +41,24 @@ cc.Class({
         var rdid=this.getRandomBubble(1,7);
         // lay ten file, phai luu lai thanh bien this.source_path_bubble de con release
         // release o dong thu 23
-        var source_path_bubble="GameTouch/game_02_bubble_0"+rdid;
-        var self=this;
-        cc.loader.loadRes(source_path_bubble,cc.SpriteFrame, function (err, rsdata) {
-            if(!(err==null)){
-                cc.log("----error load word  %s = %s ",err,rd_index);
-                return;
+        var source_path_bubble="GameTouch/game_02_bubble_0"+rdid+".png";
+        var child_mask=this.node.getChildByName("sp_bubble");
+        var bubble = child_mask.getComponent(cc.Sprite);
+        Utils.setSpriteFrame(bubble, source_path_bubble);
+
+
+        var child_card=this.node.getChildByName("card");
+        var img = child_card.getComponent(cc.Sprite);
+        Utils.setSpriteFrame(img, this.node.pathIMG, function () {
+            var scale = bubble.node.getContentSize().width / img.node.getContentSize().width;
+            var scaleH = bubble.node.getContentSize().height / img.node.getContentSize().height;
+            if(scale > scaleH) {
+                scale = scaleH;
             }
-            var child_mask=self.node.getChildByName("sp_bubble");
-            child_mask.getComponent(cc.Sprite).spriteFrame=rsdata;
-        });
-
-
-
-        cc.loader.loadRes(this.node.pathIMG,cc.SpriteFrame, function (err, rsdata) {
-            if(!(err==null)){
-                cc.log("----error load word  %s = %s ",err,rd_index);
-                return;
+            if(scale < 1) {
+                img.node.setScale(scale * 0.6);
             }
-            var child_card=self.node.getChildByName("card");
-            child_card.getComponent(cc.Sprite).spriteFrame=rsdata;
         });
-
-
-
-
-
     },
 
     stopMoveNode:function(){
