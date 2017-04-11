@@ -281,16 +281,16 @@ var Utils = {
         var checkDownload = "download_pack_" + letter;
         return cc.sys.localStorage.getItem(checkDownload);
     },
-    getOldPrice: function(){
+    getOldPrice: function () {
         var price = cc.sys.localStorage.getItem("vkids_old_price");
-        if(price == null) {
+        if (price == null) {
             price = '$17.99';
         }
         return price;
     },
-    getNewPrice: function(){
+    getNewPrice: function () {
         var price = cc.sys.localStorage.getItem("vkids_new_price");
-        if(price == null) {
+        if (price == null) {
             price = '$12.99';
         }
         return price;
@@ -305,6 +305,13 @@ var Utils = {
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "initIABHelper", "()V");
         }
+    },
+    /**
+     * Returns a random integer between min (inclusive) and max (inclusive)
+     * Using Math.round() will give you a non-uniform distribution!
+     */
+    getRandomInt: function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     },
     videoUrl: "",
     videoType: "song",

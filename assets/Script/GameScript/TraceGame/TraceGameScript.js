@@ -18,8 +18,28 @@ cc.Class({
         this.timeAddDot=this.timeAddDot+dt;
     },
 
+    randomBackground: function () {
+        //random background
+        var randomInt = Utils.getRandomInt(0, 1);
+        var imgPath = randomInt == 1 ? "Texture/GameIMG/gamebg1.png" : "Texture/GameIMG/gamebg2.png";
+        var gamebg = this.node.getChildByName("gamebg").getComponent(cc.Sprite);
+        cc.loader.load(cc.url.raw(imgPath), function (err, tex) {
+            if (err != null) {
+                return;
+            }
+            if (cc.sys.isBrowser) {
+                gamebg.spriteFrame = new cc.SpriteFrame(tex);
+            } else {
+                gamebg.spriteFrame = cc.SpriteFrame(tex);
+            }
+        });
+        //end random background
+    },
+
     // use this for initialization
     onLoad: function () {
+        this.randomBackground();
+
         this.timeAddDot=0;
         this.scSize=cc.director.getVisibleSize();
         //this.scheduleOnce(this.loadConfigGame,0.5);
@@ -116,6 +136,7 @@ cc.Class({
     },
 
     actionReload:function(){
+        this.randomBackground();
         this.index_trace=0;
         this.indexDraw=[];
         for(var ii=0;ii<10;ii++){
