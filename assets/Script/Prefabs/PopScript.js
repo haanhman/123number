@@ -156,15 +156,15 @@ cc.Class({
         }.bind(this));
     },
     actionPlaySong: function () {
-        Utils.playVideoForCard('video/' + this.strCardName.toLowerCase() + '_song.mp4');
-        this.actionShowBgNoTouch(true);
-        this.node.removeFromParent(true);
+        Utils.videoUrl = 'video/' + this.strCardName.toLowerCase() + '_song.mp4';
+        Utils.videoType = "song";
+        cc.director.loadScene('VideoScene');
     },
 
     actionTraceVideo: function () {
-        Utils.playVideoForCard('video/' + this.strCardName.toLowerCase() + '_trace.mp4');
-        this.actionShowBgNoTouch(true);
-        this.node.removeFromParent(true);
+        Utils.videoUrl = 'video/' + this.strCardName.toLowerCase() + '_trace.mp4';
+        Utils.videoType = "trace";
+        cc.director.loadScene('VideoScene');
     },
 
     actionShowBgNoTouch: function (active) {

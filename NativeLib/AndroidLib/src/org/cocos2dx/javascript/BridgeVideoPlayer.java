@@ -141,7 +141,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
             @Override
             public void run() {
                 Cocos2dxJavascriptJavaBridge.evalString("var currentsc = cc.director.getScene();\n" +
-                        "var runningScene = currentsc.children[0].getComponent(\"HomeUIScript\");\n" +
+                        "var runningScene = currentsc.children[0].getComponent(\"VideoScene\");\n" +
                         "runningScene.videoCompleteCallback();");
             }
         });
@@ -154,7 +154,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
             @Override
             public void run() {
                 Cocos2dxJavascriptJavaBridge.evalString("var currentsc = cc.director.getScene();\n" +
-                        "var runningScene = currentsc.children[0].getComponent(\"HomeUIScript\");\n" +
+                        "var runningScene = currentsc.children[0].getComponent(\"VideoScene\");\n" +
                         "runningScene.closeVideoButton();");
             }
         });
