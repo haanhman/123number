@@ -305,8 +305,9 @@ var Utils = {
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "initIABHelper", "()V");
         }
-    }
-
+    },
+    videoUrl: "",
+    videoType: "song",
 }
 module.exports = Utils;
 

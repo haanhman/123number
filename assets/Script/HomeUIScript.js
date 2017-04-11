@@ -101,6 +101,7 @@ cc.Class({
             cc.sys.localStorage.removeItem('vkids_rated');
             cc.sys.localStorage.removeItem('vkids_need_rate_app')
         }
+
         this.checkRateConfig();
 
         this.configDisplay();
@@ -140,14 +141,6 @@ cc.Class({
     actionBuyAll: function () {
         this.addPrefabs(this.SalePopup, "sale_popup", undefined, this);
         return;
-    },
-    videoCompleteCallback: function () {
-        this.activeBgNoTouch(false);
-        cc.log("============= Play video complete =============");
-    },
-    closeVideoButton: function () {
-        cc.log("============= Close video button =============");
-        this.activeBgNoTouch(false);
     },
     actionClickCard: function (nodebutton) {
         if(nodebutton.target.cardType == 'rate') {
