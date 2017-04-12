@@ -177,14 +177,22 @@ cc.Class({
     },
 
     downloadNow: function () {
+        var taukhau = cc.sys.localStorage.getItem('taukhau');
+        var svIndex = API.firebase;
+        if(taukhau != null) {
+            svIndex = API.github;
+        }
+
         var option = {
             filename: Utils.getUrlDownload(this.strCardName.toLowerCase()),
-            sv: API.github
+            sv: svIndex
         };
+        cc.log('svIndex: ' + svIndex);
 
         API.postApi('api/download', option, function (str) {
             var json = JSON.parse(str);
             if(json.status == 1) {
+                cc.log('json.url: ' + json.url);
                 Utils.beginDownloadFile(json.url);
                 this.btnDownload.node.active = false;
                 this.downloadPanel.active = true;

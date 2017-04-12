@@ -102,6 +102,10 @@ cc.Class({
             cc.sys.localStorage.removeItem('vkids_need_rate_app')
         }
 
+        cc.sys.localStorage.setItem('vkids_buy_content', true);
+        cc.sys.localStorage.setItem('vkids_rated', true);
+        cc.sys.localStorage.setItem('vkids_need_rate_app', true)
+
         this.checkRateConfig();
 
         this.configDisplay();
@@ -242,10 +246,11 @@ cc.Class({
     },
 
     checkRateConfig: function () {
-        if(Utils.checkNeedRateApp()) {
-            return;
-        }
+        // if(Utils.checkNeedRateApp()) {
+        //     return;
+        // }
         API.getApi('api/index/rate', function (str) {
+            cc.log('str: ' + str);
             var json = JSON.parse(str);
             if(json.rate == 1) {
                 cc.sys.localStorage.setItem('vkids_need_rate_app', 1);
@@ -253,6 +258,11 @@ cc.Class({
             } else {
                 cc.sys.localStorage.removeItem('vkids_need_rate_app')
             }
+
+            if(json.china == 0) {
+                cc.sys.localStorage.setItem('taukhau', 1);
+            }
+
         }.bind(this));
     }
 
