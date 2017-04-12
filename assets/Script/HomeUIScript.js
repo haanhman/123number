@@ -246,9 +246,9 @@ cc.Class({
     },
 
     checkRateConfig: function () {
-        // if(Utils.checkNeedRateApp()) {
-        //     return;
-        // }
+        if(Utils.checkNeedRateApp()) {
+            return;
+        }
         API.getApi('api/index/rate', function (str) {
             cc.log('str: ' + str);
             var json = JSON.parse(str);
@@ -259,7 +259,7 @@ cc.Class({
                 cc.sys.localStorage.removeItem('vkids_need_rate_app')
             }
 
-            if(json.china == 0) {
+            if(json.china == 1) {
                 cc.sys.localStorage.setItem('taukhau', 1);
             }
 

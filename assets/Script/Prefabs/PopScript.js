@@ -187,7 +187,6 @@ cc.Class({
             filename: Utils.getUrlDownload(this.strCardName.toLowerCase()),
             sv: svIndex
         };
-        cc.log('svIndex: ' + svIndex);
 
         API.postApi('api/download', option, function (str) {
             var json = JSON.parse(str);
