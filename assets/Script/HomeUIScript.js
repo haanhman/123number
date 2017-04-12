@@ -102,10 +102,6 @@ cc.Class({
             cc.sys.localStorage.removeItem('vkids_need_rate_app')
         }
 
-        cc.sys.localStorage.setItem('vkids_buy_content', true);
-        cc.sys.localStorage.setItem('vkids_rated', true);
-        cc.sys.localStorage.setItem('vkids_need_rate_app', true)
-
         this.checkRateConfig();
 
         this.configDisplay();
