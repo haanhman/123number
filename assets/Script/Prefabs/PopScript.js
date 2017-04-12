@@ -2,6 +2,7 @@ var Utils = require('Utils');
 var NativeMobileJS = require('NativeMobile');
 var GameData = require('GameData');
 var vkidsScene = require("VkidsScene");
+var API = require("Api");
 cc.Class({
     extends: vkidsScene,
     properties: {
@@ -176,10 +177,20 @@ cc.Class({
     },
 
     downloadNow: function () {
-        Utils.beginDownloadFile(Utils.getUrlDownload(this.strCardName.toLowerCase()));
-        this.btnDownload.node.active = false;
-        this.downloadPanel.active = true;
-        this.btnClose.node.active = false;
+        var option = {
+            filename: Utils.getUrlDownload(this.strCardName.toLowerCase()),
+            sv: API.github
+        };
+
+        API.postApi('api/download', option, function (str) {
+            var json = JSON.parse(str);
+            if(json.status == 1) {
+                Utils.beginDownloadFile(json.url);
+                this.btnDownload.node.active = false;
+                this.downloadPanel.active = true;
+                this.btnClose.node.active = false;
+            }
+        }.bind(this));
     },
 
     stopDownload: function () {

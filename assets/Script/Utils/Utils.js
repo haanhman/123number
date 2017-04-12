@@ -133,7 +133,9 @@ var Utils = {
             "y": "a95430b60ba655ab74c213afe69efc5008cff51aaaffc691731f63e73f02f658",
             "z": "4ab8e4383c6576a4412ac393571cba8c1601f2a5504610f61f71638c8f3e2ab3"
         };
-        return this.getServer() + "/" + listFile[letter] + ".zip";
+
+        // return this.getServer() + "/" + listFile[letter] + ".zip";
+        return listFile[letter];
     },
 
     beginDownloadFile: function (strfileDownload) {
