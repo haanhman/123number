@@ -29,6 +29,7 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "platform/ios/CCEAGLView-ios.h"
+#import <FirebaseCore/FIRApp.h>
 
 @implementation AppController
 
@@ -82,6 +83,7 @@ static AppDelegate s_sharedApplication;
     
     cocos2d::Application::getInstance()->run();
     [UIApplication sharedApplication].idleTimerDisabled = YES;
+    [FIRApp configure];
     return YES;
 }
 
