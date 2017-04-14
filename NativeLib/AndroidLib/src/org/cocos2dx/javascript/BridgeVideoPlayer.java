@@ -49,6 +49,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
 
     private static void startVideo(String videoUrl) {
         try {
+            AppActivity.videoIsPlaying = true;
             Uri myUri = Uri.parse(videoUrl);
             Log.d(TAG, myUri.toString());
             DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -134,7 +135,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
 
     }
 
-    private static void completeVideo() {
+    public static void completeVideo() {
         removeVideo();
 
         Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
@@ -147,7 +148,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
         });
     }
 
-    private static void closeVideo() {
+    public static void closeVideo() {
         removeVideo();
 
         Cocos2dxGLSurfaceView.getInstance().queueEvent(new Runnable() {
@@ -167,8 +168,6 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
         }
     }
 
-
-
     public static void checkVideoResume() {
         if(_video != null) {
             _video.seekTo(stopPosition);
@@ -184,6 +183,7 @@ public class BridgeVideoPlayer extends Cocos2dxActivity {
     }
 
     private static void restartParams() {
+        AppActivity.videoIsPlaying = false;
         stopPosition = 0;
         _video = null;
         _layout = null;
