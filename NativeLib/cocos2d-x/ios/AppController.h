@@ -22,10 +22,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#import <FirebaseCore/FIRApp.h>
+#import <FirebaseMessaging/FIRMessaging.h>
+#import <UserNotifications/UserNotifications.h>
 
 @class RootViewController;
 
-@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate>
+@interface AppController : NSObject <UIAccelerometerDelegate, UIAlertViewDelegate, UITextFieldDelegate,UIApplicationDelegate, FIRMessagingDelegate, UNUserNotificationCenterDelegate>
 {
     UIWindow *window;
     RootViewController    *viewController;
