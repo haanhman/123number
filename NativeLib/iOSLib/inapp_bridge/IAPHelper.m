@@ -9,6 +9,7 @@
 #import "IAPHelper.h"
 #import "NSString+Base64.h"
 #import "SFHFKeychainUtils.h"
+#import "SmIAB.h"
 
 #if ! __has_feature(objc_arc)
 #error You need to either convert your project to ARC or add the -fobjc-arc compiler flag to IAPHelper.m.
@@ -107,7 +108,8 @@
 
 }
 
-- (void)recordTransaction:(SKPaymentTransaction *)transaction {    
+- (void)recordTransaction:(SKPaymentTransaction *)transaction {
+    [SmIAB unlockDataSuccess];
     // TODO: Record the transaction on the server side...    
 }
 
@@ -243,6 +245,7 @@
 
 -(void)restoreProductsWithCompletion:(resoreProductsCompleteResponseBlock)completion {
 
+    NSLog(@"==> restoreProductsWithCompletion");
     //clear it
     self.buyProductCompleteBlock = nil;
     
@@ -304,6 +307,8 @@
     #ifndef NDEBUG
         requestURL = [NSURL URLWithString:@"http://54.218.122.252/api/receipt/verify?debug=1"];
     #endif
+    
+    NSLog(@"requestURL: %@", requestURL);
     
     NSString *myRequestString = [NSString stringWithFormat:@"receipt-data=%@", receiptBase64];
     NSData *myRequestData = [NSData dataWithBytes: [myRequestString UTF8String] length:[myRequestString length]];

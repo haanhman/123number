@@ -17,7 +17,6 @@ static bool clickBuyBtn = NO;
     
     [[IAPShare sharedHelper].iap requestProductsWithCompletion:^(SKProductsRequest* request,SKProductsResponse* response){
          if(response > 0 ) {
-             
              for (SKProduct *p in [IAPShare sharedHelper].iap.products) {
                  NSLog(@"Price: %@",[[IAPShare sharedHelper].iap getLocalePrice:p]);
                  NSLog(@"Title: %@",p.localizedTitle);
@@ -27,10 +26,13 @@ static bool clickBuyBtn = NO;
                  } else {
                      [SmIAB setPrice:[[IAPShare sharedHelper].iap getLocalePrice:p] andType:2];
                  }
-             }             
+             }
              //neu click vao nut mua khi chua co mang, sau do bat mang len va load duoc thong tin mua ban se tu mua luon
              if(clickBuyBtn) {
                  [SmIAB unlockContent];
+             } else {
+                 //auto restore
+                 [SmIAB restoreProduct];
              }
          } else {
              NSLog(@"Khong lay duoc thong tin mua ban tu Apple. vui long kiem tra lai");
@@ -38,6 +40,14 @@ static bool clickBuyBtn = NO;
      }];
 }
 
+
++(void)restoreProduct {
+    [[IAPShare sharedHelper].iap restoreProductsWithCompletion:^(SKPaymentQueue *payment, NSError *error) {
+        if(error != nil) {
+            NSLog(@"Error: %@", error);
+        }
+    }];
+}
 
 +(void)unlockContent {
     clickBuyBtn = YES;

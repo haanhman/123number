@@ -99,7 +99,7 @@ cc.Class({
         if (cc.sys.os == cc.sys.OS_OSX) {
             cc.sys.localStorage.removeItem('vkids_buy_content');
             cc.sys.localStorage.removeItem('vkids_rated');
-            cc.sys.localStorage.removeItem('vkids_need_rate_app')
+            cc.sys.localStorage.removeItem('vkids_need_rate_app');
         }
 
         this.checkRateConfig();
