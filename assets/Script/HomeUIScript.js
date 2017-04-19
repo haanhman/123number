@@ -194,10 +194,18 @@ cc.Class({
     start: function () {
         this.checkInstallData();
         if(Utils.isUnlockContent() == null && Utils.loadProduct == false) {
-            Utils.loadPackageInappPurchase();
-            Utils.loadProduct = true;
+            var callFun = cc.callFunc(this.loadProducts);
+            var delayTime = cc.delayTime(3);
+            this.node.runAction(cc.sequence([delayTime, callFun]));
         }
     },
+
+    loadProducts: function () {
+        cc.log("===> loadProducts");
+        Utils.loadPackageInappPurchase();
+        Utils.loadProduct = true;
+    },
+
     checkInstallData: function () {
         if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
             var checkFileExist = Utils.getFilePath("resources/video/a_song.mp4");
