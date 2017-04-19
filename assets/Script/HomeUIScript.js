@@ -138,6 +138,9 @@ cc.Class({
     actionBuyNow: function() {
         this.addParentalPopup('buy', this);
     },
+    actionRestore: function() {
+        this.addParentalPopup('restore', this);
+    },
     actionBuyAll: function () {
         this.addPrefabs(this.SalePopup, "sale_popup", undefined, this);
         return;
@@ -190,8 +193,9 @@ cc.Class({
 
     start: function () {
         this.checkInstallData();
-        if(Utils.isUnlockContent() == null) {
+        if(Utils.isUnlockContent() == null && Utils.loadProduct == false) {
             Utils.loadPackageInappPurchase();
+            Utils.loadProduct = true;
         }
     },
     checkInstallData: function () {

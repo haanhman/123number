@@ -30,9 +30,6 @@ static bool clickBuyBtn = NO;
              //neu click vao nut mua khi chua co mang, sau do bat mang len va load duoc thong tin mua ban se tu mua luon
              if(clickBuyBtn) {
                  [SmIAB unlockContent];
-             } else {
-                 //auto restore
-                 [SmIAB restoreProduct];
              }
          } else {
              NSLog(@"Khong lay duoc thong tin mua ban tu Apple. vui long kiem tra lai");
@@ -41,7 +38,7 @@ static bool clickBuyBtn = NO;
 }
 
 
-+(void)restoreProduct {
++(void)restoreContent {
     [[IAPShare sharedHelper].iap restoreProductsWithCompletion:^(SKPaymentQueue *payment, NSError *error) {
         if(error != nil) {
             NSLog(@"Error: %@", error);

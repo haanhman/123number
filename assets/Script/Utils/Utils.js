@@ -2,6 +2,7 @@ var iOS_appid = "1213910464";
 var Android_appid = "com.kidsapp.abcphonic.learnhandwriting";
 var mailSupport = "sonman.startup@gmail.com";
 var Utils = {
+    loadProduct: false,
     limitFree: function () {
         if (this.checkNeedRateApp()) {
             return ['a', 'b', 'c'];
@@ -257,6 +258,23 @@ var Utils = {
     unlockData: function () {
         if (cc.sys.os == cc.sys.OS_IOS) {
             jsb.reflection.callStaticMethod("SmIAB", "unlockContent");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            cc.log("Unlock data function");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "unlockContent", "()V");
+        } else {
+            cc.log("This device not support inapp purchase %s", cc.sys.os);
+            //nếu đang chạy simulator của thằng CC thì coi như mua luôn
+            if (cc.sys.os == cc.sys.OS_OSX) {
+                var currentsc = cc.director.getScene();
+                var runningScene = currentsc.children[0].getComponent("HomeUIScript");
+                runningScene.unlockDataSuccess();
+            }
+        }
+    },
+
+    restoreContent: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("SmIAB", "restoreContent");
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             cc.log("Unlock data function");
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "unlockContent", "()V");

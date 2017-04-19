@@ -2,6 +2,7 @@
 #import "IAPShare.h"
 @interface SmIAB : NSObject
 +(void)unlockContent;
++(void)restoreContent;
 +(void)IABInit;
 +(void)unlockDataSuccess;
 +(void)unlockDataError;

@@ -76,6 +76,9 @@ cc.Class({
             case 'buy':
                 Utils.unlockData();
                 break;
+            case 'restore':
+                Utils.restoreContent();
+                break;
             case 'download':
                 this.node.parentScene.downloadNow();
                 break;
