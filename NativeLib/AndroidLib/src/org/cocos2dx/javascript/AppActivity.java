@@ -28,14 +28,17 @@ package org.cocos2dx.javascript;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 public class AppActivity extends Cocos2dxActivity {
-
+    public static boolean videoIsPlaying = false;
+    private static String TAG = "AppActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +98,9 @@ public class AppActivity extends Cocos2dxActivity {
     
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if(this.videoIsPlaying) {
+            BridgeVideoPlayer.closeVideo();
+        }
     }
 
     @Override

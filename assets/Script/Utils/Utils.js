@@ -2,6 +2,7 @@ var iOS_appid = "1213910464";
 var Android_appid = "com.kidsapp.abcphonic.learnhandwriting";
 var mailSupport = "sonman.startup@gmail.com";
 var Utils = {
+    loadProduct: false,
     limitFree: function () {
         if (this.checkNeedRateApp()) {
             return ['a', 'b', 'c'];
@@ -133,7 +134,9 @@ var Utils = {
             "y": "a95430b60ba655ab74c213afe69efc5008cff51aaaffc691731f63e73f02f658",
             "z": "4ab8e4383c6576a4412ac393571cba8c1601f2a5504610f61f71638c8f3e2ab3"
         };
-        return this.getServer() + "/" + listFile[letter] + ".zip";
+
+        // return this.getServer() + "/" + listFile[letter] + ".zip";
+        return listFile[letter];
     },
 
     beginDownloadFile: function (strfileDownload) {
@@ -255,6 +258,23 @@ var Utils = {
     unlockData: function () {
         if (cc.sys.os == cc.sys.OS_IOS) {
             jsb.reflection.callStaticMethod("SmIAB", "unlockContent");
+        } else if (cc.sys.os == cc.sys.OS_ANDROID) {
+            cc.log("Unlock data function");
+            jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "unlockContent", "()V");
+        } else {
+            cc.log("This device not support inapp purchase %s", cc.sys.os);
+            //nếu đang chạy simulator của thằng CC thì coi như mua luôn
+            if (cc.sys.os == cc.sys.OS_OSX) {
+                var currentsc = cc.director.getScene();
+                var runningScene = currentsc.children[0].getComponent("HomeUIScript");
+                runningScene.unlockDataSuccess();
+            }
+        }
+    },
+
+    restoreContent: function () {
+        if (cc.sys.os == cc.sys.OS_IOS) {
+            jsb.reflection.callStaticMethod("SmIAB", "restoreContent");
         } else if (cc.sys.os == cc.sys.OS_ANDROID) {
             cc.log("Unlock data function");
             jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SmIAB", "unlockContent", "()V");

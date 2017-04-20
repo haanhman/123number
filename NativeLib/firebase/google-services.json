@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "238008615375",
+    "firebase_url": "https://vkidsdata.firebaseio.com",
+    "project_id": "vkidsdata",
+    "storage_bucket": "vkidsdata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238008615375:android:026c76ad3c54e6a5",
+        "android_client_info": {
+          "package_name": "com.kidsapp.abcphonic.learnhandwriting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238008615375-0a4ticoidmopi00v0iav1oumtv8a71ks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kidsapp.abcphonic.learnhandwriting",
+            "certificate_hash": "8dd2d322c9556cccb3cf11e4cecf471f62f1d6db"
+          }
+        },
+        {
+          "client_id": "238008615375-fb58cq2e1tevupbk21dkvcogn4nf2v8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOIanK_PgkaNLe1rIDBiuAnvgT14ZIB2M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238008615375-3dmiak15d3cd5hj5a4qvh8sveal3uiba.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vkids.abcsong",
+                "app_store_id": "1213910464"
+              }
+            },
+            {
+              "client_id": "238008615375-fb58cq2e1tevupbk21dkvcogn4nf2v8r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

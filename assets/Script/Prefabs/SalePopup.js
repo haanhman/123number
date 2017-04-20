@@ -23,5 +23,10 @@ cc.Class({
     buyAction: function() {
         this.node.parentScene.actionBuyNow();
         this.node.removeFromParent(true);
+    },
+
+    restoreAction: function() {
+        this.node.parentScene.actionRestore();
+        this.node.removeFromParent(true);
     }
 });

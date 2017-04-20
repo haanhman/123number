@@ -99,7 +99,7 @@ cc.Class({
         if (cc.sys.os == cc.sys.OS_OSX) {
             cc.sys.localStorage.removeItem('vkids_buy_content');
             cc.sys.localStorage.removeItem('vkids_rated');
-            cc.sys.localStorage.removeItem('vkids_need_rate_app')
+            cc.sys.localStorage.removeItem('vkids_need_rate_app');
         }
 
         this.checkRateConfig();
@@ -137,6 +137,9 @@ cc.Class({
     },
     actionBuyNow: function() {
         this.addParentalPopup('buy', this);
+    },
+    actionRestore: function() {
+        this.addParentalPopup('restore', this);
     },
     actionBuyAll: function () {
         this.addPrefabs(this.SalePopup, "sale_popup", undefined, this);
@@ -190,10 +193,19 @@ cc.Class({
 
     start: function () {
         this.checkInstallData();
-        if(Utils.isUnlockContent() == null) {
-            Utils.loadPackageInappPurchase();
+        if(Utils.isUnlockContent() == null && Utils.loadProduct == false) {
+            var callFun = cc.callFunc(this.loadProducts);
+            var delayTime = cc.delayTime(3);
+            this.node.runAction(cc.sequence([delayTime, callFun]));
         }
     },
+
+    loadProducts: function () {
+        cc.log("===> loadProducts");
+        Utils.loadPackageInappPurchase();
+        Utils.loadProduct = true;
+    },
+
     checkInstallData: function () {
         if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
             var checkFileExist = Utils.getFilePath("resources/video/a_song.mp4");
@@ -246,6 +258,7 @@ cc.Class({
             return;
         }
         API.getApi('api/index/rate', function (str) {
+            cc.log('str: ' + str);
             var json = JSON.parse(str);
             if(json.rate == 1) {
                 cc.sys.localStorage.setItem('vkids_need_rate_app', 1);
@@ -253,6 +266,11 @@ cc.Class({
             } else {
                 cc.sys.localStorage.removeItem('vkids_need_rate_app')
             }
+
+            if(json.china == 1) {
+                cc.sys.localStorage.setItem('taukhau', 1);
+            }
+
         }.bind(this));
     }
 
