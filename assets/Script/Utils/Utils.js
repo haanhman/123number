@@ -334,6 +334,9 @@ var Utils = {
     },
     videoUrl: "",
     videoType: "song",
+    soundButton: function () {
+        this.playSoundSource("Sound/sound_btn.mp3");
+    }
 }
 module.exports = Utils;
 
