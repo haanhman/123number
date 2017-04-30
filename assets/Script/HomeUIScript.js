@@ -54,9 +54,9 @@ cc.Class({
 
 
 
-    /*
+    
     start: function () {
-        this.checkInstallData();
+        // this.checkInstallData();
         if(Utils.isUnlockContent() == null && Utils.loadProduct == false) {
             var callFun = cc.callFunc(this.loadProducts);
             var delayTime = cc.delayTime(3);
@@ -70,6 +70,7 @@ cc.Class({
         Utils.loadProduct = true;
     },
 
+    /*
     checkInstallData: function () {
         if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
             var checkFileExist = Utils.getFilePath("resources/video/a_song.mp4");

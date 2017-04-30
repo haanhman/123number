@@ -8,7 +8,7 @@ static bool clickBuyBtn = NO;
 
 +(void)IABInit {
     if(![IAPShare sharedHelper].iap) {
-        NSArray *inapps = [NSArray arrayWithObjects:@"com.vkids.abcsong.fullcontent", @"com.vkids.abcsong.fullcontent_original", nil];
+        NSArray *inapps = [NSArray arrayWithObjects:@"com.vkids.123numbers.fullcontent", @"com.vkids.123numbers.fullcontent_original", nil];
         NSSet* dataSet = [[NSSet alloc] initWithArray:inapps];
         [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:dataSet];
     }
@@ -20,7 +20,7 @@ static bool clickBuyBtn = NO;
              for (SKProduct *p in [IAPShare sharedHelper].iap.products) {
                  NSLog(@"Price: %@",[[IAPShare sharedHelper].iap getLocalePrice:p]);
                  NSLog(@"Title: %@",p.localizedTitle);
-                 if([p.productIdentifier isEqualToString:@"com.vkids.abcsong.fullcontent"]) {
+                 if([p.productIdentifier isEqualToString:@"com.vkids.123numbers.fullcontent"]) {
                      _product = p;
                      [SmIAB setPrice:[[IAPShare sharedHelper].iap getLocalePrice:p] andType:1];
                  } else {
