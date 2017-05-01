@@ -35,6 +35,7 @@ cc.Class({
                 this.node.parentScene.downloadNow();
                 break;
         }
+        this.node.removeFromParent(true);
     },
 
     touchBackground: function() {

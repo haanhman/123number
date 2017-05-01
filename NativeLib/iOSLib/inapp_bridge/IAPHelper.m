@@ -109,8 +109,11 @@
 }
 
 - (void)recordTransaction:(SKPaymentTransaction *)transaction {
-    [SmIAB unlockDataSuccess];
-    // TODO: Record the transaction on the server side...    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL click_restore = [defaults boolForKey:@"click_restore"];
+    if(click_restore) {
+        [SmIAB unlockDataSuccess];
+    }
 }
 
 
@@ -303,10 +306,11 @@
     NSString *receiptBase64 = [NSString base64StringFromData:receiptData length:[receiptData length]];
 
     NSURL *requestURL = nil;
-    requestURL = [NSURL URLWithString:@"http://54.218.122.252/api/receipt/verify?debug=0"];
+    requestURL = [NSURL URLWithString:@"http://54.218.122.252/api/receipt/number-ios?debug=0"];
     #ifndef NDEBUG
-        requestURL = [NSURL URLWithString:@"http://54.218.122.252/api/receipt/verify?debug=1"];
+        requestURL = [NSURL URLWithString:@"http://54.218.122.252/api/receipt/number-ios?debug=1"];
     #endif
+    
     
     NSLog(@"requestURL: %@", requestURL);
     

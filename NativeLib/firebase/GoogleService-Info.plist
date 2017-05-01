@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>238008615375-3dmiak15d3cd5hj5a4qvh8sveal3uiba.apps.googleusercontent.com</string>
+	<string>387686734810-94unql0stsacmsapcvaf88d962gutcdu.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.238008615375-3dmiak15d3cd5hj5a4qvh8sveal3uiba</string>
+	<string>com.googleusercontent.apps.387686734810-94unql0stsacmsapcvaf88d962gutcdu</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBYsvlOh7WW6b-iGTwOCNHesjNwVdzCIG8</string>
+	<string>AIzaSyDJ8bxCqRfQSDw6gKQG33AFz5ITJv0Oaj0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>238008615375</string>
+	<string>387686734810</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.vkids.abcsong</string>
+	<string>com.vkids.123numbers</string>
 	<key>PROJECT_ID</key>
-	<string>vkidsdata</string>
+	<string>numbers-c4721</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vkidsdata.appspot.com</string>
+	<string>numbers-c4721.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:238008615375:ios:f67e38694d1b0aea</string>
+	<string>1:387686734810:ios:a1ec84a48240ee28</string>
 	<key>DATABASE_URL</key>
-	<string>https://vkidsdata.firebaseio.com</string>
+	<string>https://numbers-c4721.firebaseio.com</string>
 </dict>
 </plist>

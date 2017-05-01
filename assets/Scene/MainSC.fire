@@ -2637,7 +2637,7 @@
       "__id__": 2
     },
     "component": "HomeUIScript",
-    "handler": "actionBuyNow",
+    "handler": "actionBuyAll",
     "customEventData": ""
   },
   {
@@ -3022,6 +3022,9 @@
     },
     "btnBuy": {
       "__id__": 75
+    },
+    "SalePopup": {
+      "__uuid__": "63a6e5be-5f5d-4a64-a0ed-4188b5abf0c1"
     }
   }
 ]
