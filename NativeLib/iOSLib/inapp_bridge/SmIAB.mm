@@ -39,6 +39,8 @@ static bool clickBuyBtn = NO;
 
 
 +(void)restoreContent {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:@"click_restore"];
     [[IAPShare sharedHelper].iap restoreProductsWithCompletion:^(SKPaymentQueue *payment, NSError *error) {
         if(error != nil) {
             NSLog(@"Error: %@", error);
@@ -47,6 +49,8 @@ static bool clickBuyBtn = NO;
 }
 
 +(void)unlockContent {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"click_restore"];
     clickBuyBtn = YES;
     if(_product == nil) {
         NSLog(@"chua load duoc cac goi mua ve");

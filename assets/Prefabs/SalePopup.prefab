@@ -574,7 +574,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "8e61ac6b-b505-40f8-b1de-42e2d546bea0"
+      "__uuid__": "e4a9a714-b7a2-43fc-8fe4-28a339a6c072"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -590,7 +590,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": {
-      "__uuid__": "17ac29d9-4189-4930-849c-6f6101f2f27f"
+      "__uuid__": "46d0487c-9989-461e-9c26-d90f6583877f"
     }
   },
   {
@@ -753,7 +753,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "96bac95c-0558-459b-b723-2df5ad35785a"
+      "__uuid__": "195d33c8-dd51-4ce0-9652-58b2b76f1371"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -769,7 +769,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": {
-      "__uuid__": "17ac29d9-4189-4930-849c-6f6101f2f27f"
+      "__uuid__": "46d0487c-9989-461e-9c26-d90f6583877f"
     }
   },
   {
@@ -935,7 +935,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "9afc4385-83a3-4185-9096-6bdbfeba9538"
+      "__uuid__": "e81ec7e0-b8e4-4074-bfc7-c7a7383ca56d"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -951,7 +951,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": {
-      "__uuid__": "17ac29d9-4189-4930-849c-6f6101f2f27f"
+      "__uuid__": "46d0487c-9989-461e-9c26-d90f6583877f"
     }
   },
   {
@@ -1094,7 +1094,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "1c24ec5c-90ba-4d8e-abba-599d0d1d8855"
+      "__uuid__": "ce66fdf1-046a-463e-9f03-493f0fd1ec95"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -1110,7 +1110,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": {
-      "__uuid__": "17ac29d9-4189-4930-849c-6f6101f2f27f"
+      "__uuid__": "46d0487c-9989-461e-9c26-d90f6583877f"
     }
   },
   {
@@ -1196,7 +1196,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "059a2fa5-9e0d-4a53-bd0f-8b611b42af95"
+      "__uuid__": "9176796b-9b9f-4ba0-886a-178f7cfe735c"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -1212,7 +1212,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_atlas": {
-      "__uuid__": "17ac29d9-4189-4930-849c-6f6101f2f27f"
+      "__uuid__": "46d0487c-9989-461e-9c26-d90f6583877f"
     }
   },
   {

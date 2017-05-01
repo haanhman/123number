@@ -7,12 +7,25 @@ cc.Class({
     properties: {
         parental: cc.Prefab,
         setting: cc.Prefab,
-        btnBuy: cc.Sprite
+        btnBuy: cc.Sprite,
+        SalePopup: cc.Prefab,
     },
 
 
     onLoad: function () {
+        if (cc.sys.os == cc.sys.OS_OSX) {
+            cc.sys.localStorage.removeItem('vkids_buy_content');
+            cc.sys.localStorage.removeItem('vkids_rated');
+            cc.sys.localStorage.removeItem('vkids_need_rate_app');
+        }
 
+        this.checkRateConfig();
+        if (Utils.isUnlockContent()) {
+            this.removeBuyBtn();
+        }
+    },
+    reloadAllCard: function () {
+        cc.log('====> reloadAllCard <====');
     },
     removeBuyBtn: function () {
         this.btnBuy.node.removeFromParent(true);
@@ -121,7 +134,7 @@ cc.Class({
         if(Utils.checkNeedRateApp()) {
             return;
         }
-        API.getApi('api/index/rate', function (str) {
+        API.getApi('api/index/rate-number', function (str) {
             cc.log('str: ' + str);
             var json = JSON.parse(str);
             if(json.rate == 1) {
