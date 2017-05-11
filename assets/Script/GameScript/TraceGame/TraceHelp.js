@@ -91,10 +91,24 @@ cc.Class({
             return;
         }
         var arrayAction=[];
-        var lastPos=allchild[0].getPosition();
-        arrayAction[0]=cc.fadeTo(0.5,255);
+
+        //xac dinh dot dau tien
+        var lastPos = cc.v2(0,0);
+        for(var ic=0;ic<count_child;ic++){
+            var tmpd_dot=allchild[ic];
+            var name_dot=tmpd_dot.name;
+            if(name_dot==="dot_hidden_ignore"){
+                continue;
+            }
+            if(ic > 0) {
+                lastPos = allchild[ic].getPosition();
+                break;
+            }
+        }
         handNode.setPosition(lastPos);
 
+
+        arrayAction[0]=cc.fadeTo(0.5,255);
         var count_index=1;
         for(var ic=1;ic<count_child;ic++){
             var tmpd_dot=allchild[ic];
