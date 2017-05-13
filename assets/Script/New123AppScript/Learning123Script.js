@@ -24,5 +24,5 @@ cc.Class({
     actionSound:function(){
 
     },
-    
+
 });
