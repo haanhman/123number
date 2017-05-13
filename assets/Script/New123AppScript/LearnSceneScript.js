@@ -32,7 +32,7 @@ cc.Class({
         cc.director.loadScene("Learn123.fire");
     },
     actionCounting:function(){
-
+        cc.director.loadScene("LearnCounting.fire");
     },
     actionReading:function(){
         cc.director.loadScene("Reading.fire");
