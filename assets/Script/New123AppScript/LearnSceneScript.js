@@ -29,10 +29,13 @@ cc.Class({
 
     },
     actionLearning:function(){
-
+        cc.director.loadScene("Learn123.fire");
     },
     actionCounting:function(){
-        cc.director.loadScene("Learn123.fire");
+
+    },
+    actionReading:function(){
+        cc.director.loadScene("Reading.fire");
     },
 
 
