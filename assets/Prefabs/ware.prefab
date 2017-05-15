@@ -72,16 +72,19 @@
     "_components": [
       {
         "__id__": 39
+      },
+      {
+        "__id__": 40
       }
     ],
     "_prefab": {
-      "__id__": 40
+      "__id__": 41
     },
     "groupIndex": 0
   },
   {
     "__type__": "cc.Node",
-    "_name": "wave2",
+    "_name": "wave1",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -203,7 +206,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "wave1",
+    "_name": "wave2",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -553,7 +556,9 @@
     "zoomScale": 1.2,
     "pressedSprite": null,
     "hoverSprite": null,
-    "clickEvents": [],
+    "clickEvents": [
+      null
+    ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$normalColor": {
@@ -699,7 +704,9 @@
     "zoomScale": 1.2,
     "pressedSprite": null,
     "hoverSprite": null,
-    "clickEvents": [],
+    "clickEvents": [
+      null
+    ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$normalColor": {
@@ -845,7 +852,9 @@
     "zoomScale": 1.2,
     "pressedSprite": null,
     "hoverSprite": null,
-    "clickEvents": [],
+    "clickEvents": [
+      null
+    ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$normalColor": {
@@ -931,7 +940,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "wave2",
+    "_name": "wave3",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -1053,7 +1062,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "wave1",
+    "_name": "wave4",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -1175,7 +1184,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "wave2",
+    "_name": "wave5",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -1320,6 +1329,24 @@
     "_isAbsVerticalCenter": true,
     "_originalWidth": 0,
     "_originalHeight": 0
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "618764e6-74be-4d9f-ae87-6bcba5c3441e"
+    },
+    "_clips": [
+      {
+        "__uuid__": "618764e6-74be-4d9f-ae87-6bcba5c3441e"
+      }
+    ],
+    "playOnLoad": false
   },
   {
     "__type__": "cc.PrefabInfo",

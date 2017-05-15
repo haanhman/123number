@@ -25,7 +25,7 @@ var GameData = {
         }
         var nextScName = "";
         if(this.arrayScene.length<=this.gameIndex){
-            nextScName = "MainSC";
+            nextScName = "Scene/LearningScene/LearnSC";
         } else {
             nextScName=this.arrayScene[this.gameIndex];
         }

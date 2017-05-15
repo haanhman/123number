@@ -41,7 +41,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "8f4212a0-00fc-46ef-aa9f-07f4f6634047",
-    "autoReleaseAssets": false
+    "autoReleaseAssets": true
   },
   {
     "__type__": "cc.Node",
@@ -4289,6 +4289,7 @@
       {
         "__id__": 51
       }
-    ]
+    ],
+    "number": 5
   }
 ]

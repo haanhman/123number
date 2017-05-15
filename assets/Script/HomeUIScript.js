@@ -9,15 +9,24 @@ cc.Class({
         setting: cc.Prefab,
         btnBuy: cc.Sprite,
         SalePopup: cc.Prefab,
+        learnLevel: cc.Sprite
     },
 
 
     onLoad: function () {
         if (cc.sys.os == cc.sys.OS_OSX) {
             cc.sys.localStorage.removeItem('vkids_buy_content');
-            cc.sys.localStorage.removeItem('vkids_rated');
+            // cc.sys.localStorage.removeItem('vkids_rated');
             cc.sys.localStorage.removeItem('vkids_need_rate_app');
         }
+        var level = Utils.getRangeNumber();
+        var imgPath = "";
+        if(level == 10) {
+            imgPath = "Texture/IMGUI/btn_1to10.png";
+        } else {
+            imgPath = "Texture/IMGUI/btn_1to5.png";
+        }
+        Utils.setSpriteFrame(this.learnLevel, imgPath, undefined, true);
 
         this.checkRateConfig();
         if (Utils.isUnlockContent()) {
@@ -157,7 +166,28 @@ cc.Class({
     },
     switchLearn: function () {
         Utils.soundButton();
+        var level = Utils.getRangeNumber();
+        var imgPath = "";
+        if(level == 10) {
+            level = 5;
+            imgPath = "Texture/IMGUI/btn_1to5.png";
+        } else {
+            level = 10;
+            imgPath = "Texture/IMGUI/btn_1to10.png";
+        }
+        cc.sys.localStorage.setItem("learnLevel", level);
+        Utils.setSpriteFrame(this.learnLevel, imgPath, undefined, true);
     },
+    learnAction: function () {
+        Utils.soundButton();
+        cc.director.loadScene("Scene/LearningScene/LearnSC");
+    },
+    gameAction: function () {
+        Utils.soundButton();
+    },
+    practicalAction: function () {
+        Utils.soundButton();
+    }
 
 
 });
