@@ -41,7 +41,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "f869fcea-6914-48b5-8f35-d76884a157bc",
-    "autoReleaseAssets": false
+    "autoReleaseAssets": true
   },
   {
     "__type__": "cc.Node",
@@ -247,7 +247,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 378.03,
+      "width": 567.09,
       "height": 200
     },
     "_children": [],
@@ -292,7 +292,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "One",
+    "_N$string": "Seven",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
@@ -507,7 +507,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 300,
+      "x": 365,
       "y": 50
     },
     "_skewX": 0,
@@ -660,8 +660,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "Learning123Script",
+    "target": {
+      "__id__": 2
+    },
+    "component": "ReadingScript",
     "handler": "actionNext",
     "customEventData": ""
   },
@@ -802,8 +804,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "Learning123Script",
+    "target": {
+      "__id__": 2
+    },
+    "component": "ReadingScript",
     "handler": "actionSound",
     "customEventData": ""
   },
@@ -844,7 +848,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -300,
+      "x": -365,
       "y": 50
     },
     "_skewX": 0,
@@ -997,8 +1001,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "Learning123Script",
+    "target": {
+      "__id__": 2
+    },
+    "component": "ReadingScript",
     "handler": "actionBack",
     "customEventData": ""
   },
@@ -1025,6 +1031,9 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true
+    "_enabled": true,
+    "lbNumber": {
+      "__id__": 7
+    }
   }
 ]

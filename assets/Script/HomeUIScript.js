@@ -180,7 +180,7 @@ cc.Class({
     },
     learnAction: function () {
         Utils.soundButton();
-        cc.director.loadScene("Scene/LearningScene/LearnSC");
+        cc.director.loadScene("LearnSC.fire");
     },
     gameAction: function () {
         Utils.soundButton();

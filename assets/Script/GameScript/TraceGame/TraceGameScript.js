@@ -331,7 +331,7 @@ cc.Class({
         var sequence = [];
         var fadeTo = cc.fadeTo(0.4,0);
         var callFunc = cc.callFunc(function(){
-            cc.director.loadScene("Scene/LearningScene/LearnSC");
+            cc.director.loadScene("LearnSC.fire");
         });
         sequence.push(fadeTo);
         sequence.push(callFunc);
