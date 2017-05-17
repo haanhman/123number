@@ -10,7 +10,8 @@ cc.Class({
         helpNode:{
             type:cc.Node,
             default:[]
-        }
+        },
+        number: 0
     },
 
 
@@ -81,20 +82,7 @@ cc.Class({
     },
 
     playAudioGame:function(){
-        var rid=Math.floor(Math.random()*10)>5?1:0;
-        var soundms_bg="Sound/gamevoice/trace"+rid+".mp3";
-        Utils.playSoundSource(soundms_bg,false,false);
-        this.scheduleOnce(this.playNextSoundCard,1.8);
-    },
-    playNextSoundCard:function(){
-        var allWord=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","Y","X","Z"];
-        var letter=GameData.playGameLetter;
-        if(letter==null||(typeof(letter )=="undefine")){
-            letter="B";
-        }
-        var index_letter=allWord.indexOf(letter.toUpperCase());
-        index_letter=index_letter+1;
-        var soundms_bg="Sound/speak/"+index_letter+"e.mp3";
+        var soundms_bg="Sound/count_voice1/"+this.number+".mp3";
         Utils.playSoundSource(soundms_bg,false,false);
     },
 
@@ -343,7 +331,7 @@ cc.Class({
         var sequence = [];
         var fadeTo = cc.fadeTo(0.4,0);
         var callFunc = cc.callFunc(function(){
-            cc.director.loadScene("MainSC");
+            cc.director.loadScene("LearnSC.fire");
         });
         sequence.push(fadeTo);
         sequence.push(callFunc);

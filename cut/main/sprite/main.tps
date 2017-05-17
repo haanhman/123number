@@ -244,20 +244,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">btn_1to10.png</key>
-            <key type="filename">btn_1to5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>45,16,90,33</rect>
-                <key>scale9Paddings</key>
-                <rect>45,16,90,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">btn_fullversion.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>

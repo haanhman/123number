@@ -188,8 +188,14 @@ var Utils = {
      * VD: card/ant.png => full path /resources/card/ant.png
      * @param callback callback function neu co
      */
-    setSpriteFrame: function (sprite, filePath, callback) {
-        var path = this.getFilePath("resources/" + filePath);
+    setSpriteFrame: function (sprite, filePath, callback, notResource) {
+        var path = "";
+        if(notResource == undefined) {
+            path = this.getFilePath("resources/" + filePath);
+        } else {
+            path = cc.url.raw(filePath);
+        }
+        cc.log("path: "  + path);
         cc.loader.load(path, function (err, tex) {
             if (err != null) {
                 return;
@@ -336,6 +342,13 @@ var Utils = {
     videoType: "song",
     soundButton: function () {
         this.playSoundSource("Sound/btsound.mp3");
+    },
+    getRangeNumber: function () {
+        var level = cc.sys.localStorage.getItem("learnLevel");
+        if(level == null) {
+            level = 5;
+        }
+        return level;
     }
 }
 module.exports = Utils;
