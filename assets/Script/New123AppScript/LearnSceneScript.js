@@ -54,6 +54,7 @@ cc.Class({
         cc.director.loadScene("Learn123.fire");
     },
     actionCounting:function(){
+        cc.director.loadScene("LearnCounting.fire");
         Utils.soundButton();
     },
     actionReading:function(){
