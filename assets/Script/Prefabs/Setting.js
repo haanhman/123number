@@ -34,7 +34,6 @@ cc.Class({
     closeBtn: function () {
         Utils.soundButton();
         var parentScript = this.node.parent.getComponent('HomeUIScript');
-        parentScript.actionShare();
         this.removePopup();
     },
 
