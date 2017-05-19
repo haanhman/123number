@@ -187,6 +187,7 @@ cc.Class({
     },
     practicalAction: function () {
         Utils.soundButton();
+        cc.director.loadScene("Practicle.fire");
     }
 
 
