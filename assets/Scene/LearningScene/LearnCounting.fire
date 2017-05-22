@@ -109,6 +109,9 @@
     "_components": [
       {
         "__id__": 29
+      },
+      {
+        "__id__": 30
       }
     ],
     "_prefab": null,
@@ -244,8 +247,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 59,
-      "height": 62
+      "width": 70,
+      "height": 70
     },
     "_children": [],
     "_rotationX": 0,
@@ -254,8 +257,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -510.20000000000005,
-      "y": 272.5
+      "x": 513,
+      "y": 265
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -315,10 +318,10 @@
     "_enabled": true,
     "isAlignOnce": true,
     "_target": null,
-    "_alignFlags": 9,
+    "_alignFlags": 33,
     "_left": 28.30000000000001,
-    "_right": 0,
-    "_top": 16.5,
+    "_right": 20,
+    "_top": 20,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
@@ -328,7 +331,7 @@
     "_isAbsBottom": true,
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
-    "_originalWidth": 0,
+    "_originalWidth": 70,
     "_originalHeight": 0
   },
   {
@@ -387,8 +390,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "ReadingScript",
+    "target": {
+      "__id__": 2
+    },
+    "component": "LearnCounting",
     "handler": "actionClose",
     "customEventData": ""
   },
@@ -589,7 +594,9 @@
       "__id__": 14
     },
     "_enabled": true,
-    "_spriteFrame": null,
+    "_spriteFrame": {
+      "__uuid__": "0c1c3f82-2218-4a70-974f-10b09c62a285"
+    },
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -661,8 +668,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "Learning123Script",
+    "target": {
+      "__id__": 2
+    },
+    "component": "LearnCounting",
     "handler": "actionNext",
     "customEventData": ""
   },
@@ -755,7 +764,9 @@
       "__id__": 19
     },
     "_enabled": true,
-    "_spriteFrame": null,
+    "_spriteFrame": {
+      "__uuid__": "b0846c6a-f583-4813-9cd2-e7d1388b5231"
+    },
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -827,8 +838,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "Learning123Script",
+    "target": {
+      "__id__": 2
+    },
+    "component": "LearnCounting",
     "handler": "actionSound",
     "customEventData": ""
   },
@@ -951,7 +964,9 @@
       "__id__": 24
     },
     "_enabled": true,
-    "_spriteFrame": null,
+    "_spriteFrame": {
+      "__uuid__": "0c1c3f82-2218-4a70-974f-10b09c62a285"
+    },
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -1023,8 +1038,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "Learning123Script",
+    "target": {
+      "__id__": 2
+    },
+    "component": "LearnCounting",
     "handler": "actionBack",
     "customEventData": ""
   },
@@ -1069,5 +1086,17 @@
     },
     "_fitWidth": false,
     "_fitHeight": true
+  },
+  {
+    "__type__": "cbb501qvqpC66+1Jh+/owuo",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "picture": {
+      "__id__": 12
+    }
   }
 ]
