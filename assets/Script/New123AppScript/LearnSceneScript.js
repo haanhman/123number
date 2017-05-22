@@ -35,6 +35,7 @@ cc.Class({
     actionSlectNumber:function(){
         Utils.soundButton();
         this.nodeSLNumber.active=!this.nodeSLNumber.active;
+        this.node.getChildByName("popBG").active=this.nodeSLNumber.active;
     },
     actionTracing:function(){
         Utils.soundButton();
@@ -66,6 +67,7 @@ cc.Class({
     actionSelect15:function(){
         Utils.soundButton();
         this.nodeSLNumber.active=false;
+        this.node.getChildByName("popBG").active=false;
         Utils.rangeNumber=5;
         cc.sys.localStorage.setItem("learnLevel", 5);
         Utils.setSpriteFrame(this.learnLevel, "Texture/LearnUI/btn_1to5.png", undefined, true);
@@ -73,11 +75,15 @@ cc.Class({
     actionSelect110:function(){
         Utils.soundButton();
         this.nodeSLNumber.active=false;
+        this.node.getChildByName("popBG").active=false;
         Utils.rangeNumber=10;
         cc.sys.localStorage.setItem("learnLevel", 10);
         Utils.setSpriteFrame(this.learnLevel, "Texture/LearnUI/btn_1to10.png", undefined, true);
     },
 
+    actionClickBackground: function () {
+        cc.log("Click background");
+    }
 
 
 });
