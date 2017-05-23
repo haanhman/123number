@@ -62,11 +62,11 @@ cc.Class({
 
 
     loadConfigButton:function(){
-        var button_reload=this.node.getChildByName("reloadbutton");
-        var widget_cpn=button_reload.getComponent(cc.Widget);
-        widget_cpn.isAlignRight=false;
-        widget_cpn.isAlignLeft=true;
-        widget_cpn.left=28;
+        // var button_reload=this.node.getChildByName("reloadbutton");
+        // var widget_cpn=button_reload.getComponent(cc.Widget);
+        // widget_cpn.isAlignRight=false;
+        // widget_cpn.isAlignLeft=true;
+        // widget_cpn.left=28;
 
         var self=this;
         cc.loader.loadRes("PrefabGame/HubCloseButton",cc.Prefab, function (err, prefab_file) {

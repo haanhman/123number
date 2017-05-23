@@ -5227,8 +5227,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 498,
-      "y": 254
+      "x": -506,
+      "y": 256.5
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -5288,10 +5288,10 @@
     "_enabled": true,
     "isAlignOnce": true,
     "_target": null,
-    "_alignFlags": 33,
-    "_left": 0,
+    "_alignFlags": 9,
+    "_left": 20,
     "_right": 28,
-    "_top": 22.5,
+    "_top": 20,
     "_bottom": 0,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
@@ -5301,7 +5301,7 @@
     "_isAbsBottom": true,
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
-    "_originalWidth": 0,
+    "_originalWidth": 84,
     "_originalHeight": 0
   },
   {
