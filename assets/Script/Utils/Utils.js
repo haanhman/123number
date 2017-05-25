@@ -195,9 +195,11 @@ var Utils = {
         } else {
             path = cc.url.raw(filePath);
         }
+        cc.log(sprite);
         cc.log("path: "  + path);
         cc.loader.load(path, function (err, tex) {
             if (err != null) {
+                cc.log(err);
                 return;
             }
             if (cc.sys.isBrowser) {

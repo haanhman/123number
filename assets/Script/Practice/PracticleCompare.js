@@ -42,7 +42,6 @@ cc.Class({
         this.logic = "";
         this.gameType = Utils.getRandomInt(1, 4);
         this.title.string = this.listTitle[this.gameType - 1];
-        this.gameType = 1;
         if (this.gameType == 1) {
             this.initBigger();
         } else if (this.gameType == 2) {
