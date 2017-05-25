@@ -14,14 +14,14 @@ cc.Class({
 
     onLoad: function () {
         this.listTitle = ["Which number is bigger", "Which number is smaller", "Which number is biggest", "Which number is smallest"];
-        this.listPos1 = [[-180, 0], [180, 0]];
+        this.listPos1 = [[-190, 0], [190, 0]];
         this.listPos5Number = [[0, 0], [-300, 113], [300, 113], [-300, -169], [300, -169]];
         this.listPos4Number = [[-300, 113], [300, 113], [-300, -169], [300, -169]];
         this.loadGame();
     },
 
     loadGame: function () {
-
+        this.numberOk = null;
         var randomNumber = Utils.getRandomInt(1, 2);
         this.listPos3Number = randomNumber == 1 ? [[0, -172], [300, 85], [-300, 85]] : [[0, 85], [300, -172], [-300, -172]];
 
@@ -41,8 +41,8 @@ cc.Class({
         this.ok = false;
         this.logic = "";
         this.gameType = Utils.getRandomInt(1, 4);
-        // this.gameType = 4;
         this.title.string = this.listTitle[this.gameType - 1];
+        this.gameType = 1;
         if (this.gameType == 1) {
             this.initBigger();
         } else if (this.gameType == 2) {
@@ -56,6 +56,10 @@ cc.Class({
     },
 
     playAudioHelp: function () {
+        if(this.ok) {
+            return;
+        }
+        this.node.stopAllActions();
         Utils.playSoundSource("Sound/sentences/whichNumberIs.mp3", false, true);
         var callFun = cc.callFunc(function () {
             cc.log('this.gameType: ' + this.gameType);
@@ -100,7 +104,51 @@ cc.Class({
         number2.y = this.listPos1[1][1];
         this.node.addChild(number2);
 
+        if(firstNumber > secondNumber) {
+            this.numberOk = number1;
+        } else {
+            this.numberOk = number2;
+        }
+
         this.logic = firstNumber > secondNumber ? "bigger" : "smaller"
+    },
+
+    actionShowEffect: function () {
+        var self = this;
+        self.numberOk.stopAllActions();
+        if(this.gameType == 3 || this.gameType == 4) {
+            for (var ic = 1; ic <= 5; ic++) {
+                var nb = this.node.getChildByName("number" + ic);
+                if (nb != null) {
+                    if (nb.name != self.numberOk.name) {
+                        nb.runAction(cc.fadeTo(0.5, 0));
+                    }
+                }
+            }
+
+            cc.loader.loadRes("PrefabGame/starboom", function (err, eff_file) {
+                if (!(err == null)) {
+                    cc.log("----error load word  %s ", err);
+                }
+                var tmp_eff = cc.instantiate(eff_file);
+                self.numberOk.addChild(tmp_eff);
+                var spawn = [];
+                spawn.push(cc.moveTo(0.5, cc.p(0, 0)));
+                spawn.push(cc.scaleTo(0.5, 1.3));
+                self.numberOk.runAction(cc.spawn(spawn));
+            });
+        } else {
+            cc.loader.loadRes("PrefabGame/starboom", function (err, eff_file) {
+                if (!(err == null)) {
+                    cc.log("----error load word  %s ", err);
+                }
+                var tmp_eff = cc.instantiate(eff_file);
+                self.numberOk.addChild(tmp_eff);
+                var scaleTo = cc.scaleTo(0.5, self.gameType == 1 ? 1.3 : 0.7);
+                self.numberOk.runAction(scaleTo);
+            });
+        }
+
     },
 
     chooseNumberOk: function () {
@@ -109,9 +157,11 @@ cc.Class({
         }
         this.ok = true;
         this.node.stopAllActions();
+        var delayTime = 3;
         if (this.gameType == 1 || this.gameType == 2) {
             this.node.getChildByName(this.logic).active = true;
         }
+        this.actionShowEffect();
         var arr_well = ["awesome", "fantastic", "greatjob", "perfect", "super", "thatsit", "yes", "youraregreat", "youdidit"];
         var rd_index = Utils.getRandomInt(0, arr_well.length - 1);
         var source_path = "Sound/gamevoice/" + arr_well[rd_index] + ".mp3";
@@ -120,7 +170,7 @@ cc.Class({
         var callFun = cc.callFunc(function () {
             this.loadGame();
         }.bind(this));
-        var delayTime = cc.delayTime(1.5);
+        var delayTime = cc.delayTime(delayTime);
         this.node.runAction(cc.sequence([delayTime, callFun]));
     },
 
@@ -153,6 +203,12 @@ cc.Class({
         number2.x = this.listPos1[1][0];
         number2.y = this.listPos1[1][1];
         this.node.addChild(number2);
+
+        if(firstNumber < secondNumber) {
+            this.numberOk = number1;
+        } else {
+            this.numberOk = number2;
+        }
 
         this.logic = firstNumber > secondNumber ? "bigger" : "smaller"
     },
@@ -193,6 +249,9 @@ cc.Class({
             number.x = listPos[index][0];
             number.y = listPos[index][1];
             this.node.addChild(number);
+            if (arrNumber[index] == largest) {
+                this.numberOk = number;
+            }
         }
     },
 
@@ -220,6 +279,9 @@ cc.Class({
             number.x = listPos[index][0];
             number.y = listPos[index][1];
             this.node.addChild(number);
+            if (arrNumber[index] == small) {
+                this.numberOk = number;
+            }
         }
     },
 
